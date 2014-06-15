@@ -1,0 +1,17 @@
+﻿<flash_project name="~res" version="1">
+	<project_file path="./~res.fla" filetype="fla" profile="" def_file="true"/>
+	<project_file path="./loading.as" filetype="as"/>
+	<project_file path="./logo.as" filetype="as"/>
+	<project_file path="./max_s_btn.as" filetype="as"/>
+	<project_file path="./min_s_btn.as" filetype="as"/>
+	<project_file path="./pg1_back.as" filetype="as"/>
+	<project_file path="./pg1_down.as" filetype="as"/>
+	<project_file path="./pg1_play.as" filetype="as"/>
+	<project_file path="./pg2_back.as" filetype="as"/>
+	<project_file path="./pg2_down.as" filetype="as"/>
+	<project_file path="./pg2_play.as" filetype="as"/>
+	<project_file path="./play_btn.as" filetype="as"/>
+	<project_file path="./prase_btn.as" filetype="as"/>
+	<project_file path="./s_prase_btn.as" filetype="as"/>
+	<project_file path="./td_btn.as" filetype="as"/>
+</flash_project>
