@@ -1,6 +1,6 @@
 ﻿package easy.edit.sys.stg.dat
 {
-    import __AS3__.vec.*;
+//    import __AS3__.vec.*;
 
     public class SetPtCmdMgr extends Object
     {

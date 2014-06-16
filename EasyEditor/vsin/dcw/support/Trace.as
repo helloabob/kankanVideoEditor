@@ -235,7 +235,10 @@
             AVALIABLE = param5;
             USE_CONSOLE = param6;
             SOHU_TR = param7;
-            TraceInitShell.exec(param1, param2, param3, param4);
+//            TraceInitShell.exec(param1, param2, param3, param4);
+//			trace(param1+param2+param3+param4);
+			param1();
+//			param1(param2,param3,param4);
             return;
         }// end function
 

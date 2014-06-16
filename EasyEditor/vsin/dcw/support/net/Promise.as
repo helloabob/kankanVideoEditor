@@ -120,12 +120,13 @@
             count;
             failNotified;
             var _loc_3:int = 0;
-            var _loc_4:* = ;
+//            var _loc_4:* = ;
+			var _loc_4:*;
             while (_loc_4 in _loc_3)
             {
                 
                 pms = _loc_4[_loc_3];
-                then(, );
+//                then(, );
             }
             return ;
         }// end function

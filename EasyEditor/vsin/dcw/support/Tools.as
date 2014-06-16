@@ -92,13 +92,15 @@
             {
                 return 0;
             }
-            var _loc_2:* = param1.match(/[^\;
+//            var _loc_2:* = param1.match(/[^\;
+			var _loc_2=null;
             return param1.length + (!_loc_2 ? (0) : (_loc_2.length));
         }// end function
 
         private static function leftB(param1:String, param2:int) : String
         {
-            var _loc_3:* = param1.replace(/\*""\*/g, " ").replace(/[^\;
+//            var _loc_3:* = param1.replace(/\*""\*/g, " ").replace(/[^\;
+			var _loc_3:* = param1.replace(/\*""\*/g, " ");
             param1 = param1.slice(0, _loc_3.slice(0, param2).replace(/\*\*""\*\*/g, " ").replace(/\*""\*/g, "").length);
             if (byteLength(param1) > param2)
             {

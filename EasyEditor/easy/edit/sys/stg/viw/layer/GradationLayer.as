@@ -52,10 +52,8 @@
             var _loc_5:Number = 5;
             var _loc_6:Number = 10;
             var _loc_7:* = height - 1;
-            var _loc_8:* = new Vector.<int>;
-            new Vector.<int>.push(GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO);
-            var _loc_9:* = new Vector.<Number>;
-            new Vector.<Number>.push(param2 + 0 * param3, _loc_7, param2 + 0 * param3, _loc_7 - _loc_6, param2 + 1 * param3, _loc_7, param2 + 1 * param3, _loc_7 - _loc_5, param2 + 2 * param3, _loc_7, param2 + 2 * param3, _loc_7 - _loc_5, param2 + 3 * param3, _loc_7, param2 + 3 * param3, _loc_7 - _loc_5, param2 + 4 * param3, _loc_7, param2 + 4 * param3, _loc_7 - _loc_5);
+            var _loc_8:* = new Vector.<int>().push(GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO);
+            var _loc_9:* = new Vector.<Number>().push(param2 + 0 * param3, _loc_7, param2 + 0 * param3, _loc_7 - _loc_6, param2 + 1 * param3, _loc_7, param2 + 1 * param3, _loc_7 - _loc_5, param2 + 2 * param3, _loc_7, param2 + 2 * param3, _loc_7 - _loc_5, param2 + 3 * param3, _loc_7, param2 + 3 * param3, _loc_7 - _loc_5, param2 + 4 * param3, _loc_7, param2 + 4 * param3, _loc_7 - _loc_5);
             graphics.drawPath(_loc_8, _loc_9);
             var _loc_10:* = new TextField();
             var _loc_11:* = new TextFormat();

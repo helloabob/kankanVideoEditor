@@ -26,20 +26,27 @@
             this._allDp[param1] = this._allDp[param1] || new Dictionary();
             var _loc_4:* = _loc_6;
             var _loc_6:* = _loc_4[param2] || new EventDispatcher();
-            _loc_6[param2] = _loc_4[param2] || new EventDispatcher();
-            var _loc_5:* = _loc_6;
+//            _loc_6[param2] = _loc_4[param2] || new EventDispatcher();
+//            var _loc_5:* = _loc_6;
             _loc_6.addEventListener(param2, param3);
             return;
         }// end function
 
         public function addCmd(param1:Class, param2:String, param3:Class) : void
         {
+			trace(param1+":"+param2+":"+param3);
             var _loc_7:* = this._allDp[param1] || new Dictionary();
+			trace(param1+":"+param2+":"+param3);
             this._allDp[param1] = this._allDp[param1] || new Dictionary();
+			trace(param1+":"+param2+":"+param3);
             var _loc_4:* = _loc_7;
+			trace(param1+":"+param2+":"+param3);
             var _loc_7:* = _loc_4[param2] || new EventDispatcher();
-            _loc_7[param2] = _loc_4[param2] || new EventDispatcher();
-            var _loc_5:* = _loc_7;
+			trace(param1+":"+param2+":"+param3);
+//            _loc_7[param2] = _loc_4[param2] || new EventDispatcher();
+			trace(param1+":"+param2+":"+param3);
+//            var _loc_5:* = _loc_7;
+			trace(param1+":"+param2+":"+param3);
             _loc_7.addEventListener(param2, this.cmdDispatcher);
             var _loc_7:* = this._allCmd[param1] || new Dictionary();
             this._allCmd[param1] = this._allCmd[param1] || new Dictionary();

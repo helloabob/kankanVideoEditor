@@ -81,7 +81,7 @@
         public function undo(param1:SetPtCmdItem) : void
         {
             var _loc_2:* = param1.action;
-            this.curOperateSprite = param1.targ as ;
+            this.curOperateSprite = param1.targ as SpriteForSelection;
             if (_loc_2 === SetPtCmdType.SET_START)
             {
                 this.inProcess = false;
@@ -169,14 +169,14 @@
     }
 }
 
-final class SpriteForSelection extends Sprite
-{
-    public var isDone:Boolean = false;
-
-    function SpriteForSelection()
-    {
-        return;
-    }// end function
-
-}
+//final class SpriteForSelection extends Sprite
+//{
+//    public var isDone:Boolean = false;
+//
+//    function SpriteForSelection()
+//    {
+//        return;
+//    }// end function
+//
+//}
 
