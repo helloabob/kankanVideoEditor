@@ -1,6 +1,6 @@
 ﻿package com.sohu.fwork.proxy
 {
-
+	import com.sohu.fwork.notify.INotify;
     public interface IProxy extends INotify
     {
 

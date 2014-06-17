@@ -7,6 +7,7 @@
     import com.sohu.fwork.*;
     import com.sohu.fwork.baseagent.*;
     import com.sohu.fwork.notify.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class GetHotVrsCommand extends Notify implements ICommand
     {

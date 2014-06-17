@@ -13,6 +13,7 @@
     import com.sohu.fwork.notify.*;
     import com.sohu.fwork.view.*;
     import flash.net.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class SeekCommand extends Notify implements ICommand
     {

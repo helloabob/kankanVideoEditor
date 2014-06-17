@@ -5,6 +5,7 @@
     import flash.display.*;
     import flash.events.*;
     import flash.text.*;
+	import com.sohu.flashplayer.inter_pack.errorpanel.IErrorPanel;
 
     public class ErrorPanel extends View implements IView, IErrorPanel
     {

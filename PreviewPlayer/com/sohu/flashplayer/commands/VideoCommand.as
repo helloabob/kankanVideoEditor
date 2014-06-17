@@ -14,6 +14,7 @@
     import com.sohu.fwork.view.*;
     import flash.net.*;
     import flash.utils.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class VideoCommand extends Notify implements ICommand
     {

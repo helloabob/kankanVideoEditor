@@ -8,6 +8,7 @@
     import flash.events.*;
     import flash.geom.*;
     import flash.globalization.*;
+	import com.sohu.flashplayer.inter_pack.splayer.IProgress;
 
     public class SProgressBar extends View implements IView, IProgress
     {

@@ -8,6 +8,7 @@
     import com.sohu.fwork.baseagent.*;
     import com.sohu.fwork.notify.*;
     import flash.external.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class HelperCommand extends Notify implements ICommand
     {

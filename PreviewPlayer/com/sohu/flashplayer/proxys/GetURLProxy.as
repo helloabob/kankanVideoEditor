@@ -6,6 +6,8 @@
     import flash.events.*;
     import flash.net.*;
     import flash.utils.*;
+	import com.sohu.fwork.proxy.IProxy;
+	import com.sohu.fwork.proxy.Proxy;
 
     public class GetURLProxy extends Proxy implements IProxy
     {
@@ -67,6 +69,8 @@
 
     }
 }
+
+import flash.net.URLLoader;
 
 class URLLoaderEx extends URLLoader
 {

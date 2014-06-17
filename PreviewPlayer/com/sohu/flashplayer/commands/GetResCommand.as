@@ -8,6 +8,7 @@
     import com.sohu.fwork.notify.*;
     import com.sohu.fwork.proxy.*;
     import flash.display.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class GetResCommand extends Notify implements ICommand
     {

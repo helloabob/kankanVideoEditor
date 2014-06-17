@@ -5,6 +5,7 @@
     import com.sohu.fwork.command.*;
     import com.sohu.fwork.view.*;
     import flash.utils.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class Notify extends Object implements INotify
     {
@@ -30,7 +31,7 @@
             for each (_loc_3 in this.views)
             {
                 
-                if (_loc_3.com.sohu.fwork.view:IView::commands.indexOf(param1) != -1)
+                if (_loc_3.commands.indexOf(param1) != -1)
                 {
                     _loc_3.update(param2 ? (param2.clone()) : (null));
                 }

@@ -5,6 +5,7 @@
     import com.sohu.fwork.*;
     import com.sohu.fwork.baseagent.*;
     import com.sohu.fwork.notify.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class ErrorPanelCommand extends Notify implements ICommand
     {

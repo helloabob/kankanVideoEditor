@@ -15,14 +15,14 @@
 
         public static function getJSParamForPage(param1:String, ... args) : Object
         {
-            args = new activation;
+//            args = new activation;
             var param:* = param1;
             var args:* = args;
             try
             {
                 if (ExternalInterface.available)
                 {
-                    return ExternalInterface.call("function(){return " +  + ";}", null);
+                    return ExternalInterface.call("function(){return " + args + ";}", null);
                 }
             }
             catch (err:Error)
@@ -93,16 +93,15 @@
 
         public static function trace(param1:String, ... args) : void
         {
-            args = "";
+            var tmp:String = "";
             var _loc_4:int = 0;
             while (_loc_4 < args.length)
             {
-                
-                args = args + String(args[_loc_4]);
+				tmp = tmp + String(args[_loc_4]);
                 _loc_4++;
             }
-            args = param1 + args;
-            ExternalInterface.call("console.log", args);
+			tmp = param1 + tmp;
+            ExternalInterface.call("console.log", tmp);
             return;
         }// end function
 

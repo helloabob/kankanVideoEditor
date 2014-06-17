@@ -1,7 +1,8 @@
 ﻿package com.sohu.flashplayer.views
 {
     import com.sohu.fwork.view.*;
-
+	import com.sohu.flashplayer.inter_pack.loading.ILoading;
+	
     public class LoadingView extends View implements IView, ILoading
     {
         private var load:loading;

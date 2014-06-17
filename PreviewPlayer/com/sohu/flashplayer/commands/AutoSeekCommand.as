@@ -6,6 +6,7 @@
     import com.sohu.fwork.baseagent.*;
     import com.sohu.fwork.notify.*;
     import flash.external.*;
+	import com.sohu.fwork.command.ICommand;
 
     public class AutoSeekCommand extends Notify implements ICommand
     {

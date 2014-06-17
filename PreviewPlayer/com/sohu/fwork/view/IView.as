@@ -1,6 +1,7 @@
 ﻿package com.sohu.fwork.view
 {
     import com.sohu.fwork.baseagent.*;
+	import com.sohu.fwork.clistener.IClistener;
 
     public interface IView extends IClistener
     {
