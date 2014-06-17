@@ -29,13 +29,14 @@
 
         public static function log(param1:Object, param2:Object = "") : void
         {
-            if (PRIM_TYPE_A.indexOf(typeof(param2)) === -1)
-            {
-                traceObject(param2);
-            }
-            else
-            {
-            }
+			trace(param1+param2);
+//            if (PRIM_TYPE_A.indexOf(typeof(param2)) === -1)
+//            {
+//                traceObject(param2);
+//            }
+//            else
+//            {
+//            }
             return;
         }// end function
 

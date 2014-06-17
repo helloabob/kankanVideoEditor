@@ -47,6 +47,7 @@
 
         private function okWithParams(param1:Function, param2:Array) : void
         {
+			trace("okWithParams"+param1+"aaaa"+param2);
             param1.apply(this, param2);
             return;
         }// end function

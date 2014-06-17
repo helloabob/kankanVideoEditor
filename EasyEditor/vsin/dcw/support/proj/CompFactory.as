@@ -26,9 +26,8 @@
             }
             if (_loc_2 === this.COMP_BIRTH)
             {
-                var _loc_3:* = param1;
-                var _loc_3:* = new param1;
-                _loc_2 = new param1;
+                var _loc_3:* = new param1();
+                _loc_2 = _loc_3;
                 this._allComp[param1] = _loc_3;
             }
             return _loc_2;
@@ -68,8 +67,7 @@
 
         public function registComp(param1:Class, param2:Array = null) : void
         {
-            this._allComp[param1] = this.COMP_BIRTH;
-            var _loc_3:* = param2;
+            this._allComp[param1] = new param1();
             this._aliasDic[param1] = param2;
             return;
         }// end function

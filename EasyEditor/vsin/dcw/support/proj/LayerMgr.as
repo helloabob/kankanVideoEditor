@@ -19,7 +19,7 @@
         public static function buildLayer(param1:DisplayObject) : void
         {
             var _loc_2:* = param1 as Sprite;
-            var _loc_3:* = param1.stage;
+//            var _loc_3:* = param1.stage;
             reservedLayer = new Sprite();
             relativeLayer = new Sprite();
             _loc_2.addChild(relativeLayer);

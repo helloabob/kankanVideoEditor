@@ -33,9 +33,11 @@
             }
             if (this._rejected)
             {
+				param2.apply(null,this._rejectedData);
             }
             else
             {
+				this._failArr.push(param2);
             }
             return this;
         }// end function
@@ -55,14 +57,12 @@
 
         public function resolve(... args) : void
         {
-            args = null;
             this._resolved = true;
             this._rejected = false;
             this._resolvedData = args;
-            for each (args in this._succArr)
+            for each (var func:* in this._succArr)
             {
-                
-                args.apply(null, args);
+				func.apply(null, args);
             }
             this._succArr.length = 0;
             return;
@@ -85,7 +85,7 @@
 
         public static function when(... args) : Promise
         {
-            args = new activation;
+//            args = new activation;
             var retPms:Promise;
             var tot:int;
             var count:int;
@@ -128,7 +128,7 @@
                 pms = _loc_4[_loc_3];
 //                then(, );
             }
-            return ;
+            return retPms;
         }// end function
 
     }

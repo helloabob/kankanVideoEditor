@@ -52,10 +52,10 @@
 
         private function ready() : void
         {
-            var _loc_1:* = new ContextMenu();
-            _loc_1.hideBuiltInItems();
-            _loc_1.customItems.push(new ContextMenuItem(this.TRACE_KEY + "::" + this.VER));
-            contextMenu = _loc_1;
+//            var _loc_1:* = new ContextMenu();
+//            _loc_1.hideBuiltInItems();
+//            _loc_1.customItems.push(new ContextMenuItem(this.TRACE_KEY + "::" + this.VER));
+//            contextMenu = _loc_1;
             Trace.initHelper(this.fire, root as Sprite, this.TRACE_KEY, Keyboard.NUMBER_1, true, true);
             return;
         }// end function
@@ -69,7 +69,13 @@
                 Trace.log("trace loaded!");
                 Trace.log(this.initSrc, stage.stageWidth);
                 _loc_1 = stage.loaderInfo.parameters;
-                new EasyBoot(_loc_1, stage, root);
+				/*test*/
+				_loc_1["vid"]="1670864";
+				_loc_1["api_key"]="";
+				_loc_1["uuid"]="e051eae7-ab0c-d4b2-1eb4-a9b256ae4bb3";
+				_loc_1["topBarFull"]="1";
+                /*end*/
+				new EasyBoot(_loc_1, stage, root);
                 this.inited = true;
             }
             return;

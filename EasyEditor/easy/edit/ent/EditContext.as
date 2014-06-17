@@ -17,6 +17,7 @@
 
         public function init(param1:Object, param2:Stage) : void
         {
+			trace("EditContext_init");
             new EditBoot(param1, param2, this);
             var _loc_3:* = EditFactory.to.getCompIns(EditTeller);
             _loc_3.addEventListener(WorkEvt.SEEK, this.sendOut);

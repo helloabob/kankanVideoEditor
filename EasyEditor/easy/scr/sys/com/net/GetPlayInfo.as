@@ -42,6 +42,7 @@
             return;
         }// end function
 
+		/*p1:type p2:data p3:target*/
         protected function httpCallback(param1:String, param2:Object, param3:Request) : void
         {
             var rootDat:Object;
@@ -53,7 +54,7 @@
             try
             {
                 rootDat = JSON.parse(str);
-                if (Tools.objLen(rootDat))
+				if (Tools.objLen(rootDat))
                 {
                     new PlayInfoParser().parse(rootDat);
                 }

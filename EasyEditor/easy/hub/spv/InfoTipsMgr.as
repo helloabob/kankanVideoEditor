@@ -30,6 +30,7 @@
 
         public function show(param1:String) : void
         {
+			trace(param1);
             LayerMgr.tipLayer.addChild(this);
             this.content.text = param1;
             this.setLayout();

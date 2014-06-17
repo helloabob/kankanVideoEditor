@@ -55,6 +55,7 @@
 
         protected function httpCallback(param1:String, param2:Object, param3:Request) : void
         {
+			trace(param1+";;;;"+param2);
             var _loc_4:* = param2 as String;
             if (param2 as String)
             {

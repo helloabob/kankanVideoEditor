@@ -11,6 +11,7 @@
 
         public function ClipInfoLoadedCmd(param1:ScreenNetEvt)
         {
+			trace("ClipInfoLoadedCmd");
             var _loc_2:* = ScrFactory.to.getCompIns(PlayDat);
             var _loc_3:* = _loc_2.clipUrls.length;
             _loc_2.allPlayUrl = [];

@@ -23,7 +23,6 @@
             var _loc_2:int = 0;
             for (_loc_3 in param1)
             {
-                
                 _loc_2++;
             }
             return _loc_2;

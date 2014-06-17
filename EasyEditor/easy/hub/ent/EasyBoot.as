@@ -15,10 +15,16 @@
         private var editCtx:EditContext;
         private var scrCtx:ScrContext;
 
+		/*
+		** @param1 LoaderInfo
+		*  @param2 Stage
+		*  @param3 Root
+		**/
         public function EasyBoot(param1:Object, param2:Stage, param3:DisplayObject)
         {
             this.stg = param2;
             this.root = param3;
+			//todo
             EasyFactory.to.tracingCreating = true;
             EasyFactory.to.registComp(ScrContext);
             EasyFactory.to.registComp(EditContext);
