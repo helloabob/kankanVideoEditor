@@ -3,10 +3,10 @@
     import flash.display.*;
     import flash.events.*;
     import flash.geom.*;
+    
     import vsin.dcw.support.comp.btn.*;
     import vsin.dcw.support.comp.def.*;
     import vsin.dcw.support.comp.evt.*;
-	import flash.events.ProgressEvent;
 
     public class ProgressShell extends EventDispatcher
     {
@@ -96,7 +96,7 @@
 
         protected function notifyProgChange() : void
         {
-            var _loc_1:* = new ProgressEvent(ProgressEvent.PROGRESS_CHANGE);
+            var _loc_1:* = new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
             _loc_1.progress = this.per;
             dispatchEvent(_loc_1);
             return;
@@ -124,7 +124,7 @@
                 return;
             }
             this.track.setStat(this.fill.getStat());
-            dispatchEvent(new ProgressEvent(ProgressEvent.TRACK_DOWN));
+            dispatchEvent(new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.TRACK_DOWN));
             return;
         }// end function
 

@@ -453,7 +453,7 @@
 
         static function updateAll(event:Event = null) : void
         {
-            var _loc_2:Dictionary = null;
+//            var _loc_2:Dictionary = null;
             var _loc_3:Object = null;
             var _loc_4:Array = null;
             var _loc_5:int = 0;
@@ -462,23 +462,23 @@
             rootFramesTimeline.renderTime((rootFrame - rootFramesTimeline.cachedStartTime) * rootFramesTimeline.cachedTimeScale, false, false);
             if (!(rootFrame % 60))
             {
-                _loc_2 = masterList;
-                for (_loc_3 in _loc_2)
+                for (_loc_3 in masterList)
                 {
                     
-                    _loc_4 = _loc_2[_loc_3];
+                    _loc_4 = masterList[_loc_3];
                     _loc_5 = _loc_4.length;
                     while (--_loc_5 > -1)
                     {
                         
-                        if (TweenLite.TweenLite(_loc_4[_loc_5]).gc)
+                        if (_loc_4[_loc_5].gc)
                         {
-                            _loc_4.splice(_loc_5, 1);
+//                            _loc_4.splice(_loc_5, 1);
+							_loc_4.slice(_loc_5,1);
                         }
                     }
                     if (_loc_4.length == 0)
                     {
-                        delete _loc_2[_loc_3];
+                        delete masterList[_loc_3];
                     }
                 }
             }

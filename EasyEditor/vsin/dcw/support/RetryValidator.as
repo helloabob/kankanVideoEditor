@@ -20,9 +20,7 @@
         {
             if (this.retryTimes < this.RETRY_MAX)
             {
-                args = this;
-                var _loc_5:* = args.retryTimes + 1;
-                args.retryTimes = _loc_5;
+                this.retryTimes+=1;
                 if (param1 is Function)
                 {
                     setTimeout(this.okWithParams, this.delayTime * 1000, param1, args);

@@ -258,7 +258,7 @@ final class TraceBin extends Object
 
     public function log(param1:Object, param2:Object = "") : void
     {
-        this.cacheTxt[this.cacheTxt.length] = getTimer() + " :: " + param1 + " :: " + param2;
+//        this.cacheTxt[this.cacheTxt.length] = getTimer() + " :: " + param1 + " :: " + param2;
         return;
     }// end function
 

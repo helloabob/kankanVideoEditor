@@ -27,6 +27,7 @@
         {
             var _loc_1:* = EditFactory.to.getCompIns(EditDat);
             this.reqUrl = "http://my.tv.sohu.com/user/a/wvideo/cloudEditor/vrshot.do" + "?vid=" + _loc_1.vid + "&t=" + new Date().time;
+			trace(reqUrl);
             return;
         }// end function
 
@@ -74,6 +75,8 @@
                 }
                 else
                 {
+					/*test*/
+//					EditDispatcher.to.dispatch(new EditNetEvt(EditNetEvt.HOT_SPOT_LOADED));
                     tip.show("热点数据缺失");
                 }
             }
