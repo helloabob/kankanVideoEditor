@@ -6,6 +6,7 @@
     import vsin.dcw.support.comp.btn.*;
     import vsin.dcw.support.comp.def.*;
     import vsin.dcw.support.comp.evt.*;
+	import flash.events.ProgressEvent;
 
     public class ProgressShell extends EventDispatcher
     {

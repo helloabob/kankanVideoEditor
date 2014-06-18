@@ -29,7 +29,7 @@
 				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_ALL_URLS_LOADED));
 			}
 			return;
-			/**/
+			/*test end*/
 			
             var _loc_12:Array = null;
             var _loc_3:* = /\?start=""\?start=/;
