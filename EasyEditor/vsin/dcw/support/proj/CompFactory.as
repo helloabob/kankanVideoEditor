@@ -1,6 +1,7 @@
 ﻿package vsin.dcw.support.proj
 {
     import flash.utils.*;
+    
     import vsin.dcw.support.*;
 
     public class CompFactory extends Object
@@ -17,7 +18,7 @@
             return;
         }// end function
 
-        public function getCompIns(param1:Class)
+        public function getCompIns(param1:Class):*
         {
             var _loc_2:* = this._allComp[param1];
             if (_loc_2 === undefined)
@@ -33,7 +34,7 @@
             return _loc_2;
         }// end function
 
-        public function getCompInsByAlias(param1:Class, param2:String = "")
+        public function getCompInsByAlias(param1:Class, param2:String = ""):*
         {
             var _loc_3:Class = null;
             var _loc_4:Array = null;

@@ -30,7 +30,6 @@
                     
                     var _loc_2:int = 0;
                     this.clipsLoadedCompletedMark[_loc_1] = 0;
-                    var _loc_2:* = _loc_2;
                     this.clipsLoadedProgress[_loc_1] = _loc_2;
                     this.dat.clipSeekMark[_loc_1] = _loc_2;
                     _loc_1++;

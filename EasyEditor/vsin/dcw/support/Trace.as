@@ -213,8 +213,7 @@
                     _loc_2 = param1[_loc_4];
                     if (PRIM_TYPE_B.indexOf(_loc_3) === -1)
                     {
-                        var _loc_12:* = count + 1;
-                        count = _loc_12;
+                        count++;
                         if (count > cascade)
                         {
                         }
@@ -222,8 +221,7 @@
                         {
                             traceObject(_loc_2);
                         }
-                        var _loc_12:* = count - 1;
-                        count = _loc_12;
+                        count--;
                         continue;
                     }
                 }

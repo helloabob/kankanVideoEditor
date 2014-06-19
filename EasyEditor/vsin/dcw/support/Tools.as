@@ -73,7 +73,7 @@
         public static function formatTime(param1:Number) : String
         {
             var _loc_2:* = new DateTimeFormatter("zh_CN");
-            if (param1 > 3600)
+            if (param1 >= 3600)
             {
                 param1 = param1 - 3600 * 8;
                 _loc_2.setDateTimePattern("kk:mm:ss");

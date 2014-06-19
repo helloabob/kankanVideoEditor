@@ -90,8 +90,7 @@
 			trace("url:"+param1);
             Trace.log(param2, param1);
             this.dat.allPlayUrl[param2] = param1;
-            var _loc_14:* = count + 1;
-            count = _loc_14;
+			count++;
             if (count >= this.dat.clipUrls.length)
             {
                 count = 0;

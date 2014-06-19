@@ -10,7 +10,7 @@
         {
             return;
         }// end function
-
+/*
         public function output(param1:NetStream, param2:String, param3:Boolean, param4:Boolean) : void
         {
             var _loc_5:Function = null;
@@ -101,8 +101,9 @@
             }
             this._loc_7();
             return;
+			
         }// end function
-
+*/
         public function cleanOutput() : void
         {
             Trace.cleanMonitor();
