@@ -10,7 +10,7 @@
 
         public function ConnectedCmd(param1:ScreenNetEvt)
         {
-            var _loc_2:* = ScrFactory.to.getCompIns(NetStmMgr);
+            var _loc_2:NetStmMgr = ScrFactory.to.getCompIns(NetStmMgr);
             _loc_2.play();
             Trace.log("First Play Pause");
             _loc_2.pause();

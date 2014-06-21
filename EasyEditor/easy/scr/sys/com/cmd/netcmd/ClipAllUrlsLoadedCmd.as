@@ -9,7 +9,7 @@
 
         public function ClipAllUrlsLoadedCmd(param1:ScreenNetEvt)
         {
-            var _loc_2:* = ScrFactory.to.getCompIns(ConnectStm);
+            var _loc_2:ConnectStm = ScrFactory.to.getCompIns(ConnectStm);
             _loc_2.connectServer();
             return;
         }// end function

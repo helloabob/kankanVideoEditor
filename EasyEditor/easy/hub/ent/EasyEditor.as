@@ -15,6 +15,7 @@
 
         public function EasyEditor()
         {
+//			http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4?start=0
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.frameRate = 30;

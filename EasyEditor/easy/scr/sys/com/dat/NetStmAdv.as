@@ -27,7 +27,7 @@
         protected var seekMgr:SeekMgr;
         protected var lastSeekToClip:Number = 0;
         protected var autoSeekPoint:Number = -1;
-        static var lastSeekToClipBytes:Number = 0;
+        private static var lastSeekToClipBytes:Number = 0;
 
         public function NetStmAdv(param1:String)
         {
@@ -123,6 +123,7 @@
 
         protected function dispatchProxy(param1:ScreenStmEvt) : void
         {
+			ScrDispatcher.to.dispatch(param1);
             return;
         }// end function
 

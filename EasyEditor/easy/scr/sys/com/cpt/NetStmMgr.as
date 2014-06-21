@@ -46,6 +46,7 @@
 
         public function play() : void
         {
+			trace("play_url:"+this.dat.curPlayUrl);
             this.dat.updateInfo((this.dat.curClipIdx + 1));
             this.shift();
             this.curStm.initStream();

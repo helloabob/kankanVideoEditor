@@ -9,7 +9,7 @@
 
         public function MetaLoadedCmd(param1:ScreenStmEvt)
         {
-            var _loc_2:* = ScrFactory.to.getCompIns(TimeMgr);
+            var _loc_2:TimeMgr = ScrFactory.to.getCompIns(TimeMgr);
             _loc_2.start();
             return;
         }// end function

@@ -1,6 +1,7 @@
 ﻿package easy.scr.sys.com.dat
 {
     import flash.net.*;
+    
     import vsin.dcw.support.*;
 
     public class PlayDat extends Object
@@ -15,7 +16,7 @@
         public var curPlayUrl:String;
         public var curSeekUrl:String;
         public var nexPlayUrl:String;
-        public var allPlayUrl:Array;
+        public var allPlayUrl:Array=new Array();
         public var curConn:NetConnection;
         public var curStm:NetStream;
         public var defaultVolume:Number = 80;
@@ -26,11 +27,11 @@
         public var hashIds:Array;
         public var keys:Array;
         public var syncUrls:Array;
-        public var clipUrls:Array;
+        public var clipUrls:Array=new Array();
         public var metaWidth:Number;
         public var metaHeight:Number;
-        public var keyFrameInfo:Array;
-        public var clipSeekMark:Array;
+        public var keyFrameInfo:Array=new Array();
+        public var clipSeekMark:Array=new Array();
         public var lastSeekToClipTime:Number = 0;
 
         public function PlayDat()
@@ -57,6 +58,7 @@
                 _loc_1 = _loc_1 + this.clipDurArr[_loc_2];
                 _loc_2++;
             }
+			trace("PlayDat_calc_loc_1:"+_loc_1+"time:"+this.curStm.time);
             _loc_1 = _loc_1 + (this.curStm.time + this.lastSeekToClipTime);
             return _loc_1;
         }// end function
