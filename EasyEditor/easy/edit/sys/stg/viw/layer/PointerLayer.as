@@ -66,6 +66,7 @@
 
         public function seekOffset(param1:Number) : void
         {
+			trace("seekOffset:"+param1);
             this.isTuning = true;
             this.isNext = param1 >= 0;
             Trace.log("ptLayer seek prog", this.slider.getPercent() + param1);

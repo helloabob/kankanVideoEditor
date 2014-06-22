@@ -61,11 +61,13 @@
 
         public function transSecToViewProg(param1:Number) : Number
         {
+			trace("transSecToViewProg:"+param1/this.viewDuration);
             return param1 / this.viewDuration;
         }// end function
 
         public function transTotProgToClipIdAndClipFlyTime(param1:Number) : Array
         {
+			trace("transTotProgToClipIdAndClipFlyTime:"+param1+" and clipDurArr:"+this.clipDurArr.toString());
             var _loc_2:* = param1 * this.dur;
             var _loc_3:Number = 0;
             var _loc_4:int = 0;
@@ -118,7 +120,10 @@
 
         public function findPrevSp(param1:int, param2:Number) : Number
         {
+//			trace("findPrevSp1:"+param1+"    "+this.keyFrDat[0].toString());
+//			trace("findPrevSp2:"+this.keyFrDat.toString());
             var _loc_3:* = this.keyFrDat[param1];
+			trace("findPrevSp:"+_loc_3.length);
             var _loc_4:Number = 0;
             var _loc_5:* = _loc_3.length;
             var _loc_6:* = _loc_3.length - 1;

@@ -42,6 +42,7 @@
 
         public static function err(param1:Object, param2:Object = "") : void
         {
+			trace("err:"+param1+param2);
             return;
         }// end function
 

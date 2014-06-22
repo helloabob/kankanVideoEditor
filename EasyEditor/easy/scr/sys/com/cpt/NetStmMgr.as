@@ -70,6 +70,11 @@
             return;
         }// end function
 
+		/**
+		 * @param1:progress
+		 * @param2:pause
+		 * @param3:next
+		 * */
         public function seek(param1:Number, param2:Boolean = false, param3:Boolean = false) : void
         {
             var _loc_4:* = this.dat.transProgToClipIdAndFlyTime(param1);

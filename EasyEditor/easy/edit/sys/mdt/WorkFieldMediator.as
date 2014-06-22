@@ -20,6 +20,11 @@
         private var teller:EditTeller;
         private var name:String = "[WorkFieldMediator]";
 
+		/**
+		 * @param1:sprite
+		 * @param2:ProgTest
+		 * @param3:EditField
+		 * */
         public function WorkFieldMediator(param1:Sprite, param2:ProgTest, param3:EditField)
         {
             EditViewFactory.to.registComp(SetPtCmdMgr);
@@ -32,7 +37,7 @@
             this.dat = EditFactory.to.getCompIns(EditDat);
             this.teller = EditFactory.to.getCompIns(EditTeller);
             param2.addEventListener(WorkFieldUIEvt.SEEK, this.dispatchOut);
-//            param3.addEventListener(WorkFieldUIEvt.SEEK, this.dispatchOut);
+            param3.addEventListener(WorkFieldUIEvt.SEEK, this.dispatchOut);
             param3.addEventListener(WorkFieldUIEvt.PAUSE, this.dispatchOut);
             param3.addEventListener(WorkFieldUIEvt.RESUME, this.dispatchOut);
             param3.addEventListener(WorkFieldUIEvt.UPDATE_EDIT_DAT, this.dispatchTo);

@@ -99,6 +99,8 @@
 
         public function transProgToClipIdAndFlyTime(param1:Number) : Array
         {
+			trace("aaaaaa");
+			trace("tot:"+this.totDuration);
             var _loc_2:* = param1 * this.totDuration;
             var _loc_3:Number = 0;
             var _loc_4:int = 0;
@@ -129,8 +131,9 @@
 
         public function buildSeekUrl(param1:int, param2:Number) : void
         {
-            var _loc_3:* = "http://" + this.redirectIp + "/" + "?prot=1" + "&file=" + this.getUrlPath(this.clipUrls[param1]) + "&new=" + (this.syncUrls[param1] || "") + "&start=" + param2;
-            Trace.log("seekurl " + param1, _loc_3);
+//            var _loc_3:* = "http://" + this.redirectIp + "/" + "?prot=1" + "&file=" + this.getUrlPath(this.clipUrls[param1]) + "&new=" + (this.syncUrls[param1] || "") + "&start=" + param2;
+			var _loc_3:*="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4?start="+param2;
+            Trace.log("seekurl: " + param1, _loc_3);
             this.curSeekUrl = _loc_3;
             return;
         }// end function

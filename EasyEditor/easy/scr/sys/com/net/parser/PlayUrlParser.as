@@ -20,15 +20,15 @@
         {
 			
 			/*test*/
-			this.dat.allPlayUrl[param2] = "http://101.227.173.13/sohu/s26h23eab6/3/38/189/Q8ZuPZRDDEqWYUerBXrOK1.mp4?key=fJVj4a6mKTCbWB4OGKLsDQIJ1ulOKn57YR8ASw..";
-			var _loc_14:* = count + 1;
-			count = _loc_14;
-			if (count >= this.dat.clipUrls.length)
-			{
-				count = 0;
-				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_ALL_URLS_LOADED));
-			}
-			return;
+//			this.dat.allPlayUrl[param2] = "http://101.227.173.13/sohu/s26h23eab6/3/38/189/Q8ZuPZRDDEqWYUerBXrOK1.mp4?key=fJVj4a6mKTCbWB4OGKLsDQIJ1ulOKn57YR8ASw..";
+//			var _loc_14:* = count + 1;
+//			count = _loc_14;
+//			if (count >= this.dat.clipUrls.length)
+//			{
+//				count = 0;
+//				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_ALL_URLS_LOADED));
+//			}
+//			return;
 			/*test end*/
 			
             var _loc_12:Array = null;

@@ -9,7 +9,7 @@
 
         public function ToSeekCmd(param1:WorkEvt)
         {
-            var _loc_2:* = ScrFactory.to.getCompIns(NetStmMgr);
+            var _loc_2:NetStmMgr = ScrFactory.to.getCompIns(NetStmMgr);
             _loc_2.seek(param1.progress, param1.pause, param1.isNext);
             return;
         }// end function

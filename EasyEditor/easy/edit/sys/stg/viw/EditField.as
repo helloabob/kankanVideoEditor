@@ -1,14 +1,20 @@
 ﻿package easy.edit.sys.stg.viw
 {
+    import easy.edit.ent.EditContext;
+    import easy.edit.sys.mdt.EditBoot;
     import easy.edit.sys.stg.*;
     import easy.edit.sys.stg.dat.*;
     import easy.edit.sys.stg.dat.def.*;
     import easy.edit.sys.stg.evt.*;
     import easy.edit.sys.stg.viw.layer.*;
+    import easy.hub.evt.WorkEvt;
     import easy.hub.spv.*;
+    import easy.scr.pro.ScrFactory;
+    
     import flash.display.*;
     import flash.events.*;
     import flash.text.*;
+    
     import vsin.dcw.support.*;
     import vsin.dcw.support.comp.btn.*;
 
@@ -216,11 +222,16 @@
                 return;
             }
             var _loc_1:* = this.udat.transTotProgToClipIdAndClipFlyTime(this.ptLayer.getTotPercent());
-            Trace.log("moveToLeftKeyFr", _loc_1.toString());
+            Trace.log("moveToLeftKeyFr:", _loc_1.toString());
             var _loc_2:* = this.udat.findPrevSp(_loc_1[0], _loc_1[1]);
-            Trace.err("cur and toSeek", _loc_1[1] + " / " + _loc_2);
+            Trace.err("cur and toSeek:", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] - this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
+			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
+			wfe.progress=this.udat.transSecToViewProg(_loc_2);
+			wfe.isNext=false;
+			wfe.pause=false;
+			this.dispatchEvent(wfe);
             return;
         }// end function
 
@@ -236,6 +247,11 @@
             Trace.err("cur and toSeek", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] + this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
+			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
+			wfe.progress=this.udat.transSecToViewProg(_loc_2);
+			wfe.isNext=false;
+			wfe.pause=false;
+			this.dispatchEvent(wfe);
             return;
         }// end function
 
