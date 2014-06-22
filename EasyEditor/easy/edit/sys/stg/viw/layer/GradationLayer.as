@@ -2,6 +2,7 @@
 {
     import flash.display.*;
     import flash.text.*;
+    
     import vsin.dcw.support.*;
 
     public class GradationLayer extends Sprite
@@ -31,9 +32,7 @@
             var _loc_3:int = 5;
             var _loc_4:* = _loc_2;
             this.clear();
-			/*count*/
             var _loc_5:* = w / _loc_4;
-            /*duration per unit*/
 			var _loc_6:* = this.dur / _loc_5;
             var _loc_7:* = Math.ceil(this.dur / (_loc_6 * _loc_3));
             var _loc_8:* = w / this.dur;
@@ -54,9 +53,11 @@
             var _loc_5:Number = 5;
             var _loc_6:Number = 10;
             var _loc_7:* = h - 1;
-            var _loc_8:* = new Vector.<int>().push(GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO);
-            var _loc_9:* = new Vector.<Number>().push(param2 + 0 * param3, _loc_7, param2 + 0 * param3, _loc_7 - _loc_6, param2 + 1 * param3, _loc_7, param2 + 1 * param3, _loc_7 - _loc_5, param2 + 2 * param3, _loc_7, param2 + 2 * param3, _loc_7 - _loc_5, param2 + 3 * param3, _loc_7, param2 + 3 * param3, _loc_7 - _loc_5, param2 + 4 * param3, _loc_7, param2 + 4 * param3, _loc_7 - _loc_5);
-            graphics.drawPath(_loc_8, _loc_9);
+            var _loc_8:* = new Vector.<int>();
+			_loc_8.push(GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO);
+			var _loc_9:* = new Vector.<Number>();
+			_loc_9.push(param2 + 0 * param3, _loc_7, param2 + 0 * param3, _loc_7 - _loc_6, param2 + 1 * param3, _loc_7, param2 + 1 * param3, _loc_7 - _loc_5, param2 + 2 * param3, _loc_7, param2 + 2 * param3, _loc_7 - _loc_5, param2 + 3 * param3, _loc_7, param2 + 3 * param3, _loc_7 - _loc_5, param2 + 4 * param3, _loc_7, param2 + 4 * param3, _loc_7 - _loc_5);
+			graphics.drawPath(_loc_8, _loc_9);
             var _loc_10:* = new TextField();
             var _loc_11:* = new TextFormat();
             new TextFormat().font = "Tahoma";

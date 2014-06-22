@@ -248,15 +248,15 @@
 
         protected function onMetaData(param1:Object) : void
         {
-			trace("----------start----------");
-			for(var key:* in param1){
-				trace("key:"+key+"|value:"+param1[key]);
-				if(key=="seekpoints"){
-					for(var child:* in param1[key]){
-						trace("spk:"+child+"|value:"+param1[key][child]);
-					}
-				}
-			}
+//			trace("----------start----------");
+//			for(var key:* in param1){
+//				trace("key:"+key+"|value:"+param1[key]);
+//				if(key=="seekpoints"){
+//					for(var child:* in param1[key]){
+//						trace("spk:"+child+"|value:"+param1[key][child]);
+//					}
+//				}
+//			}
 			var sps:*=param1.seekpoints;
 			var kfs:Array=[];
 			var _loc_9:Number=0;
@@ -264,7 +264,7 @@
 				_loc_9=Math.round(sps[i].time);
 				kfs[i]=_loc_9;
 			}
-			trace("-----------end-----------");
+//			trace("-----------end-----------");
 			var kfe:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
 			kfe.totBytes=41000000;
 			kfe.totTime = Number(param1.duration);
@@ -286,7 +286,7 @@
                 this.seekPoints[_loc_2] = _loc_5;
                 _loc_2++;
             }
-            Trace.log("meta " + this.handlingClipId, this.seekPoints.toString());
+//            Trace.log("meta " + this.handlingClipId, this.seekPoints.toString());
             if (this.seekStart)
             {
                 return;
