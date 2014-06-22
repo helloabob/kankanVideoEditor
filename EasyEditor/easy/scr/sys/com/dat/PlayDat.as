@@ -58,7 +58,7 @@
                 _loc_1 = _loc_1 + this.clipDurArr[_loc_2];
                 _loc_2++;
             }
-			trace("PlayDat_calc_loc_1:"+_loc_1+"time:"+this.curStm.time);
+//			trace("PlayDat_calc_loc_1:"+_loc_1+"time:"+this.curStm.time);
             _loc_1 = _loc_1 + (this.curStm.time + this.lastSeekToClipTime);
             return _loc_1;
         }// end function

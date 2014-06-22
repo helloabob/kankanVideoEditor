@@ -86,21 +86,21 @@
             var _loc_3:Array = null;
             var _loc_4:String = null;
             Trace.log(this.name, "onKeyFr");
-//            Trace.log("keyframe loaded", param1.keyFrDat.length);
-//            this.udat.clipDurArr = param1.clipDurArr;
-//            var _loc_2:Array = [];
-//            for each (_loc_4 in param1.keyFrDat)
-//            {
-//                
-//                if (_loc_4.slice(-1) === ";")
-//                {
-//                    _loc_4 = _loc_4.slice(0, -1);
-//                }
-//                _loc_3 = _loc_4.split(";");
-//                _loc_2.push(_loc_3);
-//            }
-//            this.udat.keyFrDat = _loc_2;
-//            this.prog.setDat(param1.totTime, param1.totBytes);
+            Trace.log("keyframe loaded", param1.keyFrDat.length);
+            this.udat.clipDurArr = param1.clipDurArr;
+            var _loc_2:Array = [];
+            for each (_loc_4 in param1.keyFrDat)
+            {
+                
+                if (_loc_4.slice(-1) === ";")
+                {
+                    _loc_4 = _loc_4.slice(0, -1);
+                }
+                _loc_3 = _loc_4.split(";");
+                _loc_2.push(_loc_3);
+            }
+            this.udat.keyFrDat = _loc_2;
+            this.prog.setDat(param1.totTime, param1.totBytes);
             this.edit.setDat(param1.totTime, param1.tvName);
             return;
         }// end function

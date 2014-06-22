@@ -108,7 +108,7 @@
         {
             param1.flyTime = this.dat.calcEntireFlyTime();
             param1.datLoaded = this.dat.calcEntireBytesLoaded() + lastSeekToClipBytes;
-			trace("flyTime:"+param1.flyTime+"datLoaded:"+param1.datLoaded+"handlingClipId:"+this.handlingClipId);
+//			trace("flyTime:"+param1.flyTime+"datLoaded:"+param1.datLoaded+"handlingClipId:"+this.handlingClipId);
             this.seekMgr.clipDownloadReport(this.handlingClipId, this.stream.bytesLoaded);
             return;
         }// end function
@@ -256,11 +256,20 @@
 						trace("spk:"+child+"|value:"+param1[key][child]);
 					}
 				}
-				
+			}
+			var sps:*=param1.seekpoints;
+			var kfs:Array=[];
+			var _loc_9:Number=0;
+			for (var i:int=0;i<sps.length;i++){
+				_loc_9=Math.round(sps[i].time);
+				kfs[i]=_loc_9;
 			}
 			trace("-----------end-----------");
 			var kfe:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+			kfe.totBytes=41000000;
 			kfe.totTime = Number(param1.duration);
+			kfe.clipDurArr=[Number(param1.duration)];
+			kfe.keyFrDat=kfs;
 			kfe.tvName="TEST";
 			var st:ScrTeller=ScrFactory.to.getCompIns(ScrTeller);
 			st.dispatchEvent(kfe);

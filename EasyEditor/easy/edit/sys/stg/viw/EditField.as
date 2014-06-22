@@ -349,6 +349,10 @@
             return;
         }// end function
 
+		/**
+		 * @param1: totalTime
+		 * @param2: tvName
+		 * */
         public function setDat(param1:Number, param2:String="Test") : void
         {
 			trace("duration:"+param1);

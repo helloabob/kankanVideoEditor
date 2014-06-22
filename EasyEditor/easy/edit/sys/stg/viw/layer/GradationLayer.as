@@ -1,6 +1,5 @@
 ﻿package easy.edit.sys.stg.viw.layer
 {
-    import __AS3__.vec.*;
     import flash.display.*;
     import flash.text.*;
     import vsin.dcw.support.*;
@@ -25,16 +24,19 @@
 
         public function render() : void
         {
+			trace("-------width:"+width+"    w:"+w+"---------");
             var _loc_9:Number = NaN;
-            var _loc_1:Number = 3;
+//            var _loc_1:Number = 3;
             var _loc_2:Number = 15;
             var _loc_3:int = 5;
             var _loc_4:* = _loc_2;
             this.clear();
-            var _loc_5:* = width / _loc_4;
-            var _loc_6:* = this.dur / _loc_5;
+			/*count*/
+            var _loc_5:* = w / _loc_4;
+            /*duration per unit*/
+			var _loc_6:* = this.dur / _loc_5;
             var _loc_7:* = Math.ceil(this.dur / (_loc_6 * _loc_3));
-            var _loc_8:* = width / this.dur;
+            var _loc_8:* = w / this.dur;
             graphics.lineStyle(1, 0, 1);
             var _loc_10:int = 0;
             while (_loc_10 <= _loc_7)
@@ -51,7 +53,7 @@
         {
             var _loc_5:Number = 5;
             var _loc_6:Number = 10;
-            var _loc_7:* = height - 1;
+            var _loc_7:* = h - 1;
             var _loc_8:* = new Vector.<int>().push(GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO);
             var _loc_9:* = new Vector.<Number>().push(param2 + 0 * param3, _loc_7, param2 + 0 * param3, _loc_7 - _loc_6, param2 + 1 * param3, _loc_7, param2 + 1 * param3, _loc_7 - _loc_5, param2 + 2 * param3, _loc_7, param2 + 2 * param3, _loc_7 - _loc_5, param2 + 3 * param3, _loc_7, param2 + 3 * param3, _loc_7 - _loc_5, param2 + 4 * param3, _loc_7, param2 + 4 * param3, _loc_7 - _loc_5);
             graphics.drawPath(_loc_8, _loc_9);

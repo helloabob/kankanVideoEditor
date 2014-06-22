@@ -22,7 +22,7 @@
                 new GetPlayUrl(_loc_4);
                 _loc_4++;
             }
-            var _loc_5:* = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+            var _loc_5:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
             new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED).totTime = _loc_2.totDuration;
             _loc_5.totBytes = _loc_2.totBytes;
             _loc_5.keyFrDat = _loc_2.keyFrameInfo;
