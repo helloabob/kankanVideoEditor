@@ -349,8 +349,9 @@
             return;
         }// end function
 
-        public function setDat(param1:Number, param2:String) : void
+        public function setDat(param1:Number, param2:String="Test") : void
         {
+			trace("duration:"+param1);
             this.title.text = param2;
             this.playBtn.x = this.title.textWidth + 15;
             this.durationField.text = Tools.formatTime(param1);

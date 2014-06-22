@@ -23,7 +23,7 @@
         public function addEvent(param1:Class, param2:String, param3:Function) : void
         {
             var _loc_6:* = this._allDp[param1] || new Dictionary();
-            this._allDp[param1] = this._allDp[param1] || new Dictionary();
+            this._allDp[param1] = this._allDp[param1] || _loc_6;
 //            var _loc_4:* = _loc_6;
 //            var _loc_6:* = _loc_6[param2] || new EventDispatcher();
             _loc_6[param2] = _loc_6[param2] || new EventDispatcher();

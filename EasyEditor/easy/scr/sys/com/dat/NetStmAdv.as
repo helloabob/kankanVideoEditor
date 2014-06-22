@@ -6,9 +6,11 @@
     import easy.scr.sys.com.cmd.*;
     import easy.scr.sys.com.cpt.*;
     import easy.scr.sys.com.dat.def.*;
+    
     import flash.events.*;
     import flash.media.*;
     import flash.net.*;
+    
     import vsin.dcw.support.*;
 
     public class NetStmAdv extends Object
@@ -106,6 +108,7 @@
         {
             param1.flyTime = this.dat.calcEntireFlyTime();
             param1.datLoaded = this.dat.calcEntireBytesLoaded() + lastSeekToClipBytes;
+			trace("flyTime:"+param1.flyTime+"datLoaded:"+param1.datLoaded+"handlingClipId:"+this.handlingClipId);
             this.seekMgr.clipDownloadReport(this.handlingClipId, this.stream.bytesLoaded);
             return;
         }// end function
@@ -135,6 +138,7 @@
             }
             if (!this.stream.hasEventListener(AsyncErrorEvent.ASYNC_ERROR))
             {
+				trace("NetStmAdv_registStmEvt_async_error");
                 this.stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
             }
             return;
@@ -244,6 +248,22 @@
 
         protected function onMetaData(param1:Object) : void
         {
+			trace("----------start----------");
+			for(var key:* in param1){
+				trace("key:"+key+"|value:"+param1[key]);
+				if(key=="seekpoints"){
+					for(var child:* in param1[key]){
+						trace("spk:"+child+"|value:"+param1[key][child]);
+					}
+				}
+				
+			}
+			trace("-----------end-----------");
+			var kfe:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+			kfe.totTime = Number(param1.duration);
+			kfe.tvName="TEST";
+			var st:ScrTeller=ScrFactory.to.getCompIns(ScrTeller);
+			st.dispatchEvent(kfe);
             var _loc_2:int = 0;
             var _loc_3:* = param1.seekpoints;
             var _loc_4:* = _loc_3.length;

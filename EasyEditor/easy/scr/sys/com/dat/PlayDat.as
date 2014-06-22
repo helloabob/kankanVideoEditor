@@ -11,7 +11,7 @@
         public var totDuration:Number;
         public var totBytes:Number;
         public var clipDurArr:Array;
-        public var clipByteArr:Array;
+        public var clipByteArr:Array=new Array();
         public var curClipIdx:int = 0;
         public var curPlayUrl:String;
         public var curSeekUrl:String;
@@ -74,7 +74,7 @@
                 _loc_2++;
             }
             _loc_1 = _loc_1 + this.curStm.bytesLoaded;
-            return _loc_1;
+			return _loc_1;
         }// end function
 
         public function isDead() : Boolean

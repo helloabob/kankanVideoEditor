@@ -38,6 +38,10 @@
             return;
         }// end function
 
+		/**
+		 * @param1:index of clip
+		 * @param2:dataloaded
+		 * */
         public function clipDownloadReport(param1:int, param2:Number) : void
         {
             this.clipsLoadedProgress[param1] = param2 / this.dat.clipByteArr[param1];

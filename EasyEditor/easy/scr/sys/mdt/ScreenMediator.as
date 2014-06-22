@@ -63,7 +63,8 @@
             this.backScr.x = _loc_10;
             var _loc_7:* = ScrFactory.to.getCompIns(ScrTeller);
             var _loc_8:* = new StmStatEvt(StmStatEvt.META_LOADED);
-            new StmStatEvt(StmStatEvt.META_LOADED).height = _loc_5;
+			_loc_8.height=_loc_5;
+//            new StmStatEvt(StmStatEvt.META_LOADED).height = _loc_5;
             _loc_7.dispatchEvent(_loc_8);
             var _loc_9:* = LoadingMgr.getIns();
             LoadingMgr.getIns().hide(LoadingMgr.OPEN);
