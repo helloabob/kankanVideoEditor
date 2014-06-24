@@ -114,6 +114,10 @@
         protected function onTrackDown(event:MouseEvent) : void
         {
             this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
+			/*add*/
+			var evt:vsin.dcw.support.comp.evt.ProgressEvent=new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
+			evt.progress=event.localX * this.skinTrack.scaleX / this.skinTrack.width;
+			this.dispatchEvent(evt);
             return;
         }// end function
 

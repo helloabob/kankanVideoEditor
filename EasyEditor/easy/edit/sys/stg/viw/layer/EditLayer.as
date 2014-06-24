@@ -40,8 +40,10 @@
 
         public function renderStart(param1:Number) : Boolean
         {
+			trace("renderStart");
             if (this.inProcess)
             {
+				trace("renderStart_in_process");
                 return false;
             }
             this.startSeekPt = param1 * this.dur;

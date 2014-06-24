@@ -115,13 +115,16 @@
             var _loc_5:* = _loc_3[1];
             var _loc_6:* = this.udat.findClosestSp(_loc_3[0], _loc_3[1]);
             var _loc_7:* = this.udat.getTotProgByClipTime(_loc_3[0], _loc_6);
-            var _loc_8:* = this.editLayer.renderStart(_loc_7);
+//            var _loc_8:* = this.editLayer.renderStart(_loc_7);
+			trace("onSetStart1:"+_loc_7);
             if (this.editLayer.renderStart(_loc_7))
             {
+				trace("onSetStart2");
                 this.ptLayerEndMode();
             }
             else
             {
+				trace("onSetStart3");
                 this.ptLayerStartMode();
             }
             return;
@@ -155,7 +158,7 @@
             var _loc_6:* = _loc_4[1];
             var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
             var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
-            var _loc_9:* = this.editLayer.renderEnd(_loc_8);
+//            var _loc_9:* = this.editLayer.renderEnd(_loc_8);
             if (this.editLayer.renderEnd(_loc_8))
             {
                 this.ptLayerStartMode();
@@ -262,12 +265,14 @@
             {
                 return;
             }
+			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             if (this.ptLayer.isSetStartEnabled())
             {
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_START_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
                 this.onSetStart(_loc_1);
             }
+			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             return;
         }// end function
 
@@ -278,12 +283,15 @@
             {
                 return;
             }
+			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             if (this.ptLayer.isSetEndEnabled())
             {
+				trace("setEndPoint2");
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_END_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
                 this.onSetEnd(_loc_1);
             }
+			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             return;
         }// end function
 
