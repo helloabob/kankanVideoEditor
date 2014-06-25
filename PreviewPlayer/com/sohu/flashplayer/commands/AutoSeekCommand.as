@@ -7,6 +7,7 @@
     import com.sohu.fwork.notify.*;
     import flash.external.*;
 	import com.sohu.fwork.command.ICommand;
+	import com.sohu.flashplayer.util.Memory;
 
     public class AutoSeekCommand extends Notify implements ICommand
     {

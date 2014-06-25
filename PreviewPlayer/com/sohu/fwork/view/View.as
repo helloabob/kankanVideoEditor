@@ -67,7 +67,7 @@
             for each (_loc_4 in this.events[param1])
             {
                 
-                this._loc_4(param2);
+                _loc_4(param2);
             }
             trace("dispach:", param1, param2);
             return;

@@ -6,6 +6,7 @@
     import com.sohu.fwork.view.*;
     import flash.utils.*;
 	import com.sohu.fwork.command.ICommand;
+	import com.sohu.flashplayer.util.Memory;
 
     public class Notify extends Object implements INotify
     {
@@ -15,9 +16,9 @@
 
         public function Notify()
         {
-            this.commands = Memroy.getInstents().commands;
-            this.proxys = Memroy.getInstents().proxys;
-            this.views = Memroy.getInstents().views;
+            this.commands = Memory.getInstents().commands;
+            this.proxys = Memory.getInstents().proxys;
+            this.views = Memory.getInstents().views;
             return;
         }// end function
 
