@@ -26,7 +26,8 @@
         protected function buildReqUrl() : void
         {
             var _loc_1:* = ScrFactory.to.getCompIns(PlayDat);
-            this.reqUrl = "http://hot.vrs.sohu.com/vrs_flash.action" + "?vid=" + _loc_1.vid + "&kft=1" + "&t=" + new Date().time;
+			this.reqUrl = "http://localhost/video.php";
+//            this.reqUrl = "http://hot.vrs.sohu.com/vrs_flash.action" + "?vid=" + _loc_1.vid + "&kft=1" + "&t=" + new Date().time;
             return;
         }// end function
 
@@ -67,7 +68,7 @@
             catch (e:Error)
             {
                 tip = new InfoTipsMgr();
-                tip.show("视频信息错误");
+                tip.show("视频信息错误"+e.message);
             }
             return;
         }// end function

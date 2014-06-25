@@ -5,6 +5,7 @@
     import flash.system.*;
     import flash.ui.*;
     import vsin.dcw.support.*;
+	import flash.system.Security;
 
     public class EasyEditor extends Sprite
     {
@@ -27,6 +28,8 @@
 
         private function stageOn(event:Event) : void
         {
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
             removeEventListener(Event.ADDED_TO_STAGE, this.stageOn);
             if (stage.stageWidth > 10)
             {

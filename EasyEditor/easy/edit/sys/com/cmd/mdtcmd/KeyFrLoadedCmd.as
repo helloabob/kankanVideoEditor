@@ -8,7 +8,7 @@
 
         public function KeyFrLoadedCmd(param1:KeyFrEvt)
         {
-            new GetHotSpot();
+//            new GetHotSpot();
             return;
         }// end function
 

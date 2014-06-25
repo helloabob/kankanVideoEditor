@@ -22,6 +22,26 @@
             var _loc_4:Boolean = false;
             var _loc_5:String = null;
             var _loc_2:* = new InfoTipsMgr();
+			if(!param1.kft||!param1.videoURL||!param1.duration||!param1.totalBytes){
+				_loc_2.show("接口错误(#1)");
+				return;
+			}else{
+//				this.pDat.redirectIp = param1.allot;
+//				this.pDat.playInfo = param1;
+//				this.pDat.keys = param1.data.ck;
+//				this.pDat.hashIds = param1.data.hc;
+//				this.pDat.syncUrls = param1.data.su || [];
+				this.pDat.clipUrls = [param1.videoURL];
+				this.pDat.totBytes = param1.totalBytes;
+				this.pDat.clipByteArr = [param1.totalBytes];
+				this.pDat.totDuration = param1.duration;
+				this.pDat.clipDurArr = [param1.duration];
+				this.pDat.keyFrameInfo = [param1.kft];
+				this.pDat.tvName = param1.videoName;
+				this.pDat.clipSeekMark = [];
+				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_INFO_LOADED));
+				return;
+			}
             if (param1.data)
             {
                 _loc_3 = param1.data.kft;

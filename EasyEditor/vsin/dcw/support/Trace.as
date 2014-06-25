@@ -30,6 +30,7 @@
         public static function log(param1:Object, param2:Object = "") : void
         {
 			trace(param1+param2);
+			ExternalInterface.call("console.log",param1+param2);
 //            if (PRIM_TYPE_A.indexOf(typeof(param2)) === -1)
 //            {
 //                traceObject(param2);
@@ -43,6 +44,7 @@
         public static function err(param1:Object, param2:Object = "") : void
         {
 			trace("err:"+param1+param2);
+			ExternalInterface.call("console.log",param1+param2);
             return;
         }// end function
 

@@ -4,7 +4,7 @@
 
     public class SetPtCmdMgr extends Object
     {
-        private var allCmd:Vector.<SetPtCmdItem>;
+        public var allCmd:Vector.<SetPtCmdItem>;
 
         public function SetPtCmdMgr()
         {

@@ -310,7 +310,7 @@
         {
             var block:Object;
             var i:int;
-            var obj:Object;
+            var obj:Array=[];
             var dat:* = param1;
             if (!this.inited)
             {
@@ -333,12 +333,10 @@
                 Trace.err("setEditDat parse err");
                 return;
             }
-            var arr:Array;
+            var arr:Array=[];
             var _loc_3:int = 0;
             var _loc_4:* = obj;
-            while (_loc_4 in _loc_3)
-            {
-                
+            for (_loc_3 in _loc_4){
                 block = _loc_4[_loc_3];
                 arr.push(block);
             }
@@ -347,10 +345,12 @@
                 return param1.start - param2.start;
             }// end function
             );
-            i;
+			var _loc_19:*=this.undoMgr.allCmd.length;
+			for(var _loc_1:*=0;_loc_1<_loc_19;_loc_1++){
+				this.undo();
+			}
             while (i < arr.length)
             {
-                
                 block = arr[i];
                 if (this.editLayer.renderStart(this.udat.transSecToViewProg(block.start)))
                 {
@@ -368,7 +368,7 @@
                 {
                     this.ptLayerEndMode();
                 }
-                i = (i + 1);
+                i=i+1;
             }
             return;
         }// end function

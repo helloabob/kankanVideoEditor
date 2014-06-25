@@ -27,8 +27,8 @@
             ScrFactory.to.registComp(NetStmMgr);
             ScrFactory.to.registComp(TimeMgr);
             ScrFactory.to.registComp(SeekMgr);
-//            ScrDispatcher.to.addCmd(ScreenNetEvt, ScreenNetEvt.CLIP_INFO_LOADED, ClipInfoLoadedCmd);
-//            ScrDispatcher.to.addCmd(ScreenNetEvt, ScreenNetEvt.CLIP_ALL_URLS_LOADED, ClipAllUrlsLoadedCmd);
+            ScrDispatcher.to.addCmd(ScreenNetEvt, ScreenNetEvt.CLIP_INFO_LOADED, ClipInfoLoadedCmd);
+            ScrDispatcher.to.addCmd(ScreenNetEvt, ScreenNetEvt.CLIP_ALL_URLS_LOADED, ClipAllUrlsLoadedCmd);
             ScrDispatcher.to.addCmd(ScreenNetEvt, ScreenNetEvt.CONNECTED, ConnectedCmd);
             ScrDispatcher.to.addCmd(ScreenStmEvt, ScreenStmEvt.PLAY_START, PlayStartCmd);
             ScrDispatcher.to.addCmd(ScreenStmEvt, ScreenStmEvt.PAUSE, PauseCmd);
@@ -64,13 +64,15 @@
             var _loc_12:* = LoadingMgr.getIns();
             LoadingMgr.getIns().resize(param2.stageWidth, param2.stageHeight);
             _loc_12.show(LoadingMgr.OPEN);
-//            new GetPlayInfo();
-			var pd:PlayDat = ScrFactory.to.getCompIns(PlayDat);
-			pd.clipUrls[0]="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
-			pd.allPlayUrl[0]="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
-			pd.curPlayUrl="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
-			new ClipAllUrlsLoadedCmd(new ScreenNetEvt(ScreenNetEvt.CLIP_ALL_URLS_LOADED));
-            return;
+            new GetPlayInfo();
+			
+//			var pd:PlayDat = ScrFactory.to.getCompIns(PlayDat);
+//			pd.clipUrls[0]="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
+//			pd.allPlayUrl[0]="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
+//			pd.curPlayUrl="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4";
+//			new ClipAllUrlsLoadedCmd(new ScreenNetEvt(ScreenNetEvt.CLIP_ALL_URLS_LOADED));
+            
+			return;
         }// end function
 
     }

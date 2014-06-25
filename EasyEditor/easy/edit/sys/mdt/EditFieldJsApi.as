@@ -82,30 +82,28 @@
         {
             var result:String;
             var cloneDat:Array;
-            var i:int;
+            var i:int=0;
             Trace.log("FROM JS getEditDat");
             this.edit.dispatchEvent(new WorkFieldUIEvt(WorkFieldUIEvt.PAUSE));
-            var editDat:Object;
-            if (this.dat.editDat)
-            {
+            var editDat:Array=[];
+            if (this.dat.editDat){
+				Trace.log("concat_sort");
                 cloneDat = this.dat.editDat.concat();
-                cloneDat.sort(function (param1:Object, param2:Object) : int
-            {
-                return param1.start - param2.start;
-            }// end function
-            );
-                i;
-                while (i < cloneDat.length)
-                {
-                    
-                    editDat[i] = cloneDat[i];
-                    i = (i + 1);
-                }
-                result = JSON.stringify(editDat);
-                return result;
+				Trace.log("aaa");
+                cloneDat.sort(function (param1:Object, param2:Object):int{
+                	return param1.start - param2.start;
+            	});
+				Trace.log("bbb");
+				while (i < cloneDat.length){
+					editDat[i] = cloneDat[i];
+					i=i+1;
+				}
+				Trace.log(editDat.toString());
+				result = JSON.stringify(editDat);
+				Trace.log(result);
+				return result;
             }
-            else
-            {
+            else{
                 return null;
             }
         }// end function

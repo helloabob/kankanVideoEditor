@@ -258,33 +258,33 @@
 //				}
 //			}
 //			trace(param1.seekpoints.toString());
-			var sps:*=param1.seekpoints;
-			var kfs:Array=[];
-			var _loc_9:Number=0;
-			for (var i:int=0;i<sps.length;i++){
-				_loc_9=sps[i].time;
-				kfs[i]=_loc_9;
-			}
-			trace("meta_count:"+kfs.length);
+//			var sps:*=param1.seekpoints;
+//			var kfs:Array=[];
+//			var _loc_9:Number=0;
+//			for (var i:int=0;i<sps.length;i++){
+//				_loc_9=sps[i].time;
+//				kfs[i]=_loc_9;
+//			}
+//			trace("meta:"+kfs.join(";"));
 			
 //			trace("-----------end-----------");
 			/*skip*/
 			
-			this.dat.totBytes = 41000000;
-			this.dat.clipByteArr = [41000000];
-			this.dat.totDuration = Number(param1.duration);
-			this.dat.clipDurArr = [Number(param1.duration)];
-			this.dat.keyFrameInfo = [kfs.join(";")];
-			this.dat.tvName = "TEST";
+//			this.dat.totBytes = 41000000;
+//			this.dat.clipByteArr = [41000000];
+//			this.dat.totDuration = Number(param1.duration);
+//			this.dat.clipDurArr = [Number(param1.duration)];
+//			this.dat.keyFrameInfo = [kfs.join(";")];
+//			this.dat.tvName = "TEST";
 			
-			var kfe:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
-			kfe.totBytes=41000000;
-			kfe.totTime = Number(param1.duration);
-			kfe.clipDurArr=[Number(param1.duration)];
-			kfe.keyFrDat=[kfs.join(";")];
-			kfe.tvName="TEST";
-			var st:ScrTeller=ScrFactory.to.getCompIns(ScrTeller);
-			st.dispatchEvent(kfe);
+//			var kfe:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+//			kfe.totBytes=41000000;
+//			kfe.totTime = Number(param1.duration);
+//			kfe.clipDurArr=[Number(param1.duration)];
+//			kfe.keyFrDat=[kfs.join(";")];
+//			kfe.tvName="TEST";
+//			var st:ScrTeller=ScrFactory.to.getCompIns(ScrTeller);
+//			st.dispatchEvent(kfe);
 			/*end*/
             var _loc_2:int = 0;
             var _loc_3:* = param1.seekpoints;

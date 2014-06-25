@@ -1,7 +1,9 @@
 ﻿package easy.hub.spv
 {
     import com.greensock.*;
+    
     import flash.display.*;
+    
     import vsin.dcw.support.*;
     import vsin.dcw.support.proj.*;
 
@@ -39,8 +41,10 @@
         public function show(param1:String) : void
         {
             Trace.log("LoadingShow", param1);
+			trace("---------------show---------------"+this.openRec.toString());
             if (this.openRec.indexOf(param1) === -1)
             {
+				trace("push");
                 this.openRec.push(param1);
             }
             visible = true;
@@ -51,15 +55,14 @@
         public function hide(param1:String) : void
         {
             Trace.log("LoadingHide", param1);
+			trace("---------------hide---------------"+this.openRec.toString());
             var _loc_2:* = this.openRec.indexOf(param1);
-            if (_loc_2 > -1)
-            {
-                this.openRec.splice(_loc_2, 1);
-            }
-            if (!this.openRec.length)
-            {
-                TweenLite.to(this, 0.3, {alpha:0, onComplete:this.onDone});
-            }
+			if(_loc_2>-1){
+				this.openRec.splice(_loc_2);
+			}
+			if(this.openRec.length==0){
+				TweenLite.to(this, 0.3, {alpha:0, onComplete:this.onDone});
+			}
             return;
         }// end function
 
@@ -78,9 +81,13 @@
 
         public static function getIns() : LoadingMgr
         {
-            var _loc_1:* = ins || new LoadingMgr(new Singleton());
-            ins = ins || new LoadingMgr(new Singleton());
-            return _loc_1;
+			if(!ins){
+				ins=new LoadingMgr(new Singleton());
+			}
+			return ins;
+//            var _loc_1:* = ins || new LoadingMgr(new Singleton());
+//            ins = ins || new LoadingMgr(new Singleton());
+//            return _loc_1;
         }// end function
 
     }
