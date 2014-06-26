@@ -22,6 +22,7 @@
 
         public function trafficHandling(param1:NotifyData) : void
         {
+			JSUtil.log("GetResCommand_trafficHandling");
             var _loc_2:* = param1.data["url"];
             var _loc_3:* = new GetResReq();
             _loc_3.url = _loc_2;
@@ -31,6 +32,7 @@
 
         private function completeHandler(param1:ProxyResp) : void
         {
+			JSUtil.log("GetResCommand_completeHandler");
             var _loc_2:* = new NotifyData();
             GlobelResUtil.setData(param1.data as MovieClip);
             this.sendNotify(GET_RES_RESULT, _loc_2);

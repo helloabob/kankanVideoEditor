@@ -83,14 +83,11 @@
             ButtonUtil.regestButtonBaseHandler(this.fullScreenBtn);
             ButtonUtil.regestButtonBaseHandler(this.normalScreenBtn);
             ButtonUtil.regestButtonBaseHandler(this.proBtn);
-            var _loc_1:Boolean = true;
             this.miniProBottomMc.buttonMode = true;
-            this.proBottomMc.buttonMode = _loc_1;
-            var _loc_1:Boolean = false;
+            this.proBottomMc.buttonMode = true;
             this.proTopMc.visible = false;
-            var _loc_1:* = _loc_1;
-            this.proMiddleMc.visible = _loc_1;
-            this.proBottomMc.visible = _loc_1;
+            this.proMiddleMc.visible = false;
+            this.proBottomMc.visible = false;
             stage.addEventListener(MouseEvent.MOUSE_OVER, this.miniProBottomMcMouseOverHandler);
             stage.addEventListener(MouseEvent.MOUSE_OUT, this.proBottomMcMouseOutHandler);
             this.proBtn.addEventListener(MouseEvent.MOUSE_DOWN, this.proBtnMouseDown);
@@ -273,32 +270,24 @@
         private function miniProBottomMcMouseOverHandler(event:MouseEvent) : void
         {
             this.isProBtnMouseOver = true;
-            var _loc_2:Boolean = true;
             this.proTopMc.visible = true;
-            var _loc_2:* = _loc_2;
-            this.proMiddleMc.visible = _loc_2;
-            this.proBottomMc.visible = _loc_2;
-            var _loc_2:Boolean = false;
+            this.proMiddleMc.visible = true;
+            this.proBottomMc.visible = true;
             this.miniProTopMc.visible = false;
-            var _loc_2:* = _loc_2;
-            this.miniProMiddleMc.visible = _loc_2;
-            this.miniProBottomMc.visible = _loc_2;
+            this.miniProMiddleMc.visible = false;
+            this.miniProBottomMc.visible = false;
             return;
         }// end function
 
         private function proBottomMcMouseOutHandler(event:MouseEvent) : void
         {
             this.isProBtnMouseOver = false;
-            var _loc_2:Boolean = false;
             this.proTopMc.visible = false;
-            var _loc_2:* = _loc_2;
-            this.proMiddleMc.visible = _loc_2;
-            this.proBottomMc.visible = _loc_2;
-            var _loc_2:Boolean = true;
+            this.proMiddleMc.visible = false;
+            this.proBottomMc.visible = false;
             this.miniProTopMc.visible = true;
-            var _loc_2:* = _loc_2;
-            this.miniProMiddleMc.visible = _loc_2;
-            this.miniProBottomMc.visible = _loc_2;
+            this.miniProMiddleMc.visible = true;
+            this.miniProBottomMc.visible = true;
             return;
         }// end function
 

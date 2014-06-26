@@ -37,13 +37,14 @@
             {
                 Configer.vid = "980887";
             }
-            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res/res.swf";
+//            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res.swf";
+			var _loc_3:* = "res.swf";
             Configer.RES_PATH = _loc_3;
             FWork.notify.sendNotify(StartCommand.NOTIFY, null);
             FWork.controller.regestView(LoadingView.NAME, new LoadingView());
             (FWork.controller.getView(LoadingView.NAME) as ILoading).show();
             FWork.controller.getView(SProgressBar.NAME).addListener(SProgressBar.SCREEN_CTRL_EVENT, this.secHandler);
-            JSUtil.trace("width:" + stage.stageWidth + " height:" + stage.stageHeight);
+			JSUtil.log("width:" + stage.stageWidth + " height:" + stage.stageHeight);
             return;
         }// end function
 
@@ -74,7 +75,7 @@
 
         private function resizeHandler(event:Event) : void
         {
-            JSUtil.trace("width:" + stage.stageWidth + " height:" + stage.stageHeight);
+            JSUtil.log("width:" + stage.stageWidth + " height:" + stage.stageHeight);
             this.graphicsBackGround();
             FWork.controller.resize(stage.stageWidth, stage.stageHeight);
             return;

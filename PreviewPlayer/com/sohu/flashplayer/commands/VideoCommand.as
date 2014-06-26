@@ -10,11 +10,12 @@
     import com.sohu.flashplayer.views.*;
     import com.sohu.fwork.*;
     import com.sohu.fwork.baseagent.*;
+    import com.sohu.fwork.command.ICommand;
     import com.sohu.fwork.notify.*;
     import com.sohu.fwork.view.*;
+    
     import flash.net.*;
     import flash.utils.*;
-	import com.sohu.fwork.command.ICommand;
 
     public class VideoCommand extends Notify implements ICommand
     {
@@ -85,7 +86,7 @@
                     break;
                 }
             }
-            JSUtil.trace("played", param1.code);
+            JSUtil.log("played  "+param1.code);
             return;
         }// end function
 
@@ -175,25 +176,30 @@
         private function getEntry() : void
         {
             var _loc_1:* = new GetEntryReq();
-            _loc_1.ip = this.hotVrsResp.ip;
-            _loc_1._new = this.hotVrsResp.news[this.index];
+//            _loc_1.ip = this.hotVrsResp.ip;
+//            _loc_1._new = this.hotVrsResp.news[this.index];
             _loc_1.file = this.hotVrsResp.files[this.index];
-            _loc_1.key = this.hotVrsResp.keys[this.index];
-            _loc_1.prot = this.hotVrsResp.prot;
-            (FWork.controller.getProxy(GetEntryProxy.NAME) as GetEntryProxy).getData(_loc_1, this.getEntryProxy);
+//            _loc_1.key = this.hotVrsResp.keys[this.index];
+//            _loc_1.prot = this.hotVrsResp.prot;
+//            (FWork.controller.getProxy(GetEntryProxy.NAME) as GetEntryProxy).getData(_loc_1, this.getEntryProxy);
+			var nd:NotifyData = new NotifyData();
+			nd.data = _loc_1.file;
+			this.getEntryProxy(nd);
             return;
         }// end function
 
         private function getEntryProxy(param1:NotifyData) : void
         {
-            var _loc_2:* = param1 as GetEntryResp;
-            var _loc_3:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3];
-            if (Configer.AUTO_SEEK)
+			JSUtil.log("VideoCommand_getEntryProxy_url:"+param1.data);
+//            var _loc_2:* = param1 as GetEntryResp;
+//            var _loc_3:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3];
+            var _loc_3:* = param1.data;
+			if (Configer.AUTO_SEEK)
             {
-                _loc_3 = _loc_3 + ("&start=" + this.hotVrsResp.starts[this.index]);
+                _loc_3 = _loc_3 + ("?start=" + this.hotVrsResp.starts[this.index]);
             }
             var _loc_4:* = new NetStream(this.nc);
-            new NetStream(this.nc).play(_loc_3);
+			_loc_4.play(_loc_3);
             _loc_4.pause();
             if (this.index >= (this.hotVrsResp.files.length - 1))
             {
@@ -208,9 +214,7 @@
 
         private function playSoonEvent(param1:NotifyData) : void
         {
-            var _loc_2:String = this;
-            var _loc_3:* = this.index + 1;
-            _loc_2.index = _loc_3;
+            this.index = this.index + 1;
             this.getEntry();
             return;
         }// end function

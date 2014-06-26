@@ -9,13 +9,12 @@
         public static var streams:Dictionary = new Dictionary(true);
         public static var autoSeek:Array=[];
 		private static var ins:Memory;
-		private var commands:Array;
-		private var views:Array;
-		private var proxys:Array;
+		public var commands:Dictionary=new Dictionary();
+		public var proxys:Dictionary=new Dictionary();
+		public var views:Dictionary=new Dictionary();
 		
         public function Memory(param1:Singleton)
         {
-			commands=[];
             return;
         }// end function
 		public static function getInstents():Memory

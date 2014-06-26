@@ -20,7 +20,7 @@
             super.receive = param2;
             var _loc_3:* = param1["url"];
             var _loc_4:* = new Loader();
-            new Loader().contentLoaderInfo.addEventListener(Event.COMPLETE, this.loadCompleteHandler);
+			_loc_4.contentLoaderInfo.addEventListener(Event.COMPLETE, this.loadCompleteHandler);
             _loc_4.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.ioErorHandler);
             _loc_4.load(new URLRequest(_loc_3));
             return;

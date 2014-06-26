@@ -13,6 +13,10 @@
             return;
         }// end function
 
+		public static function log(param:String):void{
+			trace(param);
+		}
+		
         public static function getJSParamForPage(param1:String, ... args) : Object
         {
 //            args = new activation;
@@ -91,19 +95,20 @@
             return boo;
         }// end function
 
-        public static function trace(param1:String, ... args) : void
-        {
-            var tmp:String = "";
-            var _loc_4:int = 0;
-            while (_loc_4 < args.length)
-            {
-				tmp = tmp + String(args[_loc_4]);
-                _loc_4++;
-            }
-			tmp = param1 + tmp;
-            ExternalInterface.call("console.log", tmp);
-            return;
-        }// end function
+//        public static function trace(param1:String) : void
+//        {
+//            var tmp:String = "";
+//            var _loc_4:int = 0;
+//            while (_loc_4 < args.length)
+//            {
+//				tmp = tmp + String(args[_loc_4]);
+//                _loc_4++;
+//            }
+//			tmp = param1 + tmp;
+//            ExternalInterface.call("console.log", param1);
+//			trace(param1);
+//            return;
+//        }// end function
 
         public static function alert(param1:String) : void
         {

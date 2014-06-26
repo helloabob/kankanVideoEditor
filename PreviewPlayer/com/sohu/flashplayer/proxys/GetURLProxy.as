@@ -27,7 +27,7 @@
             _loc_3.method = (param1 as GetURLReq).urlRequest.method;
             _loc_3.data = (param1 as GetURLReq).urlRequest.data;
             var _loc_4:* = new URLLoaderEx();
-            new URLLoaderEx().dataFormat = URLLoaderDataFormat.TEXT;
+			_loc_4.dataFormat = URLLoaderDataFormat.TEXT;
             _loc_4.addEventListener(Event.COMPLETE, this.urlLoaderCompleteHandler);
             _loc_4.addEventListener(IOErrorEvent.IO_ERROR, this.ioErrorHandler);
             _loc_4.seq = this.getSeq();
@@ -36,7 +36,7 @@
                 this.queueCallBack[_loc_4.seq] = param2;
             }
             _loc_4.load(_loc_3);
-            JSUtil.trace(_loc_3.url);
+            JSUtil.log(_loc_3.url);
             return;
         }// end function
 
@@ -47,11 +47,13 @@
 
         private function urlLoaderCompleteHandler(event:Event) : void
         {
+			JSUtil.log("GetURLProxy_urlLoaderCompleteHandler");
             var _loc_2:* = event.currentTarget as URLLoaderEx;
             var _loc_3:* = this.queueCallBack[_loc_2.seq] as Function;
             if (_loc_3 != null)
             {
-                this._loc_3(_loc_2.data);
+				JSUtil.log("GetURLProxy_urlLoaderCompleteHandler_not_null");
+                _loc_3(_loc_2.data);
                 _loc_3 = null;
                 delete this.queueCallBack[_loc_2.seq];
             }
@@ -61,9 +63,7 @@
 
         private function getSeq() : int
         {
-            var _loc_1:String = this;
-            var _loc_2:* = this._seq + 1;
-            _loc_1._seq = _loc_2;
+			this._seq = this._seq + 1;
             return this._seq;
         }// end function
 

@@ -10,10 +10,11 @@
     import com.sohu.flashplayer.views.*;
     import com.sohu.fwork.*;
     import com.sohu.fwork.baseagent.*;
+    import com.sohu.fwork.command.ICommand;
     import com.sohu.fwork.notify.*;
     import com.sohu.fwork.view.*;
+    
     import flash.net.*;
-	import com.sohu.fwork.command.ICommand;
 
     public class SeekCommand extends Notify implements ICommand
     {
@@ -57,12 +58,15 @@
             if (this.isGetEntry(this.index, this.seekTime))
             {
                 _loc_3 = new GetEntryReq();
-                _loc_3.ip = this.hotVrsResp.ip;
-                _loc_3._new = this.hotVrsResp.news[this.index];
+//                _loc_3.ip = this.hotVrsResp.ip;
+//                _loc_3._new = this.hotVrsResp.news[this.index];
                 _loc_3.file = this.hotVrsResp.files[this.index];
-                _loc_3.key = this.hotVrsResp.keys[this.index];
-                _loc_3.prot = this.hotVrsResp.prot;
-                (FWork.controller.getProxy(GetEntryProxy.NAME) as GetEntryProxy).getData(_loc_3, this.getEntryProxy);
+//                _loc_3.key = this.hotVrsResp.keys[this.index];
+//                _loc_3.prot = this.hotVrsResp.prot;
+				var nd:NotifyData = new NotifyData();
+				nd.data = _loc_3.file;
+				this.getEntryProxy(nd);
+//                (FWork.controller.getProxy(GetEntryProxy.NAME) as GetEntryProxy).getData(_loc_3, this.getEntryProxy);
             }
             else
             {
@@ -127,10 +131,11 @@
 
         private function getEntryProxy(param1:NotifyData) : void
         {
-            var _loc_2:* = param1 as GetEntryResp;
+//            var _loc_2:* = param1 as GetEntryResp;
             var _loc_3:* = this.getPlayStartTime(this.index, this.seekTime);
-            var _loc_4:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3] + "&start=" + _loc_3;
-            var _loc_5:* = new NetStream(this.nc);
+//            var _loc_4:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3] + "&start=" + _loc_3;
+            var _loc_4:* = param1.data;
+			var _loc_5:* = new NetStream(this.nc);
             new NetStream(this.nc).play(_loc_4);
             _loc_5.pause();
             this.iPlayView.seek(_loc_5, Configer.AUTO_SEEK ? (_loc_3 - this.hotVrsResp.starts[this.index]) : (_loc_3), this.index, this.index >= (this.hotVrsResp.files.length - 1));

@@ -22,6 +22,7 @@
 
         public function trafficHandling(param1:NotifyData) : void
         {
+			JSUtil.log("ProgressCommand_trafficHandling");
             this.iProgress.init();
             FWork.notify.sendNotify(AutoSeekCommand.AUTO_START, null);
             return;

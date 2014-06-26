@@ -29,7 +29,7 @@
             }
             catch (e:Error)
             {
-                JSUtil.trace(e.message);
+                JSUtil.log(e.message);
             }
             return;
         }// end function

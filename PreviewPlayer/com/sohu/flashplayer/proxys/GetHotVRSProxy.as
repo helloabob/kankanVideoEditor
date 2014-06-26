@@ -20,9 +20,10 @@
         override public function getData(param1:ProxyReq, param2:Function) : void
         {
             super.receive = param2;
-            var _loc_3:* = Configer.HOST_PATH + (param1 as HotVrsReq).vid;
+			var _loc_3:* = Configer.VIDEO_PATH;
+//            var _loc_3:* = Configer.HOST_PATH + (param1 as HotVrsReq).vid;
             var _loc_4:* = new GetURLReq();
-            new GetURLReq().urlRequest = new URLRequest(_loc_3);
+            _loc_4.urlRequest = new URLRequest(_loc_3);
             (FWork.controller.getProxy(GetURLProxy.NAME) as GetURLProxy).getData(_loc_4 as ProxyReq, this.completeCallBack);
             return;
         }// end function
@@ -38,46 +39,48 @@
             var _loc_10:String = null;
             var _loc_2:* = JSON.parse(param1);
             var _loc_3:* = new HotVrsResp();
-            _loc_3.prot = _loc_2.prot;
-            _loc_3.ip = _loc_2.allot;
-            if (!_loc_2.data)
-            {
-                return;
-            }
-            _loc_3.files = [];
-            for each (_loc_4 in _loc_2.data.clipsURL)
-            {
-                
-                _loc_9 = "data.vod.itc.cn";
-                _loc_10 = _loc_4.substring(_loc_4.indexOf(_loc_9) + _loc_9.length);
-                _loc_3.files.push(_loc_10);
-            }
-            _loc_3.keys = [];
-            for each (_loc_5 in _loc_2.data.ck)
-            {
-                
-                _loc_3.keys.push(_loc_5);
-            }
-            _loc_3.news = [];
-            for each (_loc_6 in _loc_2.data.su)
-            {
-                
-                _loc_3.news.push(_loc_6);
-            }
-            _loc_3.times = [];
-            for each (_loc_7 in _loc_2.data.clipsDuration)
-            {
-                
-                _loc_3.times.push(_loc_7);
-            }
-            _loc_3.byteLens = [];
-            for each (_loc_8 in _loc_2.data.clipsBytes)
-            {
-                
-                _loc_3.byteLens.push(_loc_8);
-            }
-            _loc_3.totalBytes = _loc_2.data.totalBytes;
-            _loc_3.totalDuration = _loc_2.data.totalDuration;
+//            _loc_3.prot = _loc_2.prot;
+//            _loc_3.ip = _loc_2.allot;
+//            if (!_loc_2.data)
+//            {
+//                return;
+//            }
+            _loc_3.files = [_loc_2.videoURL];
+//            for each (_loc_4 in _loc_2.data.clipsURL)
+//            {
+//                
+//                _loc_9 = "data.vod.itc.cn";
+//                _loc_10 = _loc_4.substring(_loc_4.indexOf(_loc_9) + _loc_9.length);
+//                _loc_3.files.push(_loc_10);
+//            }
+//            _loc_3.keys = [];
+//            for each (_loc_5 in _loc_2.data.ck)
+//            {
+//                
+//                _loc_3.keys.push(_loc_5);
+//            }
+//            _loc_3.news = [];
+//            for each (_loc_6 in _loc_2.data.su)
+//            {
+//                
+//                _loc_3.news.push(_loc_6);
+//            }
+            _loc_3.times = [_loc_2.duration];
+//            for each (_loc_7 in _loc_2.data.clipsDuration)
+//            {
+//                
+//                _loc_3.times.push(_loc_7);
+//            }
+            _loc_3.byteLens = [_loc_2.totalBytes];
+			_loc_3.totalBytes = _loc_2.totalBytes;
+			_loc_3.totalDuration = _loc_2.duration;
+//            for each (_loc_8 in _loc_2.data.clipsBytes)
+//            {
+//                
+//                _loc_3.byteLens.push(_loc_8);
+//            }
+//            _loc_3.totalBytes = _loc_2.data.totalBytes;
+//            _loc_3.totalDuration = _loc_2.data.totalDuration;
             if (Configer.AUTO_SEEK)
             {
                 _loc_3 = this.updateAutoSeekData(_loc_3);
@@ -149,8 +152,8 @@
                 {
                     _loc_3.starts.push(this.getPlayStartTime(_loc_9, _loc_7, param1.times));
                     _loc_3.files.push(param1.files[_loc_9]);
-                    _loc_3.keys.push(param1.keys[_loc_9]);
-                    _loc_3.news.push(param1.news[_loc_9]);
+//                    _loc_3.keys.push(param1.keys[_loc_9]);
+//                    _loc_3.news.push(param1.news[_loc_9]);
                     _loc_3.times.push(_loc_8);
                     _loc_3.byteLens.push(this.getVideoMakingBytes(_loc_9, _loc_8, param1.byteLens, param1.times));
                     _loc_4 = _loc_4 + _loc_3.byteLens[(_loc_3.byteLens.length - 1)];
