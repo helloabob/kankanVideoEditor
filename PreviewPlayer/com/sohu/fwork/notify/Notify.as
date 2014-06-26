@@ -16,9 +16,9 @@
 
         public function Notify()
         {
-            this.commands = Memory.getInstents().commands;
-            this.proxys = Memory.getInstents().proxys;
-            this.views = Memory.getInstents().views;
+//            this.commands = Memory.getInstents().commands;
+//            this.proxys = Memory.getInstents().proxys;
+//            this.views = Memory.getInstents().views;
             return;
         }// end function
 
