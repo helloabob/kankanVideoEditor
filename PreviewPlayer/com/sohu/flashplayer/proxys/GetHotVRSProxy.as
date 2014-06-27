@@ -155,6 +155,7 @@
 //                    _loc_3.keys.push(param1.keys[_loc_9]);
 //                    _loc_3.news.push(param1.news[_loc_9]);
                     _loc_3.times.push(_loc_8);
+					//_loc_9=0  _loc_8=total
                     _loc_3.byteLens.push(this.getVideoMakingBytes(_loc_9, _loc_8, param1.byteLens, param1.times));
                     _loc_4 = _loc_4 + _loc_3.byteLens[(_loc_3.byteLens.length - 1)];
                 }
