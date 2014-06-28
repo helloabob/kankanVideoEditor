@@ -87,7 +87,6 @@
 
         private function onKeyFr(param1:KeyFrEvt) : void
         {
-			trace("WorkFieldMediator_onKeyFr");
             var _loc_3:Array = null;
             var _loc_4:String = null;
             Trace.log(this.name, "onKeyFr");
@@ -106,7 +105,7 @@
             }
             this.udat.keyFrDat = _loc_2;
             this.prog.setDat(param1.totTime, param1.totBytes);
-            this.edit.setDat(param1.totTime, param1.tvName);
+            this.edit.setDat(param1.totTime, param1.tvName, param1.epg);
             return;
         }// end function
 

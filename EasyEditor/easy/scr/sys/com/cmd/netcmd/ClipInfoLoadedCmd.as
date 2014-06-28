@@ -30,6 +30,7 @@
             _loc_5.keyFrDat = _loc_2.keyFrameInfo;
             _loc_5.tvName = _loc_2.tvName;
             _loc_5.clipDurArr = _loc_2.clipDurArr;
+			_loc_5.epg = _loc_2.epg;
             ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_5);
 			
 			setTimeout(dispatchLoaded,500);

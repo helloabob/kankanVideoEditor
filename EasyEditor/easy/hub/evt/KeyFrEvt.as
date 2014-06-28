@@ -9,6 +9,7 @@
         public var tvName:String;
         public var keyFrDat:Array;
         public var clipDurArr:Array;
+		public var epg:String;
         private static const PREFIX:String = "KeyFrEvt_";
         public static const KEY_FRAME_LOADED:String = PREFIX + "KEY_FRAME_LOADED";
 
@@ -26,6 +27,7 @@
             _loc_1.tvName = this.tvName;
             _loc_1.keyFrDat = this.keyFrDat;
             _loc_1.clipDurArr = this.clipDurArr;
+			_loc_1.epg = this.epg;
             return _loc_1;
         }// end function
 

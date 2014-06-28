@@ -33,6 +33,7 @@
         public var keyFrameInfo:Array=new Array();
         public var clipSeekMark:Array=new Array();
         public var lastSeekToClipTime:Number = 0;
+		public var epg:String;
 
         public function PlayDat()
         {

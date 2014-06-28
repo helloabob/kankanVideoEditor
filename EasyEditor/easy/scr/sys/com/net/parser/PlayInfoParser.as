@@ -26,11 +26,14 @@
 				_loc_2.show("接口错误(#1)");
 				return;
 			}else{
+				trace("play_info_did_loaded");
 //				this.pDat.redirectIp = param1.allot;
 //				this.pDat.playInfo = param1;
 //				this.pDat.keys = param1.data.ck;
 //				this.pDat.hashIds = param1.data.hc;
 //				this.pDat.syncUrls = param1.data.su || [];
+				var _loc_1:*;
+				if(param1.epg&&param1.epg.length>0)_loc_1=JSON.stringify(param1.epg);
 				this.pDat.clipUrls = [param1.videoURL];
 				this.pDat.totBytes = param1.totalBytes;
 				this.pDat.clipByteArr = [param1.totalBytes];
@@ -38,6 +41,7 @@
 				this.pDat.clipDurArr = [param1.duration];
 				this.pDat.keyFrameInfo = [param1.kft];
 				this.pDat.tvName = param1.videoName;
+				this.pDat.epg = _loc_1;
 				this.pDat.clipSeekMark = [];
 				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_INFO_LOADED));
 				return;

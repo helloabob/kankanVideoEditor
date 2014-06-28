@@ -57,7 +57,6 @@
 
         private function notiToEdit(event:Event) : void
         {
-//			trace("EasyBoot_notiToEdit_event_type:"+event.type);
             this.editCtx.noti(event);
             return;
         }// end function

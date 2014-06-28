@@ -1,6 +1,7 @@
 ﻿package easy.edit.sys.stg.viw
 {
     import easy.edit.ent.EditContext;
+    import easy.edit.pro.EditDispatcher;
     import easy.edit.sys.mdt.EditBoot;
     import easy.edit.sys.stg.*;
     import easy.edit.sys.stg.dat.*;
@@ -75,7 +76,7 @@
             addChild(this.skin);
             return;
         }// end function
-
+		
         private function addEvent() : void
         {
             this.playBtn.addEventListener(MouseEvent.MOUSE_UP, this.onPlayCtrl);
@@ -377,7 +378,7 @@
 		 * @param1: totalTime
 		 * @param2: tvName
 		 * */
-        public function setDat(param1:Number, param2:String="Test") : void
+        public function setDat(param1:Number, param2:String="Test", param3:String=null) : void
         {
 			trace("duration:"+param1);
             this.title.text = param2;
@@ -395,6 +396,7 @@
             this.line.width = width;
             this.inited = true;
             this.initedCallback.run();
+			this.setEditDat(param3);
             return;
         }// end function
 

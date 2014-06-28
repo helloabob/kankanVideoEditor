@@ -1,5 +1,6 @@
 ﻿package easy.edit.sys.com.cmd.mdtcmd
 {
+    import easy.edit.pro.EditDispatcher;
     import easy.edit.sys.com.net.*;
     import easy.hub.evt.*;
 

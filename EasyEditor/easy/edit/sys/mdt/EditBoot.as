@@ -26,7 +26,7 @@
             var _loc_4:* = EditFactory.to.getCompIns(EditDat);
             EditFactory.to.getCompIns(EditDat).vid = param1.vid;
             var _loc_5:* = new ProgTest();
-            var _loc_6:* = new EditField();
+            var _loc_6:EditField = new EditField();
             (param3 as Sprite).addChild(_loc_5);
             (param3 as Sprite).addChild(_loc_6);
             _loc_5.x = -7;
@@ -34,6 +34,7 @@
             var _loc_7:* = new WorkFieldMediator(param3 as Sprite, _loc_5, _loc_6);
             _loc_5.init();
             _loc_6.init();
+			trace("EditField_did_loaded");
             _loc_5.visible = false;
             new EditFieldJsApi(_loc_6);
             return;
