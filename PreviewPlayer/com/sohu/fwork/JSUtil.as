@@ -15,6 +15,7 @@
 
 		public static function log(param:String):void{
 			trace(param);
+			ExternalInterface.call("console.log",param);
 		}
 		
         public static function getJSParamForPage(param1:String, ... args) : Object

@@ -16,11 +16,11 @@
 
         public function PreviewPlayer()
         {
-            var _loc_1:* = new ContextMenu();
-            _loc_1.customItems = [new ContextMenuItem("preview:1.0.1")];
-            _loc_1.hideBuiltInItems();
-            _loc_1.clipboardMenu = false;
-            this.contextMenu = _loc_1;
+//            var _loc_1:* = new ContextMenu();
+//            _loc_1.customItems = [new ContextMenuItem("preview:1.0.1")];
+//            _loc_1.hideBuiltInItems();
+//            _loc_1.clipboardMenu = false;
+//            this.contextMenu = _loc_1;
             Security.allowDomain("*");
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.TOP_LEFT;
@@ -29,14 +29,15 @@
             FWork.init(this);
             FWork.controller.regestCommand(StartCommand.NOTIFY, new StartCommand());
             var _loc_2:* = this.loaderInfo;
-            if (_loc_2.parameters.hasOwnProperty("vid"))
+            if (_loc_2.parameters.vid)
             {
                 Configer.vid = _loc_2.parameters.vid;
             }
             else
             {
-                Configer.vid = "http://127.0.0.1/video.php";
+                Configer.vid = "http://localhost/video.php";
             }
+			JSUtil.log("url:"+Configer.vid);
 //            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res.swf";
 			var _loc_3:* = "res.swf";
             Configer.RES_PATH = _loc_3;

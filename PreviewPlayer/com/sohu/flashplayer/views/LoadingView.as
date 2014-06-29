@@ -2,6 +2,7 @@
 {
     import com.sohu.fwork.view.*;
 	import com.sohu.flashplayer.inter_pack.loading.ILoading;
+	import com.sohu.fwork.JSUtil;
 	
     public class LoadingView extends View implements IView, ILoading
     {
@@ -15,6 +16,7 @@
 
         public function high() : void
         {
+			JSUtil.log("loading_hide");
             if (this.load)
             {
                 this.removeChild(this.load);
@@ -25,11 +27,14 @@
 
         public function show() : void
         {
+			JSUtil.log("loading_show");
             if (this.load == null)
             {
+				JSUtil.log("loading_init");
                 this.load = new loading();
                 this.addChild(this.load);
             }
+			JSUtil.log("loading_resize_width:"+this.stage.stageWidth);
             this.resize(this.stage.stageWidth, this.stage.stageHeight);
             return;
         }// end function

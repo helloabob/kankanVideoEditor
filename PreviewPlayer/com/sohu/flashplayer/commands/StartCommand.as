@@ -43,7 +43,7 @@
             //1.2
 			FWork.controller.regestCommand(HelperCommand.HELPER_RUN, new HelperCommand());
             var _loc_2:* = new NotifyData();
-            _loc_2.data = {url:Configer.vid};
+            _loc_2.data = {url:Configer.RES_PATH};
             FWork.notify.sendNotify(GetResCommand.GET_RES_REQ, _loc_2);
             FWork.notify.sendNotify(HelperCommand.HELPER_RUN, null);
             return;

@@ -55,8 +55,10 @@
             (FWork.controller.getView(SProgressBar.NAME) as IProgress).updatePlayBtnStatus();
             this.seekTime = _loc_2 * this.hotVrsResp.totalDuration;
             this.index = this.getPlayIndext(this.seekTime);
+			JSUtil.log("start to seek:"+seekTime+"index:"+index);
             if (this.isGetEntry(this.index, this.seekTime))
             {
+				JSUtil.log("true");
                 _loc_3 = new GetEntryReq();
 //                _loc_3.ip = this.hotVrsResp.ip;
 //                _loc_3._new = this.hotVrsResp.news[this.index];
@@ -70,7 +72,9 @@
             }
             else
             {
+				JSUtil.log("false");
                 _loc_4 = this.getPlayStartTime(this.index, this.seekTime);
+				JSUtil.log("getPlayStartTime_result:"+_loc_4);
                 this.iPlayView.seek(Memory.streams[this.index], Configer.AUTO_SEEK ? (_loc_4 - this.hotVrsResp.starts[this.index]) : (_loc_4), this.index, this.index >= (this.hotVrsResp.files.length - 1));
             }
             return;
@@ -134,9 +138,9 @@
 //            var _loc_2:* = param1 as GetEntryResp;
             var _loc_3:* = this.getPlayStartTime(this.index, this.seekTime);
 //            var _loc_4:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3] + "&start=" + _loc_3;
-            var _loc_4:* = param1.data;
+            var _loc_4:* = param1.data+"?start="+_loc_3;
 			var _loc_5:* = new NetStream(this.nc);
-            new NetStream(this.nc).play(_loc_4);
+			_loc_5.play(_loc_4);
             _loc_5.pause();
             this.iPlayView.seek(_loc_5, Configer.AUTO_SEEK ? (_loc_3 - this.hotVrsResp.starts[this.index]) : (_loc_3), this.index, this.index >= (this.hotVrsResp.files.length - 1));
             return;

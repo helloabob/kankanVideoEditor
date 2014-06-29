@@ -20,7 +20,7 @@
         override public function getData(param1:ProxyReq, param2:Function) : void
         {
             super.receive = param2;
-			var _loc_3:* = Configer.VIDEO_PATH;
+			var _loc_3:* = Configer.vid;
 //            var _loc_3:* = Configer.HOST_PATH + (param1 as HotVrsReq).vid;
             var _loc_4:* = new GetURLReq();
             _loc_4.urlRequest = new URLRequest(_loc_3);

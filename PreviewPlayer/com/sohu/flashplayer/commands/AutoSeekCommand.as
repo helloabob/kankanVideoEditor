@@ -19,7 +19,7 @@
         public function AutoSeekCommand()
         {
 //            this.test = {0:{start:0, end:1759, total:1759}, 1:{start:1874.8, end:2026.72, total:151.921}, 2:{start:3551.44, end:3567.8, total:16.36}, 3:{start:3997.2, end:4098.68, total:101.48}};
-            this.test = {0:{start:124.08,end:301.6,total:177.52},1:{start:429.64,end:590.2,total:160.56}};
+            this.test = [{start:67.64,end:79.6,total:11.959999999999994},{start:96.72,end:107.76,total:11.040000000000006},{start:126.08000000000001,end:131.56,total:5.47999999999999},{start:149.2,end:155.2,total:6},{start:179.48,end:203.08,total:23.600000000000023},{start:220.2,end:237.6,total:17.400000000000006},{start:254.84,end:266.96,total:12.119999999999976},{start:278.92,end:284.88,total:5.9599999999999795}];
 			return;
         }// end function
 
@@ -57,11 +57,11 @@
 //				}
 //			}
 			JSUtil.log("json from JS:"+_loc_1);
-            var _loc_2:* = new NotifyData();
-            _loc_2.data = {vid:Configer.vid};
+            
             if (Configer.DEBUG)
             {
                 _loc_1 = this.test;
+				JSUtil.log("json from TEST:"+_loc_1);
             }
             if (_loc_1 != null)
             {
@@ -69,7 +69,7 @@
                 _loc_3 = [];
                 for (_loc_4 in _loc_1)
                 {
-                    
+                    JSUtil.log("TEST_detail:"+_loc_4+":::"+_loc_1[_loc_4]);
                     _loc_3[_loc_4] = _loc_1[_loc_4];
                 }
                 Memory.autoSeek = _loc_3;
@@ -81,6 +81,8 @@
                 _loc_5.data = "无Edit数据";
                 this.sendNotify(ErrorPanelCommand.TOTIP, _loc_5);
             }
+			var _loc_2:* = new NotifyData();
+			_loc_2.data = {vid:Configer.vid};
             FWork.notify.sendNotify(GetHotVrsCommand.NOTIFY, _loc_2);
             return;
         }// end function
