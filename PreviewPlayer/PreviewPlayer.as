@@ -35,7 +35,7 @@
             }
             else
             {
-                Configer.vid = "980887";
+                Configer.vid = "http://127.0.0.1/video.php";
             }
 //            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res.swf";
 			var _loc_3:* = "res.swf";

@@ -26,7 +26,8 @@
         protected function buildReqUrl() : void
         {
             var _loc_1:* = ScrFactory.to.getCompIns(PlayDat);
-			this.reqUrl = "http://localhost/video.php";
+			if(_loc_1.vid==null)_loc_1.vid="http://127.0.0.1/video.php";
+			this.reqUrl = _loc_1.vid;
 //            this.reqUrl = "http://hot.vrs.sohu.com/vrs_flash.action" + "?vid=" + _loc_1.vid + "&kft=1" + "&t=" + new Date().time;
             return;
         }// end function
