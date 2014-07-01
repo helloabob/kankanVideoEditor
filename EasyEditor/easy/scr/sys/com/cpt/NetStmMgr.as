@@ -21,6 +21,7 @@
 
         public function init(param1:NetStmAdv, param2:NetStmAdv) : void
         {
+			Trace.log("NetStmMgr_init");
             this.dat = ScrFactory.to.getCompIns(PlayDat);
             this.dat.curClipIdx = -1;
             this.stmA = param1;
@@ -30,6 +31,7 @@
 
         private function shift() : void
         {
+			Trace.log("NetStmMgr_shift");
             if (this.curStm != this.stmA)
             {
                 this.curStm = this.stmA;
@@ -46,7 +48,7 @@
 
         public function play() : void
         {
-			trace("play_url:"+this.dat.curPlayUrl);
+			Trace.log("play_url:"+this.dat.curPlayUrl+" and curClipIdx:"+this.dat.curClipIdx);
             this.dat.updateInfo((this.dat.curClipIdx + 1));
             this.shift();
             this.curStm.initStream();
@@ -57,6 +59,7 @@
             this.curStm.play(this.dat.curPlayUrl, this.dat.curClipIdx);
             if (this.dat.nexPlayUrl)
             {
+				Trace.log("nexPlayUrl123");
                 this.nexStm.initStream();
                 this.nexStm.play(this.dat.nexPlayUrl, (this.dat.curClipIdx + 1));
                 this.nexStm.pause();

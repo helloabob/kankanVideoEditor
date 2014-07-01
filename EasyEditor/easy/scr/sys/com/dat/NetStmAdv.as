@@ -11,6 +11,13 @@
     import flash.media.*;
     import flash.net.*;
     
+    import org.osmf.events.MediaPlayerStateChangeEvent;
+    import org.osmf.media.MediaFactory;
+    import org.osmf.media.MediaPlayerSprite;
+    import org.osmf.media.PluginInfoResource;
+    import org.osmf.media.URLResource;
+    import org.osmf.net.httpstreaming.hls.HLSPluginInfo;
+    
     import vsin.dcw.support.*;
 
     public class NetStmAdv extends Object
@@ -30,6 +37,11 @@
         protected var lastSeekToClip:Number = 0;
         protected var autoSeekPoint:Number = -1;
         private static var lastSeekToClipBytes:Number = 0;
+		
+		/*hls*/
+		public var mps:MediaPlayerSprite;
+		private var factory:MediaFactory;
+		/*end*/
 
         public function NetStmAdv(param1:String)
         {
@@ -44,7 +56,11 @@
             this.handlingClipId = param2;
             this.handlingPlayUrl = param1;
             this.registStmEvt();
-            this.stream.play(param1);
+			if(this.dat.ishls==true){
+				this.mps.media=factory.createMediaElement(new URLResource(param1));
+			}else{
+				this.stream.play(param1);
+			}
             this.inStream = true;
             if (param1.indexOf("start") === -1)
             {
@@ -56,26 +72,41 @@
 
         public function initStream() : void
         {
-            if (!this.stream)
-            {
-                this.seekMgr.init();
-                this.stream = new NetStream(this.dat.curConn);
-                this.stream.client = {onMetaData:this.onMetaData};
-                Trace.log(this.name + " init volume", this.dat.defaultVolume);
-                this.volTo(this.dat.defaultVolume);
-            }
+			if(this.dat.ishls==true){
+				if (!this.mps)
+				{
+					factory=new MediaFactory();
+					factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
+					this.seekMgr.init();
+					this.mps = new MediaPlayerSprite();
+//					this.stream.client = {onMetaData:this.onMetaData};
+//					Trace.log(this.name + " init volume", this.dat.defaultVolume);
+					this.volTo(this.dat.defaultVolume);
+				}
+			}else{
+				if (!this.stream)
+				{
+					this.seekMgr.init();
+					this.stream = new NetStream(this.dat.curConn);
+					this.stream.client = {onMetaData:this.onMetaData};
+					Trace.log(this.name + " init volume", this.dat.defaultVolume);
+					this.volTo(this.dat.defaultVolume);
+				}
+			}
             return;
         }// end function
 
         public function resume() : void
         {
-            this.stream.resume();
+			if(this.dat.ishls==true)this.mps.mediaPlayer.play();
+			else this.stream.resume();
             return;
         }// end function
 
         public function pause() : void
         {
-            this.stream.pause();
+			if(this.dat.ishls==true)this.mps.mediaPlayer.pause();
+			else this.stream.pause();
             return;
         }// end function
 
@@ -95,9 +126,11 @@
 
         public function volTo(param1:Number) : void
         {
-            var _loc_2:* = this.stream.soundTransform;
+			if(this.dat.ishls==true)this.mps.mediaPlayer.volume=this.mutedCoff * (param1 / 100);
+			else {var _loc_2:* = this.stream.soundTransform;
             _loc_2.volume = this.mutedCoff * (param1 / 100);
             this.stream.soundTransform = _loc_2;
+			}
             Trace.log(this.name + " set play volume", param1 + " / " + _loc_2.volume);
             this.dat.curVolume = param1;
             this.curVol = param1;
@@ -132,18 +165,29 @@
 
         protected function registStmEvt() : void
         {
-            if (!this.stream.hasEventListener(NetStatusEvent.NET_STATUS))
-            {
-                this.stream.addEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
-            }
-            if (!this.stream.hasEventListener(AsyncErrorEvent.ASYNC_ERROR))
-            {
-				trace("NetStmAdv_registStmEvt_async_error");
-                this.stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
-            }
+            if(this.dat.ishls==true){
+				if(!this.mps.hasEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE)){
+					this.mps.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+				}
+			}else{
+				if (!this.stream.hasEventListener(NetStatusEvent.NET_STATUS))
+				{
+					this.stream.addEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
+				}
+				if (!this.stream.hasEventListener(AsyncErrorEvent.ASYNC_ERROR))
+				{
+					trace("NetStmAdv_registStmEvt_async_error");
+					this.stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
+				}
+			}
+			
             return;
         }// end function
 
+		private function onStateChangeHandler(event:MediaPlayerStateChangeEvent):void{
+			
+		}
+		
         protected function netStatusHandler(event:NetStatusEvent) : void
         {
             var _loc_2:Boolean = false;

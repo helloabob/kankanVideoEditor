@@ -34,6 +34,7 @@
         public var clipSeekMark:Array=new Array();
         public var lastSeekToClipTime:Number = 0;
 		public var epg:String;
+		public var ishls:Boolean=false;
 
         public function PlayDat()
         {

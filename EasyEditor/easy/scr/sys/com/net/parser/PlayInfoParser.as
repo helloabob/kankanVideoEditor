@@ -18,6 +18,7 @@
 
         public function parse(param1:Object) : void
         {
+			var _loc_1:* = null;
             var _loc_3:Array = null;
             var _loc_4:Boolean = false;
             var _loc_5:String = null;
@@ -26,13 +27,12 @@
 				_loc_2.show("接口错误(#1)");
 				return;
 			}else{
-				trace("play_info_did_loaded");
+				Trace.log("play_info_did_loaded");
 //				this.pDat.redirectIp = param1.allot;
 //				this.pDat.playInfo = param1;
 //				this.pDat.keys = param1.data.ck;
 //				this.pDat.hashIds = param1.data.hc;
 //				this.pDat.syncUrls = param1.data.su || [];
-				var _loc_1:*;
 				if(param1.epg&&param1.epg.length>0)_loc_1=JSON.stringify(param1.epg);
 				this.pDat.clipUrls = [param1.videoURL];
 				this.pDat.totBytes = param1.totalBytes;
@@ -43,6 +43,7 @@
 				this.pDat.tvName = param1.videoName;
 				this.pDat.epg = _loc_1;
 				this.pDat.clipSeekMark = [];
+				if(String(param1.videoURL).indexOf(".m3u8")>0)this.pDat.ishls=true;
 				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_INFO_LOADED));
 				return;
 			}

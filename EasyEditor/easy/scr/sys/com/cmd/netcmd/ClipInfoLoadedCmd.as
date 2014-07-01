@@ -5,6 +5,7 @@
     import easy.scr.sys.com.cmd.*;
     import easy.scr.sys.com.dat.*;
     import easy.scr.sys.com.net.*;
+	import vsin.dcw.support.Trace;
     
     import flash.utils.setTimeout;
 
@@ -13,7 +14,7 @@
 
         public function ClipInfoLoadedCmd(param1:ScreenNetEvt)
         {
-			trace("ClipInfoLoadedCmd");
+			Trace.log("ClipInfoLoadedCmd");
             var _loc_2:PlayDat = ScrFactory.to.getCompIns(PlayDat);
 //            var _loc_3:* = _loc_2.clipUrls.length;
 //            _loc_2.allPlayUrl = [];
@@ -32,7 +33,6 @@
             _loc_5.clipDurArr = _loc_2.clipDurArr;
 			_loc_5.epg = _loc_2.epg;
             ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_5);
-			
 			setTimeout(dispatchLoaded,500);
             return;
         }
