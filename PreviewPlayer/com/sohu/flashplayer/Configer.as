@@ -7,7 +7,7 @@
         public static const SAVE_PATH:String = "http://my.tv.sohu.com/user/a/wvideo/cloudEditor/save.do";
         public static const UPDATE_PATH:String = "http://my.tv.sohu.com/user/a/wvideo/cloudEditor/update.do";
         public static var AUTO_SEEK:Boolean = false;
-        public static var vid:String;
+        public static var vid:String="";
         public static var DEBUG:Boolean = false;
         public static var RES_PATH:String;
 
