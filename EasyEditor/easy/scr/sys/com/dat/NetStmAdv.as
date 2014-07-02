@@ -14,6 +14,7 @@
     import org.osmf.events.MediaPlayerStateChangeEvent;
     import org.osmf.media.MediaFactory;
     import org.osmf.media.MediaPlayerSprite;
+    import org.osmf.media.MediaPlayerState;
     import org.osmf.media.PluginInfoResource;
     import org.osmf.media.URLResource;
     import org.osmf.net.httpstreaming.hls.HLSPluginInfo;
@@ -142,7 +143,7 @@
             param1.flyTime = this.dat.calcEntireFlyTime();
             param1.datLoaded = this.dat.calcEntireBytesLoaded() + lastSeekToClipBytes;
 //			trace("flyTime:"+param1.flyTime+"datLoaded:"+param1.datLoaded+"handlingClipId:"+this.handlingClipId);
-            this.seekMgr.clipDownloadReport(this.handlingClipId, this.stream.bytesLoaded);
+            this.seekMgr.clipDownloadReport(this.handlingClipId, this.dat.ishls?this.mps.mediaPlayer.bytesLoaded:this.stream.bytesLoaded);
             return;
         }// end function
 
@@ -166,8 +167,8 @@
         protected function registStmEvt() : void
         {
             if(this.dat.ishls==true){
-				if(!this.mps.hasEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE)){
-					this.mps.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+				if(!this.mps.mediaPlayer.hasEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE)){
+					this.mps.mediaPlayer.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
 				}
 			}else{
 				if (!this.stream.hasEventListener(NetStatusEvent.NET_STATUS))
@@ -185,7 +186,30 @@
         }// end function
 
 		private function onStateChangeHandler(event:MediaPlayerStateChangeEvent):void{
-			
+			switch(event.state){
+				case MediaPlayerState.READY:{
+					this.dat.metaWidth = this.mps.mediaPlayer.mediaWidth;
+					this.dat.metaHeight = this.mps.mediaPlayer.mediaHeight;
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
+					break;
+				}
+				case MediaPlayerState.PLAYING:{
+					break;
+				}
+				case MediaPlayerState.LOADING:{
+					break;
+				}
+				case MediaPlayerState.BUFFERING:{
+					break;
+				}
+				case MediaPlayerState.PAUSED:{
+					break;
+				}
+				case MediaPlayerState.PLAYBACK_ERROR:{
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.STM_NOT_FOUND));
+					break;
+				}
+			}
 		}
 		
         protected function netStatusHandler(event:NetStatusEvent) : void
@@ -273,9 +297,14 @@
         {
             try
             {
-                this.stream.removeEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
-                this.stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
-                this.stream.close();
+				if(this.dat.ishls==true){
+					this.mps.mediaPlayer.removeEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+					this.mps.mediaPlayer.stop();
+				}else{
+					this.stream.removeEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
+					this.stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
+					this.stream.close();
+				}
             }
             catch (e:Error)
             {
