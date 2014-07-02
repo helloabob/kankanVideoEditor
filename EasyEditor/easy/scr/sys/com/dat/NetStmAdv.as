@@ -42,6 +42,9 @@
 		/*hls*/
 		public var mps:MediaPlayerSprite;
 		private var factory:MediaFactory;
+		private var hasDispatchedMeta:Boolean=false;
+		private var readyCount:int;
+		private var lastState:String;
 		/*end*/
 
         public function NetStmAdv(param1:String)
@@ -127,12 +130,16 @@
 
         public function volTo(param1:Number) : void
         {
-			if(this.dat.ishls==true)this.mps.mediaPlayer.volume=this.mutedCoff * (param1 / 100);
-			else {var _loc_2:* = this.stream.soundTransform;
-            _loc_2.volume = this.mutedCoff * (param1 / 100);
-            this.stream.soundTransform = _loc_2;
+			Trace.log("VolTo:"+param1+"mutedCoff:"+this.mutedCoff+"ishls:"+this.dat.ishls);
+			if(this.dat.ishls==true){
+				this.mps.mediaPlayer.volume=this.mutedCoff * (param1 / 100);
 			}
-            Trace.log(this.name + " set play volume", param1 + " / " + _loc_2.volume);
+			else {
+				var _loc_2:* = this.stream.soundTransform;
+            	_loc_2.volume = this.mutedCoff * (param1 / 100);
+            	this.stream.soundTransform = _loc_2;
+			}
+//            Trace.log(this.name + " set play volume", param1 + " / " + _loc_2.volume);
             this.dat.curVolume = param1;
             this.curVol = param1;
             return;
@@ -186,23 +193,73 @@
         }// end function
 
 		private function onStateChangeHandler(event:MediaPlayerStateChangeEvent):void{
+			var _loc_2:Boolean = false;
+			Trace.log("state:"+event.state);
 			switch(event.state){
 				case MediaPlayerState.READY:{
-					this.dat.metaWidth = this.mps.mediaPlayer.mediaWidth;
-					this.dat.metaHeight = this.mps.mediaPlayer.mediaHeight;
-					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
+					this.readyCount++;
+					if(this.readyCount>1){
+						_loc_2 = this.dat.isDead();
+						this.resetSeekParam();
+						if (!this.inStream)
+						{
+							return;
+						}
+						this.inStream = false;
+						if (_loc_2)
+						{
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_OVER));
+						}
+						else
+						{
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_OVER_CLIP));
+						}
+						this.closeStream();
+						break;
+					}
 					break;
 				}
 				case MediaPlayerState.PLAYING:{
+					if (this.seekStart)
+					{
+						if (this.autoSeekPoint > -1)
+						{
+							Trace.log("autoSeekPoint");
+							this.stream.seek(this.autoSeekPoint);
+							this.autoSeekPoint = -1;
+							this.handlingClipId = this.lastSeekToClip;
+						}
+						Trace.log(this.name + " seek, start avoid");
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.SEEK_PLAY_START));
+					}
+					else
+					{
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_START));
+					}
+					
+					this.seekStart = false;
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
+					break;
 					break;
 				}
 				case MediaPlayerState.LOADING:{
 					break;
 				}
 				case MediaPlayerState.BUFFERING:{
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_EMPTY));
 					break;
 				}
 				case MediaPlayerState.PAUSED:{
+					if(this.lastState!=null && this.lastState==MediaPlayerState.BUFFERING){
+						if(this.hasDispatchedMeta==false){
+							this.dat.metaWidth = this.mps.mediaPlayer.mediaWidth;
+							this.dat.metaHeight = this.mps.mediaPlayer.mediaHeight;
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
+							this.hasDispatchedMeta=true;
+						}
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
+					}
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PAUSE));
 					break;
 				}
 				case MediaPlayerState.PLAYBACK_ERROR:{
@@ -210,6 +267,7 @@
 					break;
 				}
 			}
+			this.lastState = event.state;
 		}
 		
         protected function netStatusHandler(event:NetStatusEvent) : void
@@ -412,7 +470,8 @@
                 else
                 {
                     Trace.log("seek in curClip", param2);
-                    this.stream.seek(param2);
+					if(this.dat.ishls)this.mps.mediaPlayer.seek(param2);
+					else this.stream.seek(param2);
                     this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.SEEK_IN_CLIP));
                 }
                 this.resetSeekParam();
@@ -444,7 +503,7 @@
             this.dat.lastSeekToClipTime = param2;
             lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
             var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
-            new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING).clipId = param1;
+			_loc_5.clipId = param1;
             _loc_5.clipStartTime = param2;
             this.dispatchProxy(_loc_5);
             return;

@@ -67,7 +67,7 @@
 //            new StmStatEvt(StmStatEvt.META_LOADED).height = _loc_5;
             _loc_7.dispatchEvent(_loc_8);
             var _loc_9:* = LoadingMgr.getIns();
-            LoadingMgr.getIns().hide(LoadingMgr.OPEN);
+            _loc_9.hide(LoadingMgr.OPEN);
             _loc_9.x = (_loc_2 - _loc_4) / 2;
             _loc_9.resize(_loc_4, _loc_5);
             return;

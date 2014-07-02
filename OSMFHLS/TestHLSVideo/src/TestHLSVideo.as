@@ -12,6 +12,7 @@ package
 	import org.osmf.containers.MediaContainer;
 	import org.osmf.elements.VideoElement;
 	import org.osmf.events.MediaFactoryEvent;
+	import org.osmf.events.MediaPlayerStateChangeEvent;
 	import org.osmf.media.MediaElement;
 	import org.osmf.media.MediaFactory;
 	import org.osmf.media.MediaFactoryItem;
@@ -55,7 +56,7 @@ package
 			factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
 			
 			//the pointer to the media
-			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("{0}",0) );
+			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("?start={0}","") );
 			
 			// Only need to specify content-type if the m3u8 playlist does not
 			// have a .m3u8 extension.
@@ -67,7 +68,7 @@ package
 			}
 			
 			//the simplified api controller for media
-			player = new MediaPlayer( element );
+			player = new MediaPlayer();
 			player.autoRewind = false;
 //			player.bufferTime = 4;
 			
@@ -91,16 +92,23 @@ package
 			sp.addEventListener(MouseEvent.CLICK,onClick);
 			this.addChild(sp);
 			
+			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+			player.media = element;
+			
+		}
+		
+		private function onStateChangeHandler(evt:MediaPlayerStateChangeEvent):void{
+			trace("state:"+evt.state+"  wid:"+player.mediaWidth);
 		}
 		
 		private function onClick(evt:MouseEvent):void{
-			offset+=120;
-//			player.seek(offset);
-			container.removeMediaElement(element);
-			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("{0}",offset) );
-			element = factory.createMediaElement(resource);
-			player.media=element;
-			container.addMediaElement(element);
+			offset+=1780;
+			player.seek(offset);
+//			container.removeMediaElement(element);
+//			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("{0}",offset) );
+//			element = factory.createMediaElement(resource);
+//			player.media=element;
+//			container.addMediaElement(element);
 		}
 		
 		private function tt():void{

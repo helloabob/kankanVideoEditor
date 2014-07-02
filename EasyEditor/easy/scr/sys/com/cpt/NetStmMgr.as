@@ -53,6 +53,7 @@
             this.shift();
             this.curStm.initStream();
             this.dat.curStm = this.curStm.stream;
+			this.dat.mps = this.curStm.mps;
             ScrDispatcher.to.dispatch(new ScreenStmEvt(ScreenStmEvt.BEFORE_PLAY));
             this.curStm.activate(true);
             this.nexStm.activate(false);
@@ -69,7 +70,9 @@
 
         public function seekByUrl() : void
         {
-            this.curStm.play(this.dat.curSeekUrl, this.dat.curClipIdx);
+			if(this.dat.ishls==false){
+            	this.curStm.play(this.dat.curSeekUrl, this.dat.curClipIdx);
+			}
             return;
         }// end function
 

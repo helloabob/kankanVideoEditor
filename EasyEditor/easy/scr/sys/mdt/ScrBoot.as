@@ -53,7 +53,7 @@
             var _loc_6:* = new NetStmAdv("[StreamA]");
             var _loc_7:* = new NetStmAdv("[StreamB]");
             _loc_5.init(_loc_6, _loc_7);
-            var _loc_8:* = new Screen();
+            var _loc_8:Screen = new Screen();
             var _loc_9:* = new Screen();
             var _loc_10:* = param3 as Sprite;
             (param3 as Sprite).addChild(_loc_8);
