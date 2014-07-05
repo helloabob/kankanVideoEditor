@@ -10,6 +10,7 @@
         public static var vid:String="";
         public static var DEBUG:Boolean = false;
         public static var RES_PATH:String;
+		public static var ishls:Boolean = false;
 
         public function Configer()
         {

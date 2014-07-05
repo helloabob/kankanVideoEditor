@@ -44,6 +44,8 @@ package
 //		public static const HLS_TEST:String = "http://114.80.151.66/hls/shss/index.m3u8";
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
+		public statc const HLS_SPLIT:String = "http://www.codecomposer.net/hls/bipbop/gear4/prog_index.m3u8?";
+		
 		public function TestHLSVideo()
 		{
 			initPlayer();
@@ -72,7 +74,7 @@ package
 			player.autoRewind = false;
 //			player.bufferTime = 4;
 			
-//			flash.utils.setTimeout(onSeek,20000);
+			flash.utils.setInterval(tt,500);
 			
 			//the container (sprite) for managing display and layout
 			container = new MediaContainer();
@@ -112,7 +114,7 @@ package
 		}
 		
 		private function tt():void{
-			trace("time:"+player.currentTime);
+			trace("time:"+player.currentTime+"bytesloaded:"+player.bytesLoaded+"total:"+player.bytesTotal);
 		}
 		
 		private function onSeek():void{
