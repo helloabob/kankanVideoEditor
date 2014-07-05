@@ -34,7 +34,9 @@
         {
             Trace.log(this.name, "onBeforePlay");
             this.backScr = this.scrMgr.getBackScr();
-            this.backScr.attachStm(this.dat.curStm);
+//			if(this.dat.ishls==false)this.backScr.attachStm(this.dat.curStm);
+			this.backScr.attachStm(this.dat.curStm);
+			if(this.dat.ishls==true)this.backScr.alpha=0;
             this.curScr = this.scrMgr.getCurScr();
             this.curScr.detachStm();
             this.scrMgr.swap();
@@ -43,6 +45,7 @@
 
         private function onMetaLoaded(param1:ScreenStmEvt) : void
         {
+			if(this.dat.ishls==true)this.backScr.alpha=1;
             Trace.log(this.name, "onMetaLoaded");
             this.backScr = this.scrMgr.getBackScr();
             this.curScr = this.scrMgr.getCurScr();

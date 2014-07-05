@@ -11,8 +11,10 @@
     import flash.media.*;
     import flash.net.*;
     
+    import org.osmf.events.MediaFactoryEvent;
     import org.osmf.events.MediaPlayerStateChangeEvent;
     import org.osmf.media.MediaFactory;
+    import org.osmf.media.MediaFactoryItem;
     import org.osmf.media.MediaPlayerSprite;
     import org.osmf.media.MediaPlayerState;
     import org.osmf.media.PluginInfoResource;
@@ -74,6 +76,18 @@
             return;
         }// end function
 
+		private function handlePluginLoadError(event:MediaFactoryEvent):void {
+			var pluginType:String = "Unknown Plugin";
+			if (event.resource is PluginInfoResource) {
+				var item:MediaFactoryItem = (event.resource as PluginInfoResource).pluginInfo.getMediaFactoryItemAt(0);
+				if (item) {
+					pluginType = item.id;
+				}
+			}
+			Trace.log("Plugin \"" + pluginType + "\" load error.");
+			this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.STM_NOT_FOUND));
+		}
+		
         public function initStream() : void
         {
 			if(this.dat.ishls==true){
@@ -81,6 +95,7 @@
 				{
 					factory=new MediaFactory();
 					factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
+					factory.addEventListener(MediaFactoryEvent.PLUGIN_LOAD_ERROR, handlePluginLoadError);
 					this.seekMgr.init();
 					this.mps = new MediaPlayerSprite();
 //					this.stream.client = {onMetaData:this.onMetaData};
@@ -252,6 +267,7 @@
 				case MediaPlayerState.PAUSED:{
 					if(this.lastState!=null && this.lastState==MediaPlayerState.BUFFERING){
 						if(this.hasDispatchedMeta==false){
+							Trace.log("META_w:"+this.mps.mediaPlayer.mediaWidth+"  h:"+this.mps.mediaPlayer.mediaHeight);
 							this.dat.metaWidth = this.mps.mediaPlayer.mediaWidth;
 							this.dat.metaHeight = this.mps.mediaPlayer.mediaHeight;
 							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
@@ -500,9 +516,11 @@
             {
                 LoadingMgr.getIns().show(LoadingMgr.FULL_LOAD_SEEK);
             }
-            this.dat.lastSeekToClipTime = param2;
-            lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
-            var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
+			if(this.dat.ishls==false){
+            	this.dat.lastSeekToClipTime = param2;
+            	lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
+			}
+			var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
 			_loc_5.clipId = param1;
             _loc_5.clipStartTime = param2;
             this.dispatchProxy(_loc_5);

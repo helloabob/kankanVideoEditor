@@ -102,7 +102,7 @@ package
 		}
 		
 		private function onClick(evt:MouseEvent):void{
-			offset+=1780;
+			offset+=100;
 			player.seek(offset);
 //			container.removeMediaElement(element);
 //			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("{0}",offset) );
