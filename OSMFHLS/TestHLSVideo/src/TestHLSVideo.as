@@ -64,14 +64,14 @@ package
 			
 			var json:Array=new Array();
 			json[0]={};
-			json[0].start = 40;
-			json[0].end = 60;
-			json[0].total = 20;
+			json[0].start = 10;
+			json[0].end = 20;
+			json[0].total = 10;
 			trace("bbbb");
 			json[1]={};
-			json[1].start = 80;
-			json[1].end = 110;
-			json[1].total = 30;
+			json[1].start = 40;
+			json[1].end = 50;
+			json[1].total = 10;
 			trace("test");
 			var str:String = JSON.stringify(json);
 			
@@ -79,7 +79,7 @@ package
 			
 			trace("url:"+url);
 			
-			url = HLS_SPLIT;
+//			url = HLS_SPLIT;
 			
 			var resource:URLResource = new URLResource(url);
 			
