@@ -132,6 +132,36 @@ package org.osmf.net.httpstreaming.hls
 					}
 				}
 			}
+			if(_indexString.indexOf("?split=")>=0){
+				//handle split case
+				var jsonString:String=_indexString.substr(_indexString.indexOf("?split=")+7);
+				var array:Array = JSON.parse(jsonString);
+				if(array.length>0){
+					var passtime:Number=0;
+					var slice:int=0;
+					i=0;
+					while(true){
+						if(String(lines[i]).indexOf("#EXTINF:") == 0){
+							passtime+=parseFloat(String(lines[i]).substr(8));
+							if(slice>=array.length){
+								lines.splice(i,2);
+								continue;
+							}
+							if(passtime>Number(array[slice].start)&&passtime<Number(array[slice].end)){
+								i=i+2;
+							}else if(passtime>Number(array[slice].end)){
+								slice++;
+								i=i+2;
+							}else{
+								lines.splice(i,2);
+							}
+						}else{
+							i=i+1;
+						}
+					}
+				}
+			}
+			trace("con:"+JSON.stringify(lines));
 			var discontinuityExpected:Boolean = false;
 			for(i=1; i<lines.length; i++)
 			{

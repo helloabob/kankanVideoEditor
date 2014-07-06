@@ -44,7 +44,7 @@ package
 //		public static const HLS_TEST:String = "http://114.80.151.66/hls/shss/index.m3u8";
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
-		public statc const HLS_SPLIT:String = "http://www.codecomposer.net/hls/bipbop/gear4/prog_index.m3u8?";
+		public static const HLS_SPLIT:String = "http://www.codecomposer.net/hls/bipbop/gear4/prog_index.m3u8";
 		
 		public function TestHLSVideo()
 		{
@@ -58,7 +58,30 @@ package
 			factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
 			
 			//the pointer to the media
-			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("?start={0}","") );
+//			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("?start={0}","") );
+			
+			trace("ssss");
+			
+			var json:Array=new Array();
+			json[0]={};
+			json[0].start = 40;
+			json[0].end = 60;
+			json[0].total = 20;
+			trace("bbbb");
+			json[1]={};
+			json[1].start = 80;
+			json[1].end = 110;
+			json[1].total = 30;
+			trace("test");
+			var str:String = JSON.stringify(json);
+			
+			var url:String = HLS_SPLIT+"?split="+str;
+			
+			trace("url:"+url);
+			
+			url = HLS_SPLIT;
+			
+			var resource:URLResource = new URLResource(url);
 			
 			// Only need to specify content-type if the m3u8 playlist does not
 			// have a .m3u8 extension.
