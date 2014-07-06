@@ -163,6 +163,9 @@ package org.osmf.net.httpstreaming.hls
 					}
 				}
 			}
+//			if(indexContext!=null){
+//				trace("con:"+lines);
+//			}
 			var discontinuityExpected:Boolean = false;
 			for(i=1; i<lines.length; i++)
 			{
@@ -231,10 +234,10 @@ package org.osmf.net.httpstreaming.hls
 						discontinuityExpected = false;
 						continue;
 					}
-					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
-						discontinuityExpected = true;
-						continue;
-					}
+//					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
+//						discontinuityExpected = true;
+//						continue;
+//					}
 					if(String(lines[i]).indexOf("#EXT-X-ENDLIST") == 0)
 					{
 						//  This is not a live stream

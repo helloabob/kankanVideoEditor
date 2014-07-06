@@ -9,7 +9,6 @@
     import com.sohu.fwork.notify.*;
     
     import flash.external.*;
-    import flash.utils.setTimeout;
 
     public class AutoSeekCommand extends Notify implements ICommand
     {
@@ -19,7 +18,8 @@
         public function AutoSeekCommand()
         {
 //            this.test = {0:{start:0, end:1759, total:1759}, 1:{start:1874.8, end:2026.72, total:151.921}, 2:{start:3551.44, end:3567.8, total:16.36}, 3:{start:3997.2, end:4098.68, total:101.48}};
-            this.test = [{start:67.64,end:79.6,total:11.959999999999994},{start:96.72,end:107.76,total:11.040000000000006},{start:126.08000000000001,end:131.56,total:5.47999999999999},{start:149.2,end:155.2,total:6},{start:179.48,end:203.08,total:23.600000000000023},{start:220.2,end:237.6,total:17.400000000000006},{start:254.84,end:266.96,total:12.119999999999976},{start:278.92,end:284.88,total:5.9599999999999795}];
+//            this.test = [{start:67.64,end:79.6,total:11.959999999999994},{start:96.72,end:107.76,total:11.040000000000006},{start:126.08000000000001,end:131.56,total:5.47999999999999},{start:149.2,end:155.2,total:6},{start:179.48,end:203.08,total:23.600000000000023},{start:220.2,end:237.6,total:17.400000000000006},{start:254.84,end:266.96,total:12.119999999999976},{start:278.92,end:284.88,total:5.9599999999999795}];
+			this.test = [{start:15,end:19,total:4},{start:33,end:41,total:8}];
 			return;
         }// end function
 

@@ -44,7 +44,7 @@ package
 //		public static const HLS_TEST:String = "http://114.80.151.66/hls/shss/index.m3u8";
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
-		public static const HLS_SPLIT:String = "http://www.codecomposer.net/hls/bipbop/gear4/prog_index.m3u8";
+		public static const HLS_SPLIT:String = "http://v.youku.com/player/getM3U8/vid/XNzM1NTcxNTM2/type/hd2/video.m3u8?start={0}";
 		
 		public function TestHLSVideo()
 		{
@@ -64,18 +64,19 @@ package
 			
 			var json:Array=new Array();
 			json[0]={};
-			json[0].start = 10;
-			json[0].end = 20;
-			json[0].total = 10;
+			json[0].start = 20;
+			json[0].end = 40;
+			json[0].total = 20;
 			trace("bbbb");
 			json[1]={};
-			json[1].start = 40;
-			json[1].end = 50;
-			json[1].total = 10;
+			json[1].start = 60;
+			json[1].end = 80;
+			json[1].total = 20;
 			trace("test");
 			var str:String = JSON.stringify(json);
 			
-			var url:String = HLS_SPLIT+"?split="+str;
+//			var url:String = HLS_SPLIT+"?split="+str;
+			var url:String = HLS_SPLIT.replace("{0}",0);
 			
 			trace("url:"+url);
 			
@@ -128,12 +129,13 @@ package
 		
 		private function onClick(evt:MouseEvent):void{
 			offset+=100;
-			player.seek(offset);
-//			container.removeMediaElement(element);
-//			var resource:URLResource = new URLResource( HLS_TEST_PATH.replace("{0}",offset) );
-//			element = factory.createMediaElement(resource);
-//			player.media=element;
-//			container.addMediaElement(element);
+//			player.seek(offset);
+			container.removeMediaElement(element);
+			trace(HLS_SPLIT.replace("{0}",offset));
+			var resource:URLResource = new URLResource( HLS_SPLIT.replace("{0}",offset) );
+			element = factory.createMediaElement(resource);
+			player.media=element;
+			container.addMediaElement(element);
 		}
 		
 		private function tt():void{
