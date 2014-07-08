@@ -1,15 +1,17 @@
 ﻿package easy.scr.sys.com.dat
 {
-    import easy.hub.evt.*;
-    import easy.hub.spv.*;
-    import easy.scr.pro.*;
-    import easy.scr.sys.com.cmd.*;
-    import easy.scr.sys.com.cpt.*;
-    import easy.scr.sys.com.dat.def.*;
+    import flash.events.AsyncErrorEvent;
+    import flash.events.NetStatusEvent;
+    import flash.external.ExternalInterface;
+    import flash.net.NetStream;
     
-    import flash.events.*;
-    import flash.media.*;
-    import flash.net.*;
+    import easy.hub.evt.TimerEvt;
+    import easy.hub.spv.LoadingMgr;
+    import easy.scr.pro.ScrDispatcher;
+    import easy.scr.pro.ScrFactory;
+    import easy.scr.sys.com.cmd.ScreenStmEvt;
+    import easy.scr.sys.com.cpt.SeekMgr;
+    import easy.scr.sys.com.dat.def.NetStats;
     
     import org.osmf.events.MediaFactoryEvent;
     import org.osmf.events.MediaPlayerStateChangeEvent;
@@ -21,7 +23,7 @@
     import org.osmf.media.URLResource;
     import org.osmf.net.httpstreaming.hls.HLSPluginInfo;
     
-    import vsin.dcw.support.*;
+    import vsin.dcw.support.Trace;
 
     public class NetStmAdv extends Object
     {
@@ -282,8 +284,15 @@
 					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.STM_NOT_FOUND));
 					break;
 				}
+				case MediaPlayerState.UNINITIALIZED:{
+					this.readyCount=0;
+					break;
+				}
+				default:
+					break;
 			}
 			this.lastState = event.state;
+			flash.external.ExternalInterface.call("console.log","---------------state:"+event.state+"-------------------");
 		}
 		
         protected function netStatusHandler(event:NetStatusEvent) : void
@@ -516,10 +525,10 @@
             {
                 LoadingMgr.getIns().show(LoadingMgr.FULL_LOAD_SEEK);
             }
-			if(this.dat.ishls==false){
+//			if(this.dat.ishls==false){
             	this.dat.lastSeekToClipTime = param2;
             	lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
-			}
+//			}
 			var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
 			_loc_5.clipId = param1;
             _loc_5.clipStartTime = param2;

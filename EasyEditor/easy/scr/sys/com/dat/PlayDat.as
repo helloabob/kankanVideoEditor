@@ -1,10 +1,11 @@
 ﻿package easy.scr.sys.com.dat
 {
-    import flash.net.*;
+    import flash.net.NetConnection;
+    import flash.net.NetStream;
     
     import org.osmf.media.MediaPlayerSprite;
     
-    import vsin.dcw.support.*;
+    import vsin.dcw.support.Trace;
 
     public class PlayDat extends Object
     {
@@ -147,13 +148,8 @@
         {
 //            var _loc_3:* = "http://" + this.redirectIp + "/" + "?prot=1" + "&file=" + this.getUrlPath(this.clipUrls[param1]) + "&new=" + (this.syncUrls[param1] || "") + "&start=" + param2;
 //			var _loc_3:*="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4?start="+param2;
-			var _loc_3:*;
-			if(this.ishls){
-				_loc_3=this.clipUrls[param1];
-				this.mps.mediaPlayer.seek(param2);
-			}else{
-				_loc_3=this.clipUrls[param1]+"?start="+param2;
-			}
+			
+			var _loc_3:*=this.clipUrls[param1]+"?start="+param2;
             Trace.log("seekurl: " + param1, _loc_3);
             this.curSeekUrl = _loc_3;
             return;

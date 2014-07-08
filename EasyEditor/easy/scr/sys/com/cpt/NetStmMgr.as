@@ -70,9 +70,9 @@
 
         public function seekByUrl() : void
         {
-			if(this.dat.ishls==false){
+//			if(this.dat.ishls==false){
             	this.curStm.play(this.dat.curSeekUrl, this.dat.curClipIdx);
-			}
+//			}
             return;
         }// end function
 

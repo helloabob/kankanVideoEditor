@@ -43,7 +43,10 @@
 				this.pDat.tvName = param1.videoName;
 				this.pDat.epg = _loc_1;
 				this.pDat.clipSeekMark = [];
-				if(String(param1.videoURL).indexOf(".m3u8")>0)this.pDat.ishls=true;
+				if(String(param1.videoURL).indexOf(".m3u8")>0){
+					this.pDat.ishls=true;
+					this.pDat.epg=null;
+				}
 				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_INFO_LOADED));
 				return;
 			}

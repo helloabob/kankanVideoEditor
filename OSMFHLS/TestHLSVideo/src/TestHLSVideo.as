@@ -6,6 +6,7 @@ package
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.external.ExternalInterface;
 	import flash.utils.setInterval;
 	import flash.utils.setTimeout;
 	
@@ -76,7 +77,7 @@ package
 			var str:String = JSON.stringify(json);
 			
 //			var url:String = HLS_SPLIT+"?split="+str;
-			var url:String = HLS_SPLIT.replace("{0}",0);
+			var url:String = HLS_SPLIT.replace("?start={0}","");
 			
 			trace("url:"+url);
 			
@@ -129,7 +130,7 @@ package
 		
 		private function onClick(evt:MouseEvent):void{
 			offset+=100;
-//			player.seek(offset);
+//			player.seek(31.64);
 			container.removeMediaElement(element);
 			trace(HLS_SPLIT.replace("{0}",offset));
 			var resource:URLResource = new URLResource( HLS_SPLIT.replace("{0}",offset) );
@@ -139,7 +140,8 @@ package
 		}
 		
 		private function tt():void{
-			trace("time:"+player.currentTime+"bytesloaded:"+player.bytesLoaded+"total:"+player.bytesTotal);
+			trace("time:"+player.currentTime+" totaltime:"+ player.duration +" bytesloaded:"+player.bytesLoaded+"total:"+player.bytesTotal);
+			flash.external.ExternalInterface.call("console.log","time:"+player.currentTime+" totaltime:"+ player.duration +" bytesloaded:"+player.bytesLoaded+"total:"+player.bytesTotal);
 		}
 		
 		private function onSeek():void{

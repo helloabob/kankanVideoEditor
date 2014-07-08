@@ -187,6 +187,7 @@
 
         private function onSelectionChange(param1:WorkFieldUIEvt) : void
         {
+			Trace.log("onSelectionChange:"+param1.totSelectionDuration);
             this.editTimeField.text = Tools.formatTime(param1.totSelectionDuration);
             return;
         }// end function
