@@ -44,7 +44,7 @@ package
 //		public static const HLS_TEST:String = "http://114.80.151.66/hls/shss/index.m3u8";
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
-		public static const HLS_SPLIT:String = "http://v.youku.com/player/getM3U8/vid/XNzM1NTcxNTM2/type/hd2/video.m3u8?start={0}";
+		public static const HLS_SPLIT:String = "http://segment.livehls.kksmg.com/m3u8/216_1404670365.m3u8?start={0}";
 		
 		public function TestHLSVideo()
 		{
