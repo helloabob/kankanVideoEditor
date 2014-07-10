@@ -39,6 +39,7 @@
             var _loc_10:String = null;
             var _loc_2:* = JSON.parse(param1);
             var _loc_3:* = new HotVrsResp();
+			if(String(_loc_2.videoURL).indexOf(".m3u8")>=0)Configer.ishls=true;
 //            _loc_3.prot = _loc_2.prot;
 //            _loc_3.ip = _loc_2.allot;
 //            if (!_loc_2.data)

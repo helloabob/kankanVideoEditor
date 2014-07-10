@@ -82,6 +82,7 @@
 
         private function isGetEntry(param1:int, param2:Number) : Boolean
         {
+			return true;
             var _loc_3:* = Memory.streams[param1];
             if (_loc_3 == null)
             {
