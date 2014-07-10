@@ -14,6 +14,10 @@ package
 	import org.osmf.elements.VideoElement;
 	import org.osmf.events.MediaFactoryEvent;
 	import org.osmf.events.MediaPlayerStateChangeEvent;
+	import org.osmf.layout.HorizontalAlign;
+	import org.osmf.layout.LayoutMetadata;
+	import org.osmf.layout.ScaleMode;
+	import org.osmf.layout.VerticalAlign;
 	import org.osmf.media.MediaElement;
 	import org.osmf.media.MediaFactory;
 	import org.osmf.media.MediaFactoryItem;
@@ -46,6 +50,8 @@ package
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
 		public static const HLS_SPLIT:String = "http://segment.livehls.kksmg.com/m3u8/216_1404670365.m3u8?start={0}";
+		
+		private var sp:Sprite;
 		
 		public function TestHLSVideo()
 		{
@@ -94,6 +100,18 @@ package
 				throw new Error("Unsupported media type!");
 			}
 			
+			if (element && element.getMetadata(LayoutMetadata.LAYOUT_NAMESPACE) == null)
+			{
+				var layout:LayoutMetadata = new LayoutMetadata();
+				layout.scaleMode = ScaleMode.LETTERBOX;
+				layout.verticalAlign = VerticalAlign.MIDDLE;
+				layout.horizontalAlign = HorizontalAlign.CENTER;
+				layout.percentWidth = 100;
+				layout.percentHeight = 100;
+				element.addMetadata(LayoutMetadata.LAYOUT_NAMESPACE, layout);
+			}
+			
+			
 			//the simplified api controller for media
 			player = new MediaPlayer();
 			player.autoRewind = false;
@@ -102,13 +120,24 @@ package
 			flash.utils.setInterval(tt,500);
 			
 			//the container (sprite) for managing display and layout
+			
+			sp=new Sprite();
+			sp.graphics.beginFill(0,1);
+			sp.graphics.drawRect(0,0,500,500);
+			sp.graphics.endFill();
+			this.addChild(sp);
+//			sp.width=500;
+//			sp.height=500;
+			
 			container = new MediaContainer();
-			container.addMediaElement( element );
+//			container.addMediaElement( element );
 //			container.scaleX = 0.5;
 //			container.scaleY = 0.5;
 			
 			//Adds the container to the stage
-			this.addChild( container );
+//			this.addChild( container );
+			sp.addChild(container);
+			
 			
 //			flash.utils.setInterval(tt,500);
 			
@@ -120,7 +149,15 @@ package
 			this.addChild(sp);
 			
 			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
-			player.media = element;
+//			player.media = element;
+			
+//			container.height=1000;
+			player.media=element;
+			trace("hei:"+container.height);
+			
+			container.addMediaElement(element);
+			container.x=0;
+			container.y=0;
 			
 		}
 		
@@ -129,14 +166,19 @@ package
 		}
 		
 		private function onClick(evt:MouseEvent):void{
-			offset+=100;
+			
+			
+			container.width=300;
+			container.height=100;
+//			offset+=100;
 //			player.seek(31.64);
-			container.removeMediaElement(element);
-			trace(HLS_SPLIT.replace("{0}",offset));
-			var resource:URLResource = new URLResource( HLS_SPLIT.replace("{0}",offset) );
-			element = factory.createMediaElement(resource);
-			player.media=element;
-			container.addMediaElement(element);
+//			container.removeMediaElement(element);
+//			trace(HLS_SPLIT.replace("{0}",offset));
+//			var resource:URLResource = new URLResource( HLS_SPLIT.replace("{0}",offset) );
+//			element = factory.createMediaElement(resource);
+//			player.media=element;
+//			container.addMediaElement(element);
+//			container.removeMediaElement(element);
 		}
 		
 		private function tt():void{

@@ -35,7 +35,7 @@
             }
             else
             {
-                Configer.vid = "http://localhost/video.php";
+                Configer.vid = "http://test.editor.com/video.php";
             }
 			JSUtil.log("url:"+Configer.vid);
 //            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res.swf";

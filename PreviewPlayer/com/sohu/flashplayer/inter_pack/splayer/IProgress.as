@@ -4,8 +4,6 @@
     public interface IProgress
     {
 
-        public function IProgress();
-
         function init() : void;
 
         function updatePlayProgress(param1:Number) : void;
