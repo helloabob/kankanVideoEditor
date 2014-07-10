@@ -22,6 +22,7 @@ package
 	import org.osmf.media.MediaFactory;
 	import org.osmf.media.MediaFactoryItem;
 	import org.osmf.media.MediaPlayer;
+	import org.osmf.media.MediaPlayerSprite;
 	import org.osmf.media.PluginInfoResource;
 	import org.osmf.media.URLResource;
 	import org.osmf.net.NetLoader;
@@ -36,6 +37,7 @@ package
 		public var player:MediaPlayer;
 		public var container:MediaContainer;
 		private var factory:MediaFactory;
+		private var mps:MediaPlayerSprite;
 		
 		public static const STREAMING_MP4_PATH:String = "rtmp://cp67126.edgefcs.net/ondemand/mp4:mediapm/ovp/content/demo/video/elephants_dream/elephants_dream_768x428_24.0fps_408kbps.mp4";
 		public static const MP4_TEST:String = "http://domhttp.kksmg.com/2013/01/31/h264_800k_mp4_d67b2cb5025e42c6abb2a3983af2ba94_2441692.mp4";
@@ -52,9 +54,13 @@ package
 		public static const HLS_SPLIT:String = "http://segment.livehls.kksmg.com/m3u8/216_1404670365.m3u8?start={0}";
 		
 		private var sp:Sprite;
+		var sp2:Sprite;
 		
 		public function TestHLSVideo()
 		{
+//						this.graphics.beginFill(0x0000ff,1);
+//						this.graphics.drawRect(0,0,600,600);
+//						this.graphics.endFill();
 			initPlayer();
 		}
 		
@@ -121,11 +127,11 @@ package
 			
 			//the container (sprite) for managing display and layout
 			
-			sp=new Sprite();
-			sp.graphics.beginFill(0,1);
-			sp.graphics.drawRect(0,0,500,500);
-			sp.graphics.endFill();
-			this.addChild(sp);
+			sp2=new Sprite();
+//			sp2.graphics.beginFill(0x00ff00,1);
+//			sp2.graphics.drawRect(0,0,500,500);
+//			sp2.graphics.endFill();
+			this.addChild(sp2);
 //			sp.width=500;
 //			sp.height=500;
 			
@@ -136,7 +142,11 @@ package
 			
 			//Adds the container to the stage
 //			this.addChild( container );
-			sp.addChild(container);
+			sp2.addChild(container);
+			
+			mps=new MediaPlayerSprite();
+			sp2.addChild(mps);
+			mps.media=element;
 			
 			
 //			flash.utils.setInterval(tt,500);
@@ -152,7 +162,7 @@ package
 //			player.media = element;
 			
 //			container.height=1000;
-			player.media=element;
+//			player.media=element;
 			trace("hei:"+container.height);
 			
 			container.addMediaElement(element);
@@ -167,9 +177,11 @@ package
 		
 		private function onClick(evt:MouseEvent):void{
 			
+			sp2.width=300;
+			sp2.height=200;
 			
-			container.width=300;
-			container.height=100;
+//			container.width=300;
+//			container.height=100;
 //			offset+=100;
 //			player.seek(31.64);
 //			container.removeMediaElement(element);
