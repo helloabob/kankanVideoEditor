@@ -9,8 +9,8 @@
     import flash.display.*;
     import flash.events.*;
     import flash.system.*;
-    import flash.ui.*;
 
+	[SWF(backgroundColor="#000000")]
     public class PreviewPlayer extends Sprite
     {
 
@@ -84,10 +84,10 @@
 
         private function graphicsBackGround() : void
         {
-            this.graphics.clear();
-            this.graphics.beginFill(16777215, 1);
-            this.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-            this.graphics.endFill();
+//            this.graphics.clear();
+//            this.graphics.beginFill(16777215, 1);
+//            this.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+//            this.graphics.endFill();
             return;
         }// end function
 

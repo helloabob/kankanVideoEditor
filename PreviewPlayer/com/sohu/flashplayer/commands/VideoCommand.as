@@ -211,6 +211,7 @@
             {
                 _loc_3 = _loc_3 + ("?start=" + this.hotVrsResp.starts[this.index]);
             }
+			JSUtil.log("video_command_url:"+_loc_3);
 			if(Configer.ishls){
 //				var _loc_4:* = new NetStream(this.nc);
 //				_loc_4.play(_loc_3);

@@ -1,20 +1,30 @@
 ﻿package com.sohu.flashplayer.commands
 {
-    import com.sohu.flashplayer.*;
-    import com.sohu.flashplayer.inter_pack.entry.*;
-    import com.sohu.flashplayer.inter_pack.hotvrs.*;
-    import com.sohu.flashplayer.inter_pack.loading.*;
-    import com.sohu.flashplayer.inter_pack.splayer.*;
-    import com.sohu.flashplayer.proxys.*;
-    import com.sohu.flashplayer.util.*;
-    import com.sohu.flashplayer.views.*;
-    import com.sohu.fwork.*;
-    import com.sohu.fwork.baseagent.*;
+    import com.sohu.flashplayer.Configer;
+    import com.sohu.flashplayer.inter_pack.entry.GetEntryReq;
+    import com.sohu.flashplayer.inter_pack.hotvrs.HotVrsResp;
+    import com.sohu.flashplayer.inter_pack.loading.ILoading;
+    import com.sohu.flashplayer.inter_pack.splayer.IProgress;
+    import com.sohu.flashplayer.inter_pack.splayer.ISPlayer;
+    import com.sohu.flashplayer.util.Memory;
+    import com.sohu.flashplayer.views.LoadingView;
+    import com.sohu.flashplayer.views.SPlayer;
+    import com.sohu.flashplayer.views.SProgressBar;
+    import com.sohu.fwork.FWork;
+    import com.sohu.fwork.JSUtil;
+    import com.sohu.fwork.baseagent.NotifyData;
     import com.sohu.fwork.command.ICommand;
-    import com.sohu.fwork.notify.*;
-    import com.sohu.fwork.view.*;
+    import com.sohu.fwork.notify.Notify;
+    import com.sohu.fwork.view.IView;
     
-    import flash.net.*;
+    import flash.net.NetConnection;
+    import flash.net.NetStream;
+    
+    import org.osmf.media.MediaFactory;
+    import org.osmf.media.MediaPlayer;
+    import org.osmf.media.PluginInfoResource;
+    import org.osmf.media.URLResource;
+    import org.osmf.net.httpstreaming.hls.HLSPluginInfo;
 
     public class SeekCommand extends Notify implements ICommand
     {
@@ -24,6 +34,7 @@
         private var nc:NetConnection;
         private var index:int = 0;
         private var seekTime:Number;
+		private var factory:MediaFactory;
         public static const SEEK_COMMAND:String = "SEEK_COMMAND";
 
         public function SeekCommand()
@@ -31,6 +42,8 @@
             this.iProView = FWork.controller.getView(SProgressBar.NAME) as IView;
             this.iProView.addListener(SProgressBar.SEEK_EVENT, this.seekHandler);
             this.iPlayView = FWork.controller.getView(SPlayer.NAME) as ISPlayer;
+			factory=new MediaFactory();
+			factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
             return;
         }// end function
 
@@ -140,10 +153,18 @@
             var _loc_3:* = this.getPlayStartTime(this.index, this.seekTime);
 //            var _loc_4:* = _loc_2.urlValues[0] + this.hotVrsResp.news[this.index] + "?key=" + _loc_2.urlValues[3] + "&start=" + _loc_3;
             var _loc_4:* = param1.data+"?start="+_loc_3;
-			var _loc_5:* = new NetStream(this.nc);
-			_loc_5.play(_loc_4);
-            _loc_5.pause();
-            this.iPlayView.seek(_loc_5, Configer.AUTO_SEEK ? (_loc_3 - this.hotVrsResp.starts[this.index]) : (_loc_3), this.index, this.index >= (this.hotVrsResp.files.length - 1));
+			JSUtil.log("seek_command_url:"+_loc_4);
+			if(Configer.ishls){
+				var mediaPlayer:MediaPlayer=new MediaPlayer();
+				mediaPlayer.media=factory.createMediaElement(new URLResource(_loc_4));
+				mediaPlayer.pause();
+				this.iPlayView.seek(mediaPlayer, Configer.AUTO_SEEK ? (_loc_3 - this.hotVrsResp.starts[this.index]) : (_loc_3), this.index, this.index >= (this.hotVrsResp.files.length - 1));
+			}else{
+				var _loc_5:* = new NetStream(this.nc);
+				_loc_5.play(_loc_4);
+				_loc_5.pause();
+				this.iPlayView.seek(_loc_5, Configer.AUTO_SEEK ? (_loc_3 - this.hotVrsResp.starts[this.index]) : (_loc_3), this.index, this.index >= (this.hotVrsResp.files.length - 1));
+			}
             return;
         }// end function
 

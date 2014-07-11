@@ -127,26 +127,38 @@ package
 			
 			//the container (sprite) for managing display and layout
 			
+			var sp1:Sprite=new Sprite();
+						sp1.graphics.beginFill(0xff0000,1);
+						sp1.graphics.drawRect(0,0,500,500);
+						sp1.graphics.endFill();
+			
+			this.addChild(sp1);
+			
 			sp2=new Sprite();
 //			sp2.graphics.beginFill(0x00ff00,1);
 //			sp2.graphics.drawRect(0,0,500,500);
 //			sp2.graphics.endFill();
 			this.addChild(sp2);
+			
+			
+			this.addChildAt(sp2, getChildIndex(sp1));
 //			sp.width=500;
 //			sp.height=500;
 			
-			container = new MediaContainer();
+//			container = new MediaContainer();
 //			container.addMediaElement( element );
 //			container.scaleX = 0.5;
 //			container.scaleY = 0.5;
 			
 			//Adds the container to the stage
 //			this.addChild( container );
-			sp2.addChild(container);
+//			sp2.addChild(container);
 			
 			mps=new MediaPlayerSprite();
 			sp2.addChild(mps);
 			mps.media=element;
+//			mps.width=300;
+//			mps.height=300;
 			
 			
 //			flash.utils.setInterval(tt,500);
@@ -158,16 +170,16 @@ package
 			sp.addEventListener(MouseEvent.CLICK,onClick);
 			this.addChild(sp);
 			
-			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+//			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
 //			player.media = element;
 			
 //			container.height=1000;
 //			player.media=element;
 			trace("hei:"+container.height);
 			
-			container.addMediaElement(element);
-			container.x=0;
-			container.y=0;
+//			container.addMediaElement(element);
+//			container.x=0;
+//			container.y=0;
 			
 		}
 		
