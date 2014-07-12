@@ -188,6 +188,7 @@
 
         private function getEntry() : void
         {
+			if(this.index>=this.hotVrsResp.files.length)return;
             var _loc_1:* = new GetEntryReq();
 //            _loc_1.ip = this.hotVrsResp.ip;
 //            _loc_1._new = this.hotVrsResp.news[this.index];
@@ -242,7 +243,7 @@
         }// end function
 
         private function playSoonEvent(param1:NotifyData) : void
-        {
+		{
             this.index = this.index + 1;
             this.getEntry();
             return;
