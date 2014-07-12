@@ -189,13 +189,14 @@ package
 		}
 		
 		private function onClick(evt:MouseEvent):void{
-			
+//			container.visible=false;
+			container.y=10000;
 //			container.removeMediaElement(element);
-			player.stop();
-			var mp:MediaPlayer=new MediaPlayer();
-			var ele:MediaElement=factory.createMediaElement(new URLResource(HLS_SPLIT.replace("{0}",200)));
-			mp.media=ele;
-			container.addMediaElement(ele);
+//			player.stop();
+//			var mp:MediaPlayer=new MediaPlayer();
+//			var ele:MediaElement=factory.createMediaElement(new URLResource(HLS_SPLIT.replace("{0}",200)));
+//			mp.media=ele;
+//			container.addMediaElement(ele);
 			
 //			container.width=300;
 //			container.height=100;
