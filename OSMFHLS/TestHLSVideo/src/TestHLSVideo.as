@@ -123,16 +123,16 @@ package
 			player.autoRewind = false;
 //			player.bufferTime = 4;
 			
-			flash.utils.setInterval(tt,500);
+//			flash.utils.setInterval(tt,500);
 			
 			//the container (sprite) for managing display and layout
 			
-			var sp1:Sprite=new Sprite();
-						sp1.graphics.beginFill(0xff0000,1);
-						sp1.graphics.drawRect(0,0,500,500);
-						sp1.graphics.endFill();
-			
-			this.addChild(sp1);
+//			var sp1:Sprite=new Sprite();
+//						sp1.graphics.beginFill(0xff0000,1);
+//						sp1.graphics.drawRect(0,0,500,500);
+//						sp1.graphics.endFill();
+//			
+//			this.addChild(sp1);
 			
 			sp2=new Sprite();
 //			sp2.graphics.beginFill(0x00ff00,1);
@@ -141,22 +141,22 @@ package
 			this.addChild(sp2);
 			
 			
-			this.addChildAt(sp2, getChildIndex(sp1));
+//			this.addChildAt(sp2, getChildIndex(sp1));
 //			sp.width=500;
 //			sp.height=500;
 			
-//			container = new MediaContainer();
+			container = new MediaContainer();
 //			container.addMediaElement( element );
 //			container.scaleX = 0.5;
 //			container.scaleY = 0.5;
 			
 			//Adds the container to the stage
-//			this.addChild( container );
+			this.addChild( container );
 //			sp2.addChild(container);
 			
-			mps=new MediaPlayerSprite();
-			sp2.addChild(mps);
-			mps.media=element;
+//			mps=new MediaPlayerSprite();
+//			sp2.addChild(mps);
+//			mps.media=element;
 //			mps.width=300;
 //			mps.height=300;
 			
@@ -170,27 +170,32 @@ package
 			sp.addEventListener(MouseEvent.CLICK,onClick);
 			this.addChild(sp);
 			
-//			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
-//			player.media = element;
+			player.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+			player.media = element;
 			
 //			container.height=1000;
 //			player.media=element;
 			trace("hei:"+container.height);
 			
-//			container.addMediaElement(element);
+			container.addMediaElement(element);
 //			container.x=0;
 //			container.y=0;
 			
 		}
 		
 		private function onStateChangeHandler(evt:MediaPlayerStateChangeEvent):void{
-			trace("state:"+evt.state+"  wid:"+player.mediaWidth);
+//			trace("state:"+evt.state+"  wid:"+player.mediaWidth);
+			flash.external.ExternalInterface.call("conosole.log","state:"+evt.state);
 		}
 		
 		private function onClick(evt:MouseEvent):void{
 			
-			sp2.width=300;
-			sp2.height=200;
+//			container.removeMediaElement(element);
+			player.stop();
+			var mp:MediaPlayer=new MediaPlayer();
+			var ele:MediaElement=factory.createMediaElement(new URLResource(HLS_SPLIT.replace("{0}",200)));
+			mp.media=ele;
+			container.addMediaElement(ele);
 			
 //			container.width=300;
 //			container.height=100;

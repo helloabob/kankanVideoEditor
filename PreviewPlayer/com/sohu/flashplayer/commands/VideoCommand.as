@@ -213,9 +213,6 @@
             }
 			JSUtil.log("video_command_url:"+_loc_3);
 			if(Configer.ishls){
-//				var _loc_4:* = new NetStream(this.nc);
-//				_loc_4.play(_loc_3);
-//				_loc_4.pause();
 				var mediaPlayer:MediaPlayer=new MediaPlayer();
 				mediaPlayer.media=factory.createMediaElement(new URLResource(_loc_3));
 				mediaPlayer.pause();

@@ -22,7 +22,7 @@
 //			mp4
 //			this.test = [{start:15,end:19,total:4},{start:33,end:41,total:8}];
 //			hls
-			this.test = [{start:31.63,end:53.40,total:21.77},{start:80.14,end:119.85,total:39.71}];
+			this.test = [{start:31.63,end:161.87,total:130.24},{start:297.01,end:453.22,total:156.21}];
 			return;
         }// end function
 

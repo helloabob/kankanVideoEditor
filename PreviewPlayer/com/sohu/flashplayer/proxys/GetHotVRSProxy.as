@@ -46,6 +46,7 @@
 //            {
 //                return;
 //            }
+			_loc_3.keyframes=_loc_2.kft.split(";");
             _loc_3.files = [_loc_2.videoURL];
 //            for each (_loc_4 in _loc_2.data.clipsURL)
 //            {
@@ -110,6 +111,7 @@
             _loc_3.byteLens = [];
             _loc_3.starts = [];
             _loc_3.totalDuration = 0;
+			_loc_3.keyframes=param1.keyframes;
             var _loc_5:int = 0;
             while (_loc_5 < _loc_2.length)
             {
