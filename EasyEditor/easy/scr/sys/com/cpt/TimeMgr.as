@@ -29,6 +29,7 @@
 
         public function start() : void
         {
+			if(this.timer.running)return;
 			this.timer.start();
             Trace.log("TimeMgr START");
             return;

@@ -24,12 +24,45 @@ package org.osmf.media
 	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
 	import flash.events.TimerEvent;
+	import flash.external.ExternalInterface;
 	import flash.utils.Timer;
 	
-	import org.osmf.events.*;
+	import org.osmf.events.AlternativeAudioEvent;
+	import org.osmf.events.AudioEvent;
+	import org.osmf.events.BufferEvent;
+	import org.osmf.events.DRMEvent;
+	import org.osmf.events.DisplayObjectEvent;
+	import org.osmf.events.DynamicStreamEvent;
+	import org.osmf.events.LoadEvent;
+	import org.osmf.events.MediaElementEvent;
+	import org.osmf.events.MediaError;
+	import org.osmf.events.MediaErrorCodes;
+	import org.osmf.events.MediaErrorEvent;
+	import org.osmf.events.MediaPlayerCapabilityChangeEvent;
+	import org.osmf.events.MediaPlayerStateChangeEvent;
+	import org.osmf.events.PlayEvent;
+	import org.osmf.events.SeekEvent;
+	import org.osmf.events.TimeEvent;
 	import org.osmf.net.StreamingItem;
-	import org.osmf.traits.*;
+	import org.osmf.traits.AlternativeAudioTrait;
+	import org.osmf.traits.AudioTrait;
+	import org.osmf.traits.BufferTrait;
+	import org.osmf.traits.DRMState;
+	import org.osmf.traits.DRMTrait;
+	import org.osmf.traits.DVRTrait;
+	import org.osmf.traits.DisplayObjectTrait;
+	import org.osmf.traits.DynamicStreamTrait;
+	import org.osmf.traits.LoadState;
+	import org.osmf.traits.LoadTrait;
+	import org.osmf.traits.MediaTraitBase;
+	import org.osmf.traits.MediaTraitType;
+	import org.osmf.traits.PlayState;
+	import org.osmf.traits.PlayTrait;
+	import org.osmf.traits.SeekTrait;
+	import org.osmf.traits.TimeTrait;
+	import org.osmf.traits.TraitEventDispatcher;
 	import org.osmf.utils.OSMFStrings;
+	import org.osmf.events.MediaElementChangeEvent;
 	 	 
 	/**
 	 * Dispatched when the MediaPlayer's state has changed.
@@ -1450,7 +1483,7 @@ package org.osmf.media
 	    		traitName = traitName.replace("]", "").toLowerCase();	
 	    				
 	    		error = error.replace('*trait*', traitName);
-	    			    		
+	    		flash.external.ExternalInterface.call("console.log",error+":"+traitType);
 	    		throw new IllegalOperationError(error);		    		
 	    	}
 	    	return media.getTrait(traitType);

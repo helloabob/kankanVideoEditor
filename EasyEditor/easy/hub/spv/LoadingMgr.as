@@ -40,7 +40,7 @@
 
         public function show(param1:String) : void
         {
-            Trace.log("LoadingShow", param1);
+            Trace.log("LoadingShow:", param1);
 			trace("---------------show---------------"+this.openRec.toString());
             if (this.openRec.indexOf(param1) === -1)
             {

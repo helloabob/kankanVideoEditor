@@ -1,8 +1,11 @@
 ﻿package easy.scr.sys.com.dat
 {
-    import flash.net.*;
+    import flash.net.NetConnection;
+    import flash.net.NetStream;
     
-    import vsin.dcw.support.*;
+    import org.osmf.media.MediaPlayerSprite;
+    
+    import vsin.dcw.support.Trace;
 
     public class PlayDat extends Object
     {
@@ -34,6 +37,8 @@
         public var clipSeekMark:Array=new Array();
         public var lastSeekToClipTime:Number = 0;
 		public var epg:String;
+		public var ishls:Boolean=false;
+		public var mps:MediaPlayerSprite;
 
         public function PlayDat()
         {
@@ -60,8 +65,12 @@
                 _loc_2++;
             }
 //			trace("PlayDat_calc_loc_1:"+_loc_1+"time:"+this.curStm.time);
-            _loc_1 = _loc_1 + (this.curStm.time + this.lastSeekToClipTime);
-            return _loc_1;
+			if(this.ishls){
+				_loc_1 = _loc_1 + (this.mps.mediaPlayer.currentTime + this.lastSeekToClipTime);
+			}else{
+            	_loc_1 = _loc_1 + (this.curStm.time + this.lastSeekToClipTime);
+			}
+			return _loc_1;
         }// end function
 
         public function calcEntireBytesLoaded() : Number
@@ -74,7 +83,12 @@
                 _loc_1 = _loc_1 + this.clipByteArr[_loc_2];
                 _loc_2++;
             }
-            _loc_1 = _loc_1 + this.curStm.bytesLoaded;
+			if(this.ishls){
+				_loc_1 = _loc_1 + this.mps.mediaPlayer.bytesLoaded;
+			}else{
+				_loc_1 = _loc_1 + this.curStm.bytesLoaded;
+			}
+            
 			return _loc_1;
         }// end function
 
@@ -133,7 +147,9 @@
         public function buildSeekUrl(param1:int, param2:Number) : void
         {
 //            var _loc_3:* = "http://" + this.redirectIp + "/" + "?prot=1" + "&file=" + this.getUrlPath(this.clipUrls[param1]) + "&new=" + (this.syncUrls[param1] || "") + "&start=" + param2;
-			var _loc_3:*="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4?start="+param2;
+//			var _loc_3:*="http://domhttp.kksmg.com/2012/09/15/h264_450k_mp4_0717609ae3a6426eb1012167def9131e_2158948.mp4?start="+param2;
+			
+			var _loc_3:*=this.clipUrls[param1]+"?start="+param2;
             Trace.log("seekurl: " + param1, _loc_3);
             this.curSeekUrl = _loc_3;
             return;

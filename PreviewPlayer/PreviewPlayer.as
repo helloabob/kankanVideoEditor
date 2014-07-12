@@ -9,8 +9,8 @@
     import flash.display.*;
     import flash.events.*;
     import flash.system.*;
-    import flash.ui.*;
 
+	[SWF(backgroundColor="#000000")]
     public class PreviewPlayer extends Sprite
     {
 
@@ -35,7 +35,7 @@
             }
             else
             {
-                Configer.vid = "http://localhost/video.php";
+                Configer.vid = "http://test.editor.com/video.php";
             }
 			JSUtil.log("url:"+Configer.vid);
 //            var _loc_3:* = _loc_2.loaderURL.substring(0, (_loc_2.loaderURL.lastIndexOf("/") + 1)) + "res.swf";
@@ -84,10 +84,10 @@
 
         private function graphicsBackGround() : void
         {
-            this.graphics.clear();
-            this.graphics.beginFill(16777215, 1);
-            this.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-            this.graphics.endFill();
+//            this.graphics.clear();
+//            this.graphics.beginFill(16777215, 1);
+//            this.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+//            this.graphics.endFill();
             return;
         }// end function
 

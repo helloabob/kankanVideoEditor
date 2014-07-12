@@ -116,7 +116,7 @@ package org.osmf.net.httpstreaming.hls
 				trace("first line wasn't #EXTM3U was instead "+lines[0]); // have some files with weird data here
 			}
 			var i:int=0;
-			if(_indexString.indexOf("?start=")>=0){
+			if(indexContext!=null&&_indexString.indexOf("?start=")>=0){
 				var startTime:*=parseFloat(_indexString.substr(_indexString.indexOf("?start=")+7));
 				if(startTime>0){
 					while(true){
@@ -132,6 +132,40 @@ package org.osmf.net.httpstreaming.hls
 					}
 				}
 			}
+			if(indexContext!=null&&_indexString.indexOf("?split=")>=0){
+				//handle split case
+				trace("split_____started.......");
+				var jsonString:String=_indexString.substr(_indexString.indexOf("?split=")+7);
+				var array:Object = JSON.parse(jsonString);
+				if(array.length>0){
+					var passtime:Number=0;
+					var slice:int=0;
+					i=0;
+					while(true){
+						if(i>=lines.length)break;
+						if(String(lines[i]).indexOf("#EXTINF:") == 0){
+							passtime+=parseFloat(String(lines[i]).substr(8));
+							if(slice>=array.length){
+								lines.splice(i,2);
+								continue;
+							}
+							if(passtime>Number(array[slice].start)&&passtime<Number(array[slice].end)){
+								i=i+2;
+							}else if(passtime>=Number(array[slice].end)){
+								slice++;
+								i=i+2;
+							}else{
+								lines.splice(i,2);
+							}
+						}else{
+							i=i+1;
+						}
+					}
+				}
+			}
+//			if(indexContext!=null){
+//				trace("con:"+lines);
+//			}
 			var discontinuityExpected:Boolean = false;
 			for(i=1; i<lines.length; i++)
 			{
@@ -200,10 +234,10 @@ package org.osmf.net.httpstreaming.hls
 						discontinuityExpected = false;
 						continue;
 					}
-					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
-						discontinuityExpected = true;
-						continue;
-					}
+//					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
+//						discontinuityExpected = true;
+//						continue;
+//					}
 					if(String(lines[i]).indexOf("#EXT-X-ENDLIST") == 0)
 					{
 						//  This is not a live stream
@@ -217,12 +251,6 @@ package org.osmf.net.httpstreaming.hls
 						continue;
 					}	
 				}
-			}
-			trace("item_count:"+_rateVec.length);
-			if (indexContext != null)
-			{
-				trace("totalTime:"+(indexContext as HTTPStreamingM3U8IndexRateItem).totalTime);
-					notifyTotalDuration((indexContext as HTTPStreamingM3U8IndexRateItem).totalTime, 0, (indexContext as HTTPStreamingM3U8IndexRateItem).live); // FIXME: we don't what rate context (quality level) we are processing, so just return quality 0
 			}
 			
 			if(_loadingCount == 0 && _absoluteSegment == 0) // check for _absoluteSegement to make sure we are not reloading the manifest

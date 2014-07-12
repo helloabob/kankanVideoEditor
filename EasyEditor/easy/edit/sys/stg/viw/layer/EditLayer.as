@@ -1,11 +1,14 @@
 ﻿package easy.edit.sys.stg.viw.layer
 {
-    import easy.edit.sys.stg.*;
-    import easy.edit.sys.stg.dat.*;
-    import easy.edit.sys.stg.dat.def.*;
-    import easy.edit.sys.stg.evt.*;
-    import flash.display.*;
-    import vsin.dcw.support.*;
+    import flash.display.Sprite;
+    
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.dat.SetPtCmdItem;
+    import easy.edit.sys.stg.dat.SetPtCmdMgr;
+    import easy.edit.sys.stg.dat.def.SetPtCmdType;
+    import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    
+    import vsin.dcw.support.Trace;
 
     public class EditLayer extends Sprite
     {
@@ -70,7 +73,7 @@
                 this.curOperateSprite.width = _loc_2 - _loc_3;
                 this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_END));
                 this.endSeekPt = param1 * this.dur;
-                this.selectedDat.push({start:this.startSeekPt, end:this.endSeekPt, total:this.endSeekPt - this.startSeekPt});
+                this.selectedDat.push({start:this.startSeekPt, end:this.endSeekPt, total:Number(this.endSeekPt - this.startSeekPt).toFixed(2)});
                 this.syncEditDat();
                 this.curOperateSprite.isDone = true;
                 this.inProcess = false;
@@ -109,12 +112,12 @@
             var _loc_1:Number = 0;
             for each (_loc_2 in this.selectedDat)
             {
-                
-                _loc_1 = _loc_1 + _loc_2.total;
+				Trace.log("total:"+_loc_2.total+":"+_loc_1);
+                _loc_1 = _loc_1 + Number(_loc_2.total);
             }
-            Trace.log("selection len", this.selectedDat.length);
+            Trace.log("selection len", this.selectedDat.length+":::"+this.selectedDat.join("_"));
             _loc_3 = new WorkFieldUIEvt(WorkFieldUIEvt.SELECTION_CHANGE);
-            _loc_3.totSelectionDuration = _loc_1;
+            _loc_3.totSelectionDuration = Number(_loc_1.toFixed(2));
             dispatchEvent(_loc_3);
             return;
         }// end function

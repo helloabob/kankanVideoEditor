@@ -92,6 +92,8 @@ package org.osmf.net.httpstreaming.hls
 			item.startTime = _totalTime;
 			_totalTime += item.duration;
 			_manifest.push(item);
+//			trace("ttttttttt:"+_totalTime.toFixed(2));
+//			trace("addIndexItem:"+item.startTime+"duration:"+item.duration);
 		}
 		
 		public function clearManifest():void

@@ -1,17 +1,29 @@
 ﻿package easy.scr.sys.com.dat
 {
-    import easy.hub.evt.*;
-    import easy.hub.spv.*;
-    import easy.scr.pro.*;
-    import easy.scr.sys.com.cmd.*;
-    import easy.scr.sys.com.cpt.*;
-    import easy.scr.sys.com.dat.def.*;
+    import flash.events.AsyncErrorEvent;
+    import flash.events.NetStatusEvent;
+    import flash.external.ExternalInterface;
+    import flash.net.NetStream;
     
-    import flash.events.*;
-    import flash.media.*;
-    import flash.net.*;
+    import easy.hub.evt.TimerEvt;
+    import easy.hub.spv.LoadingMgr;
+    import easy.scr.pro.ScrDispatcher;
+    import easy.scr.pro.ScrFactory;
+    import easy.scr.sys.com.cmd.ScreenStmEvt;
+    import easy.scr.sys.com.cpt.SeekMgr;
+    import easy.scr.sys.com.dat.def.NetStats;
     
-    import vsin.dcw.support.*;
+    import org.osmf.events.MediaFactoryEvent;
+    import org.osmf.events.MediaPlayerStateChangeEvent;
+    import org.osmf.media.MediaFactory;
+    import org.osmf.media.MediaFactoryItem;
+    import org.osmf.media.MediaPlayerSprite;
+    import org.osmf.media.MediaPlayerState;
+    import org.osmf.media.PluginInfoResource;
+    import org.osmf.media.URLResource;
+    import org.osmf.net.httpstreaming.hls.HLSPluginInfo;
+    
+    import vsin.dcw.support.Trace;
 
     public class NetStmAdv extends Object
     {
@@ -30,6 +42,14 @@
         protected var lastSeekToClip:Number = 0;
         protected var autoSeekPoint:Number = -1;
         private static var lastSeekToClipBytes:Number = 0;
+		
+		/*hls*/
+		public var mps:MediaPlayerSprite;
+		private var factory:MediaFactory;
+		private var hasDispatchedMeta:Boolean=false;
+		private var readyCount:int;
+		private var lastState:String;
+		/*end*/
 
         public function NetStmAdv(param1:String)
         {
@@ -44,7 +64,11 @@
             this.handlingClipId = param2;
             this.handlingPlayUrl = param1;
             this.registStmEvt();
-            this.stream.play(param1);
+			if(this.dat.ishls==true){
+				this.mps.media=factory.createMediaElement(new URLResource(param1));
+			}else{
+				this.stream.play(param1);
+			}
             this.inStream = true;
             if (param1.indexOf("start") === -1)
             {
@@ -54,28 +78,56 @@
             return;
         }// end function
 
+		private function handlePluginLoadError(event:MediaFactoryEvent):void {
+			var pluginType:String = "Unknown Plugin";
+			if (event.resource is PluginInfoResource) {
+				var item:MediaFactoryItem = (event.resource as PluginInfoResource).pluginInfo.getMediaFactoryItemAt(0);
+				if (item) {
+					pluginType = item.id;
+				}
+			}
+			Trace.log("Plugin \"" + pluginType + "\" load error.");
+			this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.STM_NOT_FOUND));
+		}
+		
         public function initStream() : void
         {
-            if (!this.stream)
-            {
-                this.seekMgr.init();
-                this.stream = new NetStream(this.dat.curConn);
-                this.stream.client = {onMetaData:this.onMetaData};
-                Trace.log(this.name + " init volume", this.dat.defaultVolume);
-                this.volTo(this.dat.defaultVolume);
-            }
+			if(this.dat.ishls==true){
+				if (!this.mps)
+				{
+					factory=new MediaFactory();
+					factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
+					factory.addEventListener(MediaFactoryEvent.PLUGIN_LOAD_ERROR, handlePluginLoadError);
+					this.seekMgr.init();
+					this.mps = new MediaPlayerSprite();
+//					this.stream.client = {onMetaData:this.onMetaData};
+//					Trace.log(this.name + " init volume", this.dat.defaultVolume);
+					this.volTo(this.dat.defaultVolume);
+				}
+			}else{
+				if (!this.stream)
+				{
+					this.seekMgr.init();
+					this.stream = new NetStream(this.dat.curConn);
+					this.stream.client = {onMetaData:this.onMetaData};
+					Trace.log(this.name + " init volume", this.dat.defaultVolume);
+					this.volTo(this.dat.defaultVolume);
+				}
+			}
             return;
         }// end function
 
         public function resume() : void
         {
-            this.stream.resume();
+			if(this.dat.ishls==true)this.mps.mediaPlayer.play();
+			else this.stream.resume();
             return;
         }// end function
 
         public function pause() : void
         {
-            this.stream.pause();
+			if(this.dat.ishls==true)this.mps.mediaPlayer.pause();
+			else this.stream.pause();
             return;
         }// end function
 
@@ -95,10 +147,16 @@
 
         public function volTo(param1:Number) : void
         {
-            var _loc_2:* = this.stream.soundTransform;
-            _loc_2.volume = this.mutedCoff * (param1 / 100);
-            this.stream.soundTransform = _loc_2;
-            Trace.log(this.name + " set play volume", param1 + " / " + _loc_2.volume);
+			Trace.log("VolTo:"+param1+"mutedCoff:"+this.mutedCoff+"ishls:"+this.dat.ishls);
+			if(this.dat.ishls==true){
+				this.mps.mediaPlayer.volume=this.mutedCoff * (param1 / 100);
+			}
+			else {
+				var _loc_2:* = this.stream.soundTransform;
+            	_loc_2.volume = this.mutedCoff * (param1 / 100);
+            	this.stream.soundTransform = _loc_2;
+			}
+//            Trace.log(this.name + " set play volume", param1 + " / " + _loc_2.volume);
             this.dat.curVolume = param1;
             this.curVol = param1;
             return;
@@ -109,7 +167,7 @@
             param1.flyTime = this.dat.calcEntireFlyTime();
             param1.datLoaded = this.dat.calcEntireBytesLoaded() + lastSeekToClipBytes;
 //			trace("flyTime:"+param1.flyTime+"datLoaded:"+param1.datLoaded+"handlingClipId:"+this.handlingClipId);
-            this.seekMgr.clipDownloadReport(this.handlingClipId, this.stream.bytesLoaded);
+            this.seekMgr.clipDownloadReport(this.handlingClipId, this.dat.ishls?this.mps.mediaPlayer.bytesLoaded:this.stream.bytesLoaded);
             return;
         }// end function
 
@@ -132,18 +190,111 @@
 
         protected function registStmEvt() : void
         {
-            if (!this.stream.hasEventListener(NetStatusEvent.NET_STATUS))
-            {
-                this.stream.addEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
-            }
-            if (!this.stream.hasEventListener(AsyncErrorEvent.ASYNC_ERROR))
-            {
-				trace("NetStmAdv_registStmEvt_async_error");
-                this.stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
-            }
+            if(this.dat.ishls==true){
+				if(!this.mps.mediaPlayer.hasEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE)){
+					this.mps.mediaPlayer.addEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+				}
+			}else{
+				if (!this.stream.hasEventListener(NetStatusEvent.NET_STATUS))
+				{
+					this.stream.addEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
+				}
+				if (!this.stream.hasEventListener(AsyncErrorEvent.ASYNC_ERROR))
+				{
+					trace("NetStmAdv_registStmEvt_async_error");
+					this.stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
+				}
+			}
+			
             return;
         }// end function
 
+		private function onStateChangeHandler(event:MediaPlayerStateChangeEvent):void{
+			var _loc_2:Boolean = false;
+			Trace.log("state:"+event.state);
+			switch(event.state){
+				case MediaPlayerState.READY:{
+					this.readyCount++;
+					if(this.readyCount>1){
+						_loc_2 = this.dat.isDead();
+						this.resetSeekParam();
+						if (!this.inStream)
+						{
+							return;
+						}
+						this.inStream = false;
+						if (_loc_2)
+						{
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_OVER));
+						}
+						else
+						{
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_OVER_CLIP));
+						}
+						this.closeStream();
+						break;
+					}
+					break;
+				}
+				case MediaPlayerState.PLAYING:{
+					if (this.seekStart)
+					{
+						if (this.autoSeekPoint > -1)
+						{
+							Trace.log("autoSeekPoint");
+							this.stream.seek(this.autoSeekPoint);
+							this.autoSeekPoint = -1;
+							this.handlingClipId = this.lastSeekToClip;
+						}
+						Trace.log(this.name + " seek, start avoid");
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.SEEK_PLAY_START));
+					}
+					else
+					{
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_START));
+					}
+					
+					this.seekStart = false;
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
+					break;
+					break;
+				}
+				case MediaPlayerState.LOADING:{
+					break;
+				}
+				case MediaPlayerState.BUFFERING:{
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_EMPTY));
+					break;
+				}
+				case MediaPlayerState.PAUSED:{
+					if(this.lastState!=null && this.lastState==MediaPlayerState.BUFFERING){
+						if(this.hasDispatchedMeta==false){
+							Trace.log("META_w:"+this.mps.mediaPlayer.mediaWidth+"  h:"+this.mps.mediaPlayer.mediaHeight);
+							this.dat.metaWidth = this.mps.mediaPlayer.mediaWidth;
+							this.dat.metaHeight = this.mps.mediaPlayer.mediaHeight;
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
+							this.hasDispatchedMeta=true;
+						}
+						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
+					}
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PAUSE));
+					break;
+				}
+				case MediaPlayerState.PLAYBACK_ERROR:{
+					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.STM_NOT_FOUND));
+					break;
+				}
+				case MediaPlayerState.UNINITIALIZED:{
+					this.readyCount=0;
+					break;
+				}
+				default:
+					break;
+			}
+			this.lastState = event.state;
+			flash.external.ExternalInterface.call("console.log","---------------state:"+event.state+"-------------------");
+		}
+		
         protected function netStatusHandler(event:NetStatusEvent) : void
         {
             var _loc_2:Boolean = false;
@@ -229,9 +380,14 @@
         {
             try
             {
-                this.stream.removeEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
-                this.stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
-                this.stream.close();
+				if(this.dat.ishls==true){
+					this.mps.mediaPlayer.removeEventListener(MediaPlayerStateChangeEvent.MEDIA_PLAYER_STATE_CHANGE,onStateChangeHandler);
+					this.mps.mediaPlayer.stop();
+				}else{
+					this.stream.removeEventListener(NetStatusEvent.NET_STATUS, this.netStatusHandler);
+					this.stream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, this.asyncErrorHandler);
+					this.stream.close();
+				}
             }
             catch (e:Error)
             {
@@ -339,7 +495,8 @@
                 else
                 {
                     Trace.log("seek in curClip", param2);
-                    this.stream.seek(param2);
+					if(this.dat.ishls)this.mps.mediaPlayer.seek(param2);
+					else this.stream.seek(param2);
                     this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.SEEK_IN_CLIP));
                 }
                 this.resetSeekParam();
@@ -368,10 +525,12 @@
             {
                 LoadingMgr.getIns().show(LoadingMgr.FULL_LOAD_SEEK);
             }
-            this.dat.lastSeekToClipTime = param2;
-            lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
-            var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
-            new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING).clipId = param1;
+//			if(this.dat.ishls==false){
+            	this.dat.lastSeekToClipTime = param2;
+            	lastSeekToClipBytes = this.dat.clipByteArr[param1] * param2 / this.dat.clipDurArr[param1];
+//			}
+			var _loc_5:* = new ScreenStmEvt(ScreenStmEvt.SEEK_NEED_RE_DISPATCHING);
+			_loc_5.clipId = param1;
             _loc_5.clipStartTime = param2;
             this.dispatchProxy(_loc_5);
             return;
