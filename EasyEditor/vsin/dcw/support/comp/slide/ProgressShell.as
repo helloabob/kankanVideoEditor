@@ -1,12 +1,14 @@
 ﻿package vsin.dcw.support.comp.slide
 {
-    import flash.display.*;
-    import flash.events.*;
-    import flash.geom.*;
+    import flash.display.MovieClip;
+    import flash.events.EventDispatcher;
+    import flash.events.MouseEvent;
+    import flash.geom.Rectangle;
     
-    import vsin.dcw.support.comp.btn.*;
-    import vsin.dcw.support.comp.def.*;
-    import vsin.dcw.support.comp.evt.*;
+    import vsin.dcw.support.Trace;
+    import vsin.dcw.support.comp.btn.ButtonShell;
+    import vsin.dcw.support.comp.def.ButtonStat;
+    import vsin.dcw.support.comp.evt.ProgressEvent;
 
     public class ProgressShell extends EventDispatcher
     {
@@ -38,6 +40,7 @@
 
         public function setPercent(param1:Number, param2:Boolean = false) : void
         {
+			Trace.log("ProgressShell_setPercent:"+param1);
             param1 = param1 > 1 ? (1) : (param1);
             param1 = param1 < 0 ? (0) : (param1);
             this.per = param1;
@@ -96,6 +99,7 @@
 
         protected function notifyProgChange() : void
         {
+			Trace.log("notifyProgChange:"+this.per);
             var _loc_1:* = new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
             _loc_1.progress = this.per;
             dispatchEvent(_loc_1);
@@ -115,12 +119,16 @@
         {
             this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
 			/*add*/
-			var evt:vsin.dcw.support.comp.evt.ProgressEvent=new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
-			evt.progress=event.localX * this.skinTrack.scaleX / this.skinTrack.width;
-			this.dispatchEvent(evt);
+			this.dispatchProgress();
             return;
         }// end function
 
+		public function dispatchProgress():void{
+			var evt:vsin.dcw.support.comp.evt.ProgressEvent=new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
+			evt.progress=this.per;
+			this.dispatchEvent(evt);
+		}
+		
         protected function toFill(event:MouseEvent) : void
         {
             if (this.fill.getStat() === this.track.getStat())

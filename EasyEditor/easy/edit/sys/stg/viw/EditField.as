@@ -232,11 +232,6 @@
             Trace.err("cur and toSeek:", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] - this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
-			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
-			wfe.progress=this.udat.transSecToViewProg(_loc_2);
-			wfe.isNext=false;
-			wfe.pause=false;
-			this.dispatchEvent(wfe);
             return;
         }// end function
 
@@ -252,11 +247,6 @@
             Trace.err("cur and toSeek", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] + this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
-			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
-			wfe.progress=this.udat.transSecToViewProg(_loc_2);
-			wfe.isNext=false;
-			wfe.pause=false;
-			this.dispatchEvent(wfe);
             return;
         }// end function
 
