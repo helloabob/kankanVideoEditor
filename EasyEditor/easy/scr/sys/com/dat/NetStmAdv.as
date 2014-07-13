@@ -12,6 +12,7 @@
     import easy.scr.sys.com.cmd.ScreenStmEvt;
     import easy.scr.sys.com.cpt.SeekMgr;
     import easy.scr.sys.com.dat.def.NetStats;
+    import easy.scr.sys.stg.dat.ScreenDat;
     
     import org.osmf.events.MediaFactoryEvent;
     import org.osmf.events.MediaPlayerStateChangeEvent;
@@ -100,6 +101,8 @@
 					factory.addEventListener(MediaFactoryEvent.PLUGIN_LOAD_ERROR, handlePluginLoadError);
 					this.seekMgr.init();
 					this.mps = new MediaPlayerSprite();
+					this.mps.width=ScreenDat.stgWidth;
+					this.mps.height=ScreenDat.stgHeight;
 //					this.stream.client = {onMetaData:this.onMetaData};
 //					Trace.log(this.name + " init volume", this.dat.defaultVolume);
 					this.volTo(this.dat.defaultVolume);
@@ -257,7 +260,6 @@
 					this.seekStart = false;
 					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
 					break;
-					break;
 				}
 				case MediaPlayerState.LOADING:{
 					break;
@@ -275,6 +277,26 @@
 							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.META_LOADED));
 							this.hasDispatchedMeta=true;
 						}
+						
+						if (this.seekStart)
+						{
+							if (this.autoSeekPoint > -1)
+							{
+								Trace.log("autoSeekPoint");
+								this.stream.seek(this.autoSeekPoint);
+								this.autoSeekPoint = -1;
+								this.handlingClipId = this.lastSeekToClip;
+							}
+							Trace.log(this.name + " seek, start avoid");
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.SEEK_PLAY_START));
+							
+							this.seekStart = false;
+						}
+						else
+						{
+							this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PLAY_START));
+						}
+						
 						this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.BUF_FULL));
 					}
 					this.dispatchProxy(new ScreenStmEvt(ScreenStmEvt.PAUSE));

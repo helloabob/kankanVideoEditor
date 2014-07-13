@@ -40,7 +40,6 @@
 
         public function setPercent(param1:Number, param2:Boolean = false) : void
         {
-			Trace.log("ProgressShell_setPercent:"+param1);
             param1 = param1 > 1 ? (1) : (param1);
             param1 = param1 < 0 ? (0) : (param1);
             this.per = param1;
