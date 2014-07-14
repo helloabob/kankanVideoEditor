@@ -83,7 +83,7 @@
         public function renderStart(param1:Number,forced:Boolean=false) : Boolean
         {
 			if(this.isSerialMode&&forced==false){
-				this.startSeekPt=param1*this.dur;
+				this.startSeekPt=param1*width;
 				var sp:Sprite=this.selectedArr[sectionIndex];
 				if(this.startSeekPt<sp.x){
 					sp.width=sp.width+(sp.x-this.startSeekPt);
