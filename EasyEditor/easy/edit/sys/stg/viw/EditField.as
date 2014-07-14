@@ -344,7 +344,7 @@
             while (i < arr.length)
             {
                 block = arr[i];
-                if (this.editLayer.renderStart(this.udat.transSecToViewProg(block.start)))
+                if (this.editLayer.renderStart(this.udat.transSecToViewProg(block.start),true))
                 {
                     this.ptLayerEndMode();
                 }
@@ -352,7 +352,7 @@
                 {
                     this.ptLayerStartMode();
                 }
-                if (this.editLayer.renderEnd(this.udat.transSecToViewProg(block.end)))
+                if (this.editLayer.renderEnd(this.udat.transSecToViewProg(block.end),true))
                 {
                     this.ptLayerStartMode();
                 }
