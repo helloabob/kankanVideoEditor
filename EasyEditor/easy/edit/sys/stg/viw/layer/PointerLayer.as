@@ -66,11 +66,11 @@
 
         public function seekOffset(param1:Number) : void
         {
-			trace("seekOffset:"+param1);
             this.isTuning = true;
             this.isNext = param1 >= 0;
-            Trace.log("ptLayer seek prog", this.slider.getPercent() + param1);
+            Trace.log("seekOffset_getPercent:"+this.slider.getPercent()+"param1:"+param1);
             this.slider.setPercent(this.slider.getPercent() + param1);
+			this.slider.dispatchProgress();
             return;
         }// end function
 
@@ -104,11 +104,12 @@
 
         private function onProg(event:ProgressEvent) : void
         {
+			this.isTuning=true;
             var _loc_2:* = new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
             _loc_2.progress = this.udat.getTotProgByViewProg(event.progress);
             _loc_2.pause = this.isTuning;
             _loc_2.isNext = this.isNext;
-            Trace.log("workfield seek", event.progress + " / " + _loc_2.progress);
+            Trace.log("workfield seek:", event.progress + " / " + _loc_2.progress);
             this.isTuning = false;
             this.isNext = null;
             dispatchEvent(_loc_2);

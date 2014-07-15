@@ -1,12 +1,15 @@
 ﻿package easy.edit.sys.stg.viw.layer
 {
     import flash.display.Sprite;
+    import flash.events.MouseEvent;
     
     import easy.edit.sys.stg.EditViewFactory;
     import easy.edit.sys.stg.dat.SetPtCmdItem;
     import easy.edit.sys.stg.dat.SetPtCmdMgr;
     import easy.edit.sys.stg.dat.def.SetPtCmdType;
     import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    import easy.scr.pro.ScrFactory;
+    import easy.scr.sys.com.dat.PlayDat;
     
     import vsin.dcw.support.Trace;
 
@@ -21,6 +24,11 @@
         private var startSeekPt:Number;
         private var endSeekPt:Number;
         private var undoMgr:SetPtCmdMgr;
+		
+		private var editorHeight:int=10;
+		private var isSerialMode:Boolean=true;
+		private var line:Sprite;
+		private var sectionIndex:int=0;
 
         public function EditLayer()
         {
@@ -38,49 +46,102 @@
             _loc_3.graphics.moveTo(0, 0);
             _loc_3.graphics.lineTo((param1 - 1), (this.h - 1));
             addChild(_loc_3);
+			
+			var btn:CommitBtnSkin = new CommitBtnSkin();
+			btn.width=60;
+			btn.height=25;
+			btn.y=this.h+this.editorHeight+5;
+			btn.x=50;
+			btn.mouseEnabled=true;
+			btn.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
+			addChild(btn);
+			if((ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg!=null&&(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg.length>0)isSerialMode=true;
             return;
         }// end function
 
-        public function renderStart(param1:Number) : Boolean
+		private function onCompleteSerialMode(evt:MouseEvent):void{
+			this.isSerialMode=false;
+			line.parent.removeChild(line);
+			for each(var sp:Sprite in this.selectedArr){
+				sp.height=this.h;
+				if(sp.hasEventListener(MouseEvent.CLICK))sp.removeEventListener(MouseEvent.CLICK,onSliceTapped);
+			}
+		}
+		
+		private function onSliceTapped(evt:MouseEvent):void{
+			var sp:Sprite=evt.target as Sprite;
+			if(line==null){
+				line=new Sprite();
+				line.graphics.beginFill(0xff0000,1);
+				line.graphics.drawRect(0,sp.height-2,2,2);
+				line.graphics.endFill();
+			}
+			sp.addChild(line);
+			sectionIndex=this.selectedArr.indexOf(sp);
+		}
+		
+        public function renderStart(param1:Number,forced:Boolean=false) : Boolean
         {
-			trace("renderStart");
-            if (this.inProcess)
-            {
-				trace("renderStart_in_process");
-                return false;
-            }
-            this.startSeekPt = param1 * this.dur;
-            this.curOperateSprite = new SpriteForSelection();
-            this.curOperateSprite.graphics.beginFill(15592682, 1);
-            this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h);
-            this.curOperateSprite.graphics.endFill();
-            this.curOperateSprite.x = width * param1;
-            addChild(this.curOperateSprite);
-            this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_START));
-            this.inProcess = true;
-            this.selectedArr.push(this.curOperateSprite);
-            return true;
+			if(this.isSerialMode&&forced==false){
+				this.startSeekPt=param1*width;
+				var sp:Sprite=this.selectedArr[sectionIndex];
+				if(this.startSeekPt<sp.x){
+					sp.width=sp.width+(sp.x-this.startSeekPt);
+					sp.x=this.startSeekPt;
+				}else if(this.startSeekPt>sp.x){
+					sp.width=sp.width-(this.startSeekPt-sp.x);
+					sp.x=this.startSeekPt;
+				}
+				return true;
+			}else{
+				if (this.inProcess){
+					return false;
+				}
+				this.startSeekPt = param1 * this.dur;
+				this.curOperateSprite = new SpriteForSelection();
+				this.curOperateSprite.graphics.beginFill(15592682, 1);
+				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+this.editorHeight);
+				this.curOperateSprite.graphics.endFill();
+				this.curOperateSprite.x = width * param1;
+				addChild(this.curOperateSprite);
+				this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_START));
+				this.inProcess = true;
+				this.selectedArr.push(this.curOperateSprite);
+				return true;
+			}
         }// end function
 
-        public function renderEnd(param1:Number) : Boolean
+        public function renderEnd(param1:Number,forced:Boolean=false) : Boolean
         {
-            var _loc_2:Number = NaN;
-            var _loc_3:Number = NaN;
-            if (this.inProcess)
-            {
-                _loc_2 = width * param1;
-                _loc_3 = this.curOperateSprite.x;
-                this.curOperateSprite.width = _loc_2 - _loc_3;
-                this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_END));
-                this.endSeekPt = param1 * this.dur;
-                this.selectedDat.push({start:this.startSeekPt, end:this.endSeekPt, total:Number(this.endSeekPt - this.startSeekPt).toFixed(2)});
-                this.syncEditDat();
-                this.curOperateSprite.isDone = true;
-                this.inProcess = false;
-                this.notiTotSelectDur();
-                return true;
-            }
-            return false;
+			if(this.isSerialMode&&forced==false){
+				this.startSeekPt=param1*this.dur;
+				var sp:Sprite=this.selectedArr[sectionIndex];
+				if(this.startSeekPt<sp.x){
+					sp.width=sp.width-(sp.x-this.startSeekPt);
+				}else if(this.startSeekPt>sp.x){
+					sp.width=sp.width+(this.startSeekPt-sp.x);
+				}
+				return true;
+			}else{
+	            var _loc_2:Number = NaN;
+	            var _loc_3:Number = NaN;
+	            if (this.inProcess)
+	            {
+	                _loc_2 = width * param1;
+	                _loc_3 = this.curOperateSprite.x;
+	                this.curOperateSprite.width = _loc_2 - _loc_3;
+					if(this.isSerialMode)this.curOperateSprite.addEventListener(MouseEvent.CLICK,onSliceTapped);
+	                this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_END));
+	                this.endSeekPt = param1 * this.dur;
+	                this.selectedDat.push({start:this.startSeekPt, end:this.endSeekPt, total:Number(this.endSeekPt - this.startSeekPt).toFixed(2)});
+	                this.syncEditDat();
+	                this.curOperateSprite.isDone = true;
+	                this.inProcess = false;
+	                this.notiTotSelectDur();
+	                return true;
+	            }
+	            return false;
+			}
         }// end function
 
         public function undo(param1:SetPtCmdItem) : void
