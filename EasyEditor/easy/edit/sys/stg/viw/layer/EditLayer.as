@@ -26,9 +26,10 @@
         private var undoMgr:SetPtCmdMgr;
 		
 		private var editorHeight:int=10;
-		private var isSerialMode:Boolean=true;
+		public var isSerialMode:Boolean=true;
 		private var line:Sprite;
-		private var sectionIndex:int=0;
+		private var sectionIndex:int=-1;
+		private var btnCommit:CommitBtnSkin;
 
         public function EditLayer()
         {
@@ -46,26 +47,35 @@
             _loc_3.graphics.moveTo(0, 0);
             _loc_3.graphics.lineTo((param1 - 1), (this.h - 1));
             addChild(_loc_3);
-			
-			var btn:CommitBtnSkin = new CommitBtnSkin();
-			btn.width=60;
-			btn.height=25;
-			btn.y=this.h+this.editorHeight+5;
-			btn.x=50;
-			btn.mouseEnabled=true;
-			btn.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
-			addChild(btn);
-			if((ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg!=null&&(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg.length>0)isSerialMode=true;
             return;
         }// end function
 
+		public function showSerialMode():void{
+			if((ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg!=null&&(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg.length>0){
+				if(btnCommit==null)btnCommit = new CommitBtnSkin();
+				btnCommit.width=60;
+				btnCommit.height=25;
+				btnCommit.y=this.h+this.editorHeight+5;
+				btnCommit.x=50;
+				btnCommit.mouseEnabled=true;
+				btnCommit.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
+				addChild(btnCommit);
+				isSerialMode=true;
+			}
+		}
+		
 		private function onCompleteSerialMode(evt:MouseEvent):void{
 			this.isSerialMode=false;
 			line.parent.removeChild(line);
 			for each(var sp:Sprite in this.selectedArr){
 				sp.height=this.h;
 				if(sp.hasEventListener(MouseEvent.CLICK))sp.removeEventListener(MouseEvent.CLICK,onSliceTapped);
+//				sp.graphics.beginFill(15592682, 1);
+//				sp.graphics.drawRect(0, 0, 2, this.h);
+//				sp.graphics.endFill();
 			}
+			btnCommit.removeEventListener(MouseEvent.CLICK,onCompleteSerialMode);
+			removeChild(btnCommit);
 		}
 		
 		private function onSliceTapped(evt:MouseEvent):void{
@@ -83,15 +93,21 @@
         public function renderStart(param1:Number,forced:Boolean=false) : Boolean
         {
 			if(this.isSerialMode&&forced==false){
-				this.startSeekPt=param1*width;
-				var sp:Sprite=this.selectedArr[sectionIndex];
-				if(this.startSeekPt<sp.x){
-					sp.width=sp.width+(sp.x-this.startSeekPt);
-					sp.x=this.startSeekPt;
-				}else if(this.startSeekPt>sp.x){
-					sp.width=sp.width-(this.startSeekPt-sp.x);
-					sp.x=this.startSeekPt;
+				if(sectionIndex==-1)return false;
+				var _loc_2:*=param1*width;
+				if(sectionIndex>0){
+					if(_loc_2<this.selectedArr[sectionIndex-1].x+this.selectedArr[sectionIndex-1])return false;
 				}
+				var sp:Sprite=this.selectedArr[sectionIndex];
+				if(_loc_2<sp.x){
+					sp.width=sp.width+(sp.x-_loc_2);
+					sp.x=_loc_2;
+				}else if(_loc_2>sp.x){
+					sp.width=sp.width-(_loc_2-sp.x);
+					sp.x=_loc_2;
+				}
+				this.selectedDat[sectionIndex].start=(param1*dur).toFixed(2);
+				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
 				return true;
 			}else{
 				if (this.inProcess){
@@ -100,7 +116,7 @@
 				this.startSeekPt = param1 * this.dur;
 				this.curOperateSprite = new SpriteForSelection();
 				this.curOperateSprite.graphics.beginFill(15592682, 1);
-				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+this.editorHeight);
+				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+(isSerialMode?editorHeight:0));
 				this.curOperateSprite.graphics.endFill();
 				this.curOperateSprite.x = width * param1;
 				addChild(this.curOperateSprite);
@@ -114,13 +130,18 @@
         public function renderEnd(param1:Number,forced:Boolean=false) : Boolean
         {
 			if(this.isSerialMode&&forced==false){
-				this.startSeekPt=param1*this.dur;
+				if(sectionIndex==-1)return false;
+				var _loc_2:Number = width*param1;
+				if(_loc_2<=this.selectedArr[sectionIndex].x)return false;
+				if(sectionIndex<this.selectedArr.length-1&&_loc_2>=this.selectedArr[sectionIndex+1].x)return false;
 				var sp:Sprite=this.selectedArr[sectionIndex];
 				if(this.startSeekPt<sp.x){
 					sp.width=sp.width-(sp.x-this.startSeekPt);
 				}else if(this.startSeekPt>sp.x){
 					sp.width=sp.width+(this.startSeekPt-sp.x);
 				}
+				this.selectedDat[sectionIndex].end=(param1*dur).toFixed(2);
+				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
 				return true;
 			}else{
 	            var _loc_2:Number = NaN;
