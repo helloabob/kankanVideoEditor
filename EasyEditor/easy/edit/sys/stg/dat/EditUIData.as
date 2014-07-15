@@ -60,7 +60,7 @@
 
         public function getTotProgByClipTime(param1:int, param2:Number) : Number
         {
-			Trace.log("getTotProgByClipTime:"+param1+":"+param2+":"+this.dur);
+			Trace.log("getTotProgByClipTime:"+param1+"-----"+param2+"-----"+this.dur);
             return this.getTotTimeByClipTime(param1, param2) / this.dur;
         }// end function
 
@@ -147,7 +147,7 @@
 
         public function findClosestSp(param1:int, param2:Number) : Number
         {
-			vsin.dcw.support.Trace.log("findClosestSp:"+param1+":"+param2);
+			vsin.dcw.support.Trace.log("findClosestSp:"+param1+"-------p2:"+param2);
             var _loc_7:int = 0;
             var _loc_8:Number = NaN;
             var _loc_9:Number = NaN;

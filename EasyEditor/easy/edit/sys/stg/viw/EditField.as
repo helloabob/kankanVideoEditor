@@ -277,7 +277,7 @@
                 return;
             }
 			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
-            if (this.ptLayer.isSetStartEnabled())
+            if (this.ptLayer.isSetStartEnabled()||this.editLayer.isSerialMode)
             {
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_START_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
@@ -295,7 +295,7 @@
                 return;
             }
 			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
-            if (this.ptLayer.isSetEndEnabled())
+            if (this.ptLayer.isSetEndEnabled()||this.editLayer.isSerialMode)
             {
 				trace("setEndPoint2");
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_END_PT);

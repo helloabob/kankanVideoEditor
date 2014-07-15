@@ -8,6 +8,7 @@
     import easy.edit.sys.stg.dat.SetPtCmdMgr;
     import easy.edit.sys.stg.dat.def.SetPtCmdType;
     import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    import easy.hub.spv.InfoTipsMgr;
     import easy.scr.pro.ScrFactory;
     import easy.scr.sys.com.dat.PlayDat;
     
@@ -93,10 +94,20 @@
         public function renderStart(param1:Number,forced:Boolean=false) : Boolean
         {
 			if(this.isSerialMode&&forced==false){
-				if(sectionIndex==-1)return false;
+				if(sectionIndex==-1){
+					this.showAlert("请选择视频片段");
+					return false;
+				}
 				var _loc_2:*=param1*width;
 				if(sectionIndex>0){
-					if(_loc_2<this.selectedArr[sectionIndex-1].x+this.selectedArr[sectionIndex-1])return false;
+					if(_loc_2<this.selectedArr[sectionIndex-1].x+this.selectedArr[sectionIndex-1].width){
+						this.showAlert("包含了之前的选择区域");
+						return false;
+					}
+				}
+				if(_loc_2>this.selectedArr[sectionIndex].x+this.selectedArr[sectionIndex].width){
+					this.showAlert("请在终点前设置起点");
+					return false;
 				}
 				var sp:Sprite=this.selectedArr[sectionIndex];
 				if(_loc_2<sp.x){
@@ -129,17 +140,24 @@
 
         public function renderEnd(param1:Number,forced:Boolean=false) : Boolean
         {
+			Trace.log("renderEnd:"+param1);
 			if(this.isSerialMode&&forced==false){
-				if(sectionIndex==-1)return false;
-				var _loc_2:Number = width*param1;
-				if(_loc_2<=this.selectedArr[sectionIndex].x)return false;
-				if(sectionIndex<this.selectedArr.length-1&&_loc_2>=this.selectedArr[sectionIndex+1].x)return false;
-				var sp:Sprite=this.selectedArr[sectionIndex];
-				if(this.startSeekPt<sp.x){
-					sp.width=sp.width-(sp.x-this.startSeekPt);
-				}else if(this.startSeekPt>sp.x){
-					sp.width=sp.width+(this.startSeekPt-sp.x);
+				if(sectionIndex==-1){
+					this.showAlert("请选择视频片段");
+					return false;
 				}
+				var _loc_2:Number = width*param1;
+				if(_loc_2<=this.selectedArr[sectionIndex].x){
+					this.showAlert("请在起点后设置终点");
+					return false;
+				}
+				if(sectionIndex<this.selectedArr.length-1&&_loc_2>=this.selectedArr[sectionIndex+1].x){
+					this.showAlert("包含了之前的选择区域");
+					return false;
+				}
+				var sp:Sprite=this.selectedArr[sectionIndex];
+//				var _loc_3:*=sp.x+sp.width;
+				sp.width=_loc_2-sp.x;
 				this.selectedDat[sectionIndex].end=(param1*dur).toFixed(2);
 				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
 				return true;
@@ -154,7 +172,7 @@
 					if(this.isSerialMode)this.curOperateSprite.addEventListener(MouseEvent.CLICK,onSliceTapped);
 	                this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_END));
 	                this.endSeekPt = param1 * this.dur;
-	                this.selectedDat.push({start:this.startSeekPt, end:this.endSeekPt, total:Number(this.endSeekPt - this.startSeekPt).toFixed(2)});
+	                this.selectedDat.push({start:this.startSeekPt.toFixed(2), end:this.endSeekPt.toFixed(2), total:Number(this.endSeekPt - this.startSeekPt).toFixed(2)});
 	                this.syncEditDat();
 	                this.curOperateSprite.isDone = true;
 	                this.inProcess = false;
@@ -187,6 +205,11 @@
             return;
         }// end function
 
+		private function showAlert(title:String):void{
+			var _loc_3:* = new InfoTipsMgr();
+			_loc_3.show(title);
+		}
+		
         private function notiTotSelectDur() : void
         {
             var _loc_2:Object = null;
