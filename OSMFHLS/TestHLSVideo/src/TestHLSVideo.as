@@ -51,16 +51,16 @@ package
 //		public static const HLS_TEST:String = "http://114.80.151.66/hls/shss/index.m3u8";
 		public static const HLS_TEST:String = "http://segment.livehls.kksmg.com/m3u8/216_1403746090.m3u8?start={0}";
 		
-		public static const HLS_SPLIT:String = "http://segment.livehls.kksmg.com/m3u8/216_1404670365.m3u8?start={0}";
+		public static const HLS_SPLIT:String = "http://segment.livehls.kksmg.com/m3u8/216_1405459725.m3u8?start={0}";
 		
 		private var sp:Sprite;
 		var sp2:Sprite;
 		
 		public function TestHLSVideo()
 		{
-//						this.graphics.beginFill(0x0000ff,1);
-//						this.graphics.drawRect(0,0,600,600);
-//						this.graphics.endFill();
+						this.graphics.beginFill(0x0000ff,1);
+						this.graphics.drawRect(0,0,600,600);
+						this.graphics.endFill();
 			initPlayer();
 		}
 		
@@ -190,7 +190,7 @@ package
 		
 		private function onClick(evt:MouseEvent):void{
 //			container.visible=false;
-			container.y=10000;
+//			container.y=10000;
 //			container.removeMediaElement(element);
 //			player.stop();
 //			var mp:MediaPlayer=new MediaPlayer();
@@ -200,7 +200,8 @@ package
 			
 //			container.width=300;
 //			container.height=100;
-//			offset+=100;
+			offset+=100;
+			player.seek(offset);
 //			player.seek(31.64);
 //			container.removeMediaElement(element);
 //			trace(HLS_SPLIT.replace("{0}",offset));

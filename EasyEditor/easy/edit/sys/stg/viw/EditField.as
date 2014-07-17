@@ -51,10 +51,11 @@
             this.skin = new EditFieldSkin();
             this.undoMgr = EditViewFactory.to.getCompIns(SetPtCmdMgr);
             this.udat = EditViewFactory.to.getCompIns(EditUIData);
+			EditViewFactory.to.registComp(EditLayer);
             this.initedCallback = new CallBackCache();
             this.info = this.skin.info;
             this.caution = this.skin.caution;
-            this.editLayer = new EditLayer();
+            this.editLayer = EditViewFactory.to.getCompIns(EditLayer);
             this.specLayer = new SpecFieldLayer();
             this.ptLayer = new PointerLayer();
             this.gradLayer = new GradationLayer();
@@ -101,73 +102,91 @@
 
         private function onSetStart(param1:WorkFieldUIEvt) : void
         {
-            var _loc_9:InfoTipsMgr = null;
-            var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
-            Trace.log("onSetStart", _loc_2);
-            if (this.editLayer.isInSelected(_loc_2))
-            {
-                _loc_9 = new InfoTipsMgr();
-                _loc_9.show("请在空白处设置起点");
-                this.ptLayerStartMode();
-                return;
-            }
-            var _loc_3:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
-            var _loc_4:* = _loc_3[0];
-            var _loc_5:* = _loc_3[1];
-            var _loc_6:* = this.udat.findClosestSp(_loc_3[0], _loc_3[1]);
-            var _loc_7:* = this.udat.getTotProgByClipTime(_loc_3[0], _loc_6);
-//            var _loc_8:* = this.editLayer.renderStart(_loc_7);
-			trace("onSetStart1:"+_loc_7);
-            if (this.editLayer.renderStart(_loc_7))
-            {
-				trace("onSetStart2");
-                this.ptLayerEndMode();
-            }
-            else
-            {
-				trace("onSetStart3");
-                this.ptLayerStartMode();
-            }
+			if(this.editLayer.isSerialMode){
+				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
+				var _loc_3:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
+				var _loc_4:* = _loc_3[0];
+				var _loc_5:* = _loc_3[1];
+				var _loc_6:* = this.udat.findClosestSp(_loc_3[0], _loc_3[1]);
+				var _loc_7:* = this.udat.getTotProgByClipTime(_loc_3[0], _loc_6);
+				this.editLayer.renderStart(_loc_7);
+			}else{
+				var _loc_9:InfoTipsMgr = null;
+				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
+				if (this.editLayer.isInSelected(_loc_2))
+				{
+					_loc_9 = new InfoTipsMgr();
+					_loc_9.show("请在空白处设置起点");
+					this.ptLayerStartMode();
+					return;
+				}
+				var _loc_3:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
+				var _loc_4:* = _loc_3[0];
+				var _loc_5:* = _loc_3[1];
+				var _loc_6:* = this.udat.findClosestSp(_loc_3[0], _loc_3[1]);
+				var _loc_7:* = this.udat.getTotProgByClipTime(_loc_3[0], _loc_6);
+				trace("onSetStart1:"+_loc_7);
+				if (this.editLayer.renderStart(_loc_7))
+				{
+					trace("onSetStart2");
+					this.ptLayerEndMode();
+				}
+				else
+				{
+					trace("onSetStart3");
+					this.ptLayerStartMode();
+				}
+			}
             return;
         }// end function
 
         private function onSetEnd(param1:WorkFieldUIEvt) : void
         {
-            var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
-            Trace.log("onSetEnd", _loc_2);
-            var _loc_3:* = new InfoTipsMgr();
-            if (this.editLayer.isInSelected(_loc_2))
-            {
-                _loc_3.show("请在空白处设置终点");
-                this.ptLayerEndMode();
-                return;
-            }
-            if (this.editLayer.isBeforeStart(_loc_2))
-            {
-                _loc_3.show("请在起点后设置终点");
-                this.ptLayerEndMode();
-                return;
-            }
-            if (this.editLayer.isContainSelected(_loc_2))
-            {
-                _loc_3.show("包含了之前的选择区域");
-                this.ptLayerEndMode();
-                return;
-            }
-            var _loc_4:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
-            var _loc_5:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2)[0];
-            var _loc_6:* = _loc_4[1];
-            var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
-            var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
-//            var _loc_9:* = this.editLayer.renderEnd(_loc_8);
-            if (this.editLayer.renderEnd(_loc_8))
-            {
-                this.ptLayerStartMode();
-            }
-            else
-            {
-                this.ptLayerEndMode();
-            }
+			if(this.editLayer.isSerialMode){
+				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
+				var _loc_4:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
+				var _loc_5:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2)[0];
+				var _loc_6:* = _loc_4[1];
+				var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
+				var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
+				this.editLayer.renderEnd(_loc_8);
+			}else{
+				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
+				Trace.log("onSetEnd", _loc_2);
+				var _loc_3:* = new InfoTipsMgr();
+				if (this.editLayer.isInSelected(_loc_2))
+				{
+					_loc_3.show("请在空白处设置终点");
+					this.ptLayerEndMode();
+					return;
+				}
+				if (this.editLayer.isBeforeStart(_loc_2))
+				{
+					_loc_3.show("请在起点后设置终点");
+					this.ptLayerEndMode();
+					return;
+				}
+				if (this.editLayer.isContainSelected(_loc_2))
+				{
+					_loc_3.show("包含了之前的选择区域");
+					this.ptLayerEndMode();
+					return;
+				}
+				var _loc_4:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2);
+				var _loc_5:* = this.udat.transTotProgToClipIdAndClipFlyTime(_loc_2)[0];
+				var _loc_6:* = _loc_4[1];
+				var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
+				var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
+				//            var _loc_9:* = this.editLayer.renderEnd(_loc_8);
+				if (this.editLayer.renderEnd(_loc_8))
+				{
+					this.ptLayerStartMode();
+				}
+				else
+				{
+					this.ptLayerEndMode();
+				}
+			}
             return;
         }// end function
 
@@ -232,11 +251,6 @@
             Trace.err("cur and toSeek:", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] - this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
-			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
-			wfe.progress=this.udat.transSecToViewProg(_loc_2);
-			wfe.isNext=false;
-			wfe.pause=false;
-			this.dispatchEvent(wfe);
             return;
         }// end function
 
@@ -252,11 +266,6 @@
             Trace.err("cur and toSeek", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] + this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
-			var wfe:WorkFieldUIEvt=new WorkFieldUIEvt(WorkFieldUIEvt.SEEK);
-			wfe.progress=this.udat.transSecToViewProg(_loc_2);
-			wfe.isNext=false;
-			wfe.pause=false;
-			this.dispatchEvent(wfe);
             return;
         }// end function
 
@@ -268,7 +277,7 @@
                 return;
             }
 			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
-            if (this.ptLayer.isSetStartEnabled())
+            if (this.ptLayer.isSetStartEnabled()||this.editLayer.isSerialMode)
             {
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_START_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
@@ -286,7 +295,7 @@
                 return;
             }
 			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
-            if (this.ptLayer.isSetEndEnabled())
+            if (this.ptLayer.isSetEndEnabled()||this.editLayer.isSerialMode)
             {
 				trace("setEndPoint2");
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_END_PT);
@@ -354,7 +363,7 @@
             while (i < arr.length)
             {
                 block = arr[i];
-                if (this.editLayer.renderStart(this.udat.transSecToViewProg(block.start)))
+                if (this.editLayer.renderStart(this.udat.transSecToViewProg(block.start),true))
                 {
                     this.ptLayerEndMode();
                 }
@@ -362,7 +371,7 @@
                 {
                     this.ptLayerStartMode();
                 }
-                if (this.editLayer.renderEnd(this.udat.transSecToViewProg(block.end)))
+                if (this.editLayer.renderEnd(this.udat.transSecToViewProg(block.end),true))
                 {
                     this.ptLayerStartMode();
                 }

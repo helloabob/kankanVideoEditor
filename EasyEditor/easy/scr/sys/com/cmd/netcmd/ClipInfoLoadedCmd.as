@@ -1,13 +1,17 @@
 ﻿package easy.scr.sys.com.cmd.netcmd
 {
-    import easy.hub.evt.*;
-    import easy.scr.pro.*;
-    import easy.scr.sys.com.cmd.*;
-    import easy.scr.sys.com.dat.*;
-    import easy.scr.sys.com.net.*;
-	import vsin.dcw.support.Trace;
-    
     import flash.utils.setTimeout;
+    
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.viw.layer.EditLayer;
+    import easy.hub.evt.KeyFrEvt;
+    import easy.scr.pro.ScrDispatcher;
+    import easy.scr.pro.ScrFactory;
+    import easy.scr.pro.ScrTeller;
+    import easy.scr.sys.com.cmd.ScreenNetEvt;
+    import easy.scr.sys.com.dat.PlayDat;
+    
+    import vsin.dcw.support.Trace;
 
     public class ClipInfoLoadedCmd extends Object
     {
@@ -32,6 +36,7 @@
             _loc_5.tvName = _loc_2.tvName;
             _loc_5.clipDurArr = _loc_2.clipDurArr;
 			_loc_5.epg = _loc_2.epg;
+			EditViewFactory.to.getCompIns(EditLayer).showSerialMode();
             ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_5);
 			setTimeout(dispatchLoaded,500);
             return;

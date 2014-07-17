@@ -96,6 +96,7 @@
             if (this.silenceDrag)
             {
                 this.updateFill();
+				this.dispatchProgress();
             }
             return;
         }// end function
