@@ -29,7 +29,7 @@ package org.osmf.utils
 		 * @playerversion AIR 1.5
 		 * @productversion OSMF 1.6
 		 */
-		public static var enableStageVideo:Boolean = true;
+		public static var enableStageVideo:Boolean = false;
 		
 		/**
 		 * Obtains whether the version of Flash Player installed on the user’s 
