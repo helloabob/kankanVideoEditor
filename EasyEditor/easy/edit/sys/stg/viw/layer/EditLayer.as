@@ -53,6 +53,7 @@
 
 		public function showSerialMode():void{
 			if((ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg!=null&&(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg.length>0){
+				Trace.log("epg:"+(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg);
 				if(btnCommit==null)btnCommit = new CommitBtnSkin();
 				btnCommit.width=60;
 				btnCommit.height=25;
@@ -62,6 +63,12 @@
 				btnCommit.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
 				addChild(btnCommit);
 				isSerialMode=true;
+			}else{
+				isSerialMode=false;
+				for each(var sp:Sprite in this.selectedArr){
+					sp.height=this.h;
+					if(sp.hasEventListener(MouseEvent.CLICK))sp.removeEventListener(MouseEvent.CLICK,onSliceTapped);
+				}
 			}
 		}
 		
@@ -71,9 +78,6 @@
 			for each(var sp:Sprite in this.selectedArr){
 				sp.height=this.h;
 				if(sp.hasEventListener(MouseEvent.CLICK))sp.removeEventListener(MouseEvent.CLICK,onSliceTapped);
-//				sp.graphics.beginFill(15592682, 1);
-//				sp.graphics.drawRect(0, 0, 2, this.h);
-//				sp.graphics.endFill();
 			}
 			btnCommit.removeEventListener(MouseEvent.CLICK,onCompleteSerialMode);
 			removeChild(btnCommit);
@@ -128,6 +132,7 @@
 				this.curOperateSprite = new SpriteForSelection();
 				this.curOperateSprite.graphics.beginFill(15592682, 1);
 				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+(isSerialMode?editorHeight:0));
+				Trace.log("render_start");
 				this.curOperateSprite.graphics.endFill();
 				this.curOperateSprite.x = width * param1;
 				addChild(this.curOperateSprite);

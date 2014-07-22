@@ -46,6 +46,8 @@
 				if(String(param1.videoURL).indexOf(".m3u8")>0){
 					this.pDat.ishls=true;
 					this.pDat.epg=null;
+				}else{
+					this.pDat.keyFrameInfo=null;
 				}
 				ScrDispatcher.to.dispatch(new ScreenNetEvt(ScreenNetEvt.CLIP_INFO_LOADED));
 				return;

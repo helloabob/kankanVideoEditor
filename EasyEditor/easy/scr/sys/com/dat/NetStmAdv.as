@@ -5,10 +5,14 @@
     import flash.external.ExternalInterface;
     import flash.net.NetStream;
     
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.viw.layer.EditLayer;
+    import easy.hub.evt.KeyFrEvt;
     import easy.hub.evt.TimerEvt;
     import easy.hub.spv.LoadingMgr;
     import easy.scr.pro.ScrDispatcher;
     import easy.scr.pro.ScrFactory;
+    import easy.scr.pro.ScrTeller;
     import easy.scr.sys.com.cmd.ScreenStmEvt;
     import easy.scr.sys.com.cpt.SeekMgr;
     import easy.scr.sys.com.dat.def.NetStats;
@@ -436,13 +440,7 @@
 //				}
 //			}
 //			trace(param1.seekpoints.toString());
-//			var sps:*=param1.seekpoints;
-//			var kfs:Array=[];
-//			var _loc_9:Number=0;
-//			for (var i:int=0;i<sps.length;i++){
-//				_loc_9=sps[i].time;
-//				kfs[i]=_loc_9;
-//			}
+			
 //			trace("meta:"+kfs.join(";"));
 			
 //			trace("-----------end-----------");
@@ -464,6 +462,30 @@
 //			var st:ScrTeller=ScrFactory.to.getCompIns(ScrTeller);
 //			st.dispatchEvent(kfe);
 			/*end*/
+			/*meta data*/
+			Trace.log("-----onMetaData-----");
+			if(this.dat.keyFrameInfo==null){
+				Trace.log("----notify-----");
+				var sps:*=param1.seekpoints;
+				var kfs:Array=[];
+				var _loc_9:Number=0;
+				for (var i:int=0;i<sps.length;i++){
+					_loc_9=sps[i].time;
+					kfs[i]=_loc_9;
+				}
+				this.dat.keyFrameInfo = [kfs.join(";")];
+//				Trace.log("kft:"+this.dat.keyFrameInfo[0]);
+				var _loc_6:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+				_loc_6.totTime = this.dat.totDuration;
+				_loc_6.totBytes = this.dat.totBytes;
+				_loc_6.keyFrDat = this.dat.keyFrameInfo;
+				_loc_6.tvName = this.dat.tvName;
+				_loc_6.clipDurArr = this.dat.clipDurArr;
+				_loc_6.epg = this.dat.epg;
+				ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_6);
+				EditViewFactory.to.getCompIns(EditLayer).showSerialMode();
+			}
+			/**/
             var _loc_2:int = 0;
             var _loc_3:* = param1.seekpoints;
             var _loc_4:* = _loc_3.length;
