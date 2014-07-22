@@ -132,37 +132,36 @@ package org.osmf.net.httpstreaming.hls
 					}
 				}
 			}
-			if(indexContext!=null&&_indexString.indexOf("?split=")>=0){
-				//handle split case
-				trace("split_____started.......");
-				var jsonString:String=_indexString.substr(_indexString.indexOf("?split=")+7);
-				var array:Object = JSON.parse(jsonString);
-				if(array.length>0){
-					var passtime:Number=0;
-					var slice:int=0;
-					i=0;
-					while(true){
-						if(i>=lines.length)break;
-						if(String(lines[i]).indexOf("#EXTINF:") == 0){
-							passtime+=parseFloat(String(lines[i]).substr(8));
-							if(slice>=array.length){
-								lines.splice(i,2);
-								continue;
-							}
-							if(passtime>Number(array[slice].start)&&passtime<Number(array[slice].end)){
-								i=i+2;
-							}else if(passtime>=Number(array[slice].end)){
-								slice++;
-								i=i+2;
-							}else{
-								lines.splice(i,2);
-							}
-						}else{
-							i=i+1;
-						}
-					}
-				}
-			}
+//			if(indexContext!=null&&_indexString.indexOf("?split=")>=0){
+//				trace("split_____started.......");
+//				var jsonString:String=_indexString.substr(_indexString.indexOf("?split=")+7);
+//				var array:Object = JSON.parse(jsonString);
+//				if(array.length>0){
+//					var passtime:Number=0;
+//					var slice:int=0;
+//					i=0;
+//					while(true){
+//						if(i>=lines.length)break;
+//						if(String(lines[i]).indexOf("#EXTINF:") == 0){
+//							passtime+=parseFloat(String(lines[i]).substr(8));
+//							if(slice>=array.length){
+//								lines.splice(i,2);
+//								continue;
+//							}
+//							if(passtime>Number(array[slice].start)&&passtime<Number(array[slice].end)){
+//								i=i+2;
+//							}else if(passtime>=Number(array[slice].end)){
+//								slice++;
+//								i=i+2;
+//							}else{
+//								lines.splice(i,2);
+//							}
+//						}else{
+//							i=i+1;
+//						}
+//					}
+//				}
+//			}
 //			if(indexContext!=null){
 //				trace("con:"+lines);
 //			}
@@ -234,10 +233,10 @@ package org.osmf.net.httpstreaming.hls
 						discontinuityExpected = false;
 						continue;
 					}
-//					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
-//						discontinuityExpected = true;
-//						continue;
-//					}
+					if(String(lines[i]).indexOf("#EXT-X-DISCONTINUITY") === 0) {
+						discontinuityExpected = true;
+						continue;
+					}
 					if(String(lines[i]).indexOf("#EXT-X-ENDLIST") == 0)
 					{
 						//  This is not a live stream
