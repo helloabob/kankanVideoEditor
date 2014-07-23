@@ -19,7 +19,7 @@
         public function ClipInfoLoadedCmd(param1:ScreenNetEvt)
         {
 			Trace.log("ClipInfoLoadedCmd");
-//            var _loc_2:PlayDat = ScrFactory.to.getCompIns(PlayDat);
+            var _loc_2:PlayDat = ScrFactory.to.getCompIns(PlayDat);
 //            var _loc_3:* = _loc_2.clipUrls.length;
 //            _loc_2.allPlayUrl = [];
 //            var _loc_4:int = 0;
@@ -29,6 +29,17 @@
 //                new GetPlayUrl(_loc_4);
 //                _loc_4++;
 //            }
+			if(_loc_2.ishls){
+				var _loc_5:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
+				_loc_5.totTime = _loc_2.totDuration;
+				_loc_5.totBytes = _loc_2.totBytes;
+				_loc_5.keyFrDat = _loc_2.keyFrameInfo;
+				_loc_5.tvName = _loc_2.tvName;
+				_loc_5.clipDurArr = _loc_2.clipDurArr;
+//				_loc_5.epg = _loc_2.epg;
+				ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_5);
+				EditViewFactory.to.getCompIns(EditLayer).showSerialMode();
+			}
 			setTimeout(dispatchLoaded,500);
             return;
         }
