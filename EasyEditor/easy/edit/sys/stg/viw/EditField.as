@@ -126,6 +126,8 @@
 				var _loc_6:* = this.udat.findClosestSp(_loc_3[0], _loc_3[1]);
 				var _loc_7:* = this.udat.getTotProgByClipTime(_loc_3[0], _loc_6);
 				trace("onSetStart1:"+_loc_7);
+//				add param of user start point portion
+//				this.editLayer.renderStart(_loc_7,_loc_2);
 				if (this.editLayer.renderStart(_loc_7))
 				{
 					trace("onSetStart2");
