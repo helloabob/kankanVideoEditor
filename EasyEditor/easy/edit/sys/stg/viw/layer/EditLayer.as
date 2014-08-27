@@ -74,7 +74,7 @@
 		
 		private function onCompleteSerialMode(evt:MouseEvent):void{
 			this.isSerialMode=false;
-			line.parent.removeChild(line);
+			if(line)line.parent.removeChild(line);
 			for each(var sp:Sprite in this.selectedArr){
 				sp.height=this.h;
 				if(sp.hasEventListener(MouseEvent.CLICK))sp.removeEventListener(MouseEvent.CLICK,onSliceTapped);

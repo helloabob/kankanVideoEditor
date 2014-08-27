@@ -1,10 +1,12 @@
 ﻿package easy.scr.sys.com.net.parser
 {
-    import easy.hub.spv.*;
-    import easy.scr.pro.*;
-    import easy.scr.sys.com.cmd.*;
-    import easy.scr.sys.com.dat.*;
-    import vsin.dcw.support.*;
+    import easy.hub.spv.InfoTipsMgr;
+    import easy.scr.pro.ScrDispatcher;
+    import easy.scr.pro.ScrFactory;
+    import easy.scr.sys.com.cmd.ScreenNetEvt;
+    import easy.scr.sys.com.dat.PlayDat;
+    
+    import vsin.dcw.support.Trace;
 
     public class PlayInfoParser extends Object
     {
@@ -34,11 +36,14 @@
 //				this.pDat.hashIds = param1.data.hc;
 //				this.pDat.syncUrls = param1.data.su || [];
 				if(param1.epg&&param1.epg.length>0)_loc_1=JSON.stringify(param1.epg);
-				this.pDat.clipUrls = [param1.videoURL];
+//				this.pDat.clipUrls = [param1.videoURL];
+				this.pDat.clipUrls = ["http://test.editor.com/test_kankan.mp4"];
 				this.pDat.totBytes = param1.totalBytes;
 				this.pDat.clipByteArr = [param1.totalBytes];
-				this.pDat.totDuration = param1.duration;
-				this.pDat.clipDurArr = [param1.duration];
+//				var dur:Number = param1.duration;
+				var dur:Number = 3202;
+				this.pDat.totDuration = dur;
+				this.pDat.clipDurArr = [dur];
 				this.pDat.keyFrameInfo = [param1.kft];
 				this.pDat.tvName = param1.videoName;
 				this.pDat.epg = _loc_1;

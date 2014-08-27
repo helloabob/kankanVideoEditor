@@ -120,6 +120,7 @@
             {
                 return _loc_4 + this.findNextSp((param1 + 1), 0);
             }
+			Trace.log("findNextSp:"+param1+" and "+param2+ " result: "+_loc_4);
             return _loc_4;
         }// end function
 

@@ -474,7 +474,7 @@
 					kfs[i]=_loc_9;
 				}
 				this.dat.keyFrameInfo = [kfs.join(";")];
-//				Trace.log("kft:"+this.dat.keyFrameInfo[0]);
+				Trace.log("kft:"+this.dat.keyFrameInfo[0]);
 				var _loc_6:KeyFrEvt = new KeyFrEvt(KeyFrEvt.KEY_FRAME_LOADED);
 				_loc_6.totTime = this.dat.totDuration;
 				_loc_6.totBytes = this.dat.totBytes;

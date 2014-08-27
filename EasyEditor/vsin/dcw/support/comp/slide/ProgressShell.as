@@ -15,7 +15,9 @@
         protected var per:Number = 0;
         protected var track:ButtonShell;
         protected var fill:ButtonShell;
+//		PointerSliderSkin_top
         protected var skinFill:MovieClip;
+//		PointerSliderSkin_bot
         protected var skinTrack:MovieClip;
 
         public function ProgressShell(param1:MovieClip, param2:MovieClip)
@@ -119,12 +121,14 @@
             this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
 			/*add*/
 			this.dispatchProgress();
+//			this.dispatchProgress(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
             return;
         }// end function
 
 		public function dispatchProgress():void{
 			var evt:vsin.dcw.support.comp.evt.ProgressEvent=new vsin.dcw.support.comp.evt.ProgressEvent(vsin.dcw.support.comp.evt.ProgressEvent.PROGRESS_CHANGE);
 			evt.progress=this.per;
+//			evt.progress = rate;
 			this.dispatchEvent(evt);
 		}
 		
