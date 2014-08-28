@@ -1,10 +1,15 @@
 ﻿package vsin.dcw.support.comp.slide
 {
-    import flash.display.*;
-    import flash.events.*;
-    import flash.geom.*;
-    import vsin.dcw.support.comp.btn.*;
-    import vsin.dcw.support.comp.evt.*;
+    import flash.display.MovieClip;
+    import flash.events.MouseEvent;
+    import flash.geom.Rectangle;
+    
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.dat.EditUIData;
+    
+    import vsin.dcw.support.Trace;
+    import vsin.dcw.support.comp.btn.ButtonShell;
+    import vsin.dcw.support.comp.evt.SliderEvent;
 
     public class SliderShell extends ProgressShell
     {
@@ -95,7 +100,7 @@
             this.isDraging = false;
             if (this.silenceDrag)
             {
-                this.updateFill();
+                this.updateFill(true);
 				this.dispatchProgress();
             }
             return;
@@ -108,17 +113,29 @@
             return;
         }// end function
 
-        protected function updateFill() : void
+        protected function updateFill(isUp:Boolean=false) : void
         {
             var _loc_1:* = this.skinThumb.x - skinTrack.x;
+			_loc_1 += this.skinThumb.width/2;
+			if(isUp){
+				var udat:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
+				var rate:Number = _loc_1 / this.skinTrack.width;
+				var _loc_5:* = udat.transTotProgToClipIdAndClipFlyTime(rate);
+				var _loc_2:* = udat.findClosestSp(_loc_5[0], _loc_5[1]);
+				var res:Number = udat.transSecToViewProg(_loc_2);
+//				_loc_1 = res * this.skinTrack.width;
+				Trace.log("updateFill:"+rate+"   res:"+res+"  l5:"+_loc_5[0]+","+_loc_5[1]+"  l2:"+_loc_2);
+				this.setPercent(res);
+			}else{
             if (this.silenceDrag && this.isDraging)
             {
-                super.setPercentByPx(_loc_1 + this.skinThumb.width / 2, true);
+                super.setPercentByPx(_loc_1, true);
             }
             else
             {
-                super.setPercentByPx(_loc_1 + this.skinThumb.width / 2);
+                super.setPercentByPx(_loc_1);
             }
+			}
             return;
         }// end function
 

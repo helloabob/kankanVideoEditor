@@ -5,6 +5,9 @@
     import flash.events.MouseEvent;
     import flash.geom.Rectangle;
     
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.dat.EditUIData;
+    
     import vsin.dcw.support.Trace;
     import vsin.dcw.support.comp.btn.ButtonShell;
     import vsin.dcw.support.comp.def.ButtonStat;
@@ -118,7 +121,17 @@
 
         protected function onTrackDown(event:MouseEvent) : void
         {
-            this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
+//			this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
+			
+			/*add for find next key frame point*/
+			var udat:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
+			var rate:Number = event.localX * this.skinTrack.scaleX / this.skinTrack.width;
+			var _loc_1:* = udat.transTotProgToClipIdAndClipFlyTime(rate);
+			var _loc_2:* = udat.findClosestSp(_loc_1[0], _loc_1[1]);
+//			var _loc_3:* = _loc_2 - _loc_1[1];
+			var res:Number = udat.transSecToViewProg(_loc_2);
+			this.setPercent(res);
+			Trace.log("onTrackDown_rate:"+rate+"   res:"+res+"  l1:"+_loc_1[0]+","+_loc_1[1]+"  l2:"+_loc_2);
 			/*add*/
 			this.dispatchProgress();
 //			this.dispatchProgress(event.localX * this.skinTrack.scaleX / this.skinTrack.width);
