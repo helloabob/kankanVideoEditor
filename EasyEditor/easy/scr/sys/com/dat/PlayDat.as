@@ -38,6 +38,7 @@
         public var lastSeekToClipTime:Number = 0;
 		public var epg:String;
 		public var ishls:Boolean=false;
+		public var threshold:int = 1;
 		public var mps:MediaPlayerSprite;
 
         public function PlayDat()

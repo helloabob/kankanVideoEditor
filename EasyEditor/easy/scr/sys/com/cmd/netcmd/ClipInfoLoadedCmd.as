@@ -36,6 +36,7 @@
 				_loc_5.keyFrDat = _loc_2.keyFrameInfo;
 				_loc_5.tvName = _loc_2.tvName;
 				_loc_5.clipDurArr = _loc_2.clipDurArr;
+				_loc_5.threshold = _loc_2.threshold;
 //				_loc_5.epg = _loc_2.epg;
 				ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_5);
 				EditViewFactory.to.getCompIns(EditLayer).showSerialMode();

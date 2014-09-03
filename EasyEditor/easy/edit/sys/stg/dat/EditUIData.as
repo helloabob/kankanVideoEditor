@@ -17,7 +17,9 @@
         private var viewDuration:Number;
         private var viewWidth:Number;
         private var viewStartTime:Number;
-        private const KEYFR_OFFSET_AVOID:int = 5;
+		
+		public var KEYFR_OFFSET_AVOID:int = 1;
+//        private const KEYFR_OFFSET_AVOID:int = 5;
 
         public function EditUIData()
         {
@@ -110,7 +112,7 @@
             {
                 
                 _loc_4 = _loc_3[_loc_6];
-                if (_loc_4 > param2 && Math.abs(_loc_4 - param2) > this.KEYFR_OFFSET_AVOID)
+                if (_loc_4 > param2 && Math.abs(_loc_4 - param2) >= this.KEYFR_OFFSET_AVOID)
                 {
                     break;
                 }
@@ -137,7 +139,7 @@
             {
                 
                 _loc_4 = _loc_3[_loc_6];
-                if (_loc_4 < param2 && Math.abs(_loc_4 - param2) > this.KEYFR_OFFSET_AVOID)
+                if (_loc_4 < param2 && Math.abs(_loc_4 - param2) >= this.KEYFR_OFFSET_AVOID)
                 {
                     break;
                 }

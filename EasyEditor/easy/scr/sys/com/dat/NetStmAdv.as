@@ -482,6 +482,7 @@
 				_loc_6.tvName = this.dat.tvName;
 				_loc_6.clipDurArr = this.dat.clipDurArr;
 				_loc_6.epg = this.dat.epg;
+				_loc_6.threshold = this.dat.threshold;
 				ScrFactory.to.getCompIns(ScrTeller).dispatchEvent(_loc_6);
 				EditViewFactory.to.getCompIns(EditLayer).showSerialMode();
 			}

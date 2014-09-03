@@ -50,6 +50,7 @@
 				this.pDat.tvName = param1.videoName;
 				this.pDat.epg = _loc_1;
 				this.pDat.clipSeekMark = [];
+				this.pDat.threshold = param1.threshold;
 				if(String(param1.videoURL).indexOf(".m3u8")>0){
 					this.pDat.ishls=true;
 					this.pDat.epg=null;

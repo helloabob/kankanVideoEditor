@@ -92,6 +92,7 @@
             Trace.log(this.name, "onKeyFr");
             Trace.log("keyframe loaded", param1.keyFrDat.length);
             this.udat.clipDurArr = param1.clipDurArr;
+			this.udat.KEYFR_OFFSET_AVOID = param1.threshold;
             var _loc_2:Array = [];
             for each (_loc_4 in param1.keyFrDat)
             {
