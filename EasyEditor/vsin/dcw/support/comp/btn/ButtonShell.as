@@ -1,8 +1,11 @@
 ﻿package vsin.dcw.support.comp.btn
 {
-    import flash.display.*;
-    import flash.events.*;
-    import vsin.dcw.support.comp.def.*;
+    import flash.display.DisplayObjectContainer;
+    import flash.display.MovieClip;
+    import flash.events.EventDispatcher;
+    import flash.events.MouseEvent;
+    
+    import vsin.dcw.support.comp.def.ButtonStat;
 
     public class ButtonShell extends EventDispatcher
     {
@@ -121,6 +124,7 @@
         {
             this.skin.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
             this.skin.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			this.skin.addEventListener(MouseEvent.MOUSE_MOVE, this.onMove);
             this.skin.addEventListener(MouseEvent.MOUSE_DOWN, this.onDown);
             this.skin.addEventListener(MouseEvent.MOUSE_UP, this.onUp);
             this.skin.buttonMode = true;
@@ -157,6 +161,21 @@
             }
             return;
         }// end function
+		
+		protected function onMove(event:MouseEvent) : void
+		{
+			if (this._isEnabled)
+			{
+				this._curStat = ButtonStat.OVER;
+				this.updateStat();
+				dispatchEvent(event);
+			}
+			else
+			{
+				event.stopImmediatePropagation();
+			}
+			return;
+		}// end function
 
         protected function onDown(event:MouseEvent) : void
         {

@@ -1,23 +1,30 @@
 ﻿package easy.edit.sys.stg.viw
 {
+    import flash.display.Sprite;
+    import flash.events.MouseEvent;
+    import flash.text.TextField;
+    
     import easy.edit.ent.EditContext;
     import easy.edit.pro.EditDispatcher;
     import easy.edit.sys.mdt.EditBoot;
-    import easy.edit.sys.stg.*;
-    import easy.edit.sys.stg.dat.*;
-    import easy.edit.sys.stg.dat.def.*;
-    import easy.edit.sys.stg.evt.*;
-    import easy.edit.sys.stg.viw.layer.*;
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.dat.EditUIData;
+    import easy.edit.sys.stg.dat.SetPtCmdMgr;
+    import easy.edit.sys.stg.dat.def.SetPtCmdType;
+    import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    import easy.edit.sys.stg.viw.layer.EditLayer;
+    import easy.edit.sys.stg.viw.layer.GradationLayer;
+    import easy.edit.sys.stg.viw.layer.PointerLayer;
+    import easy.edit.sys.stg.viw.layer.SpecFieldLayer;
     import easy.hub.evt.WorkEvt;
-    import easy.hub.spv.*;
+    import easy.hub.spv.InfoTipsMgr;
     import easy.scr.pro.ScrFactory;
     
-    import flash.display.*;
-    import flash.events.*;
-    import flash.text.*;
-    
-    import vsin.dcw.support.*;
-    import vsin.dcw.support.comp.btn.*;
+    import vsin.dcw.support.CallBackCache;
+    import vsin.dcw.support.Tools;
+    import vsin.dcw.support.Trace;
+    import vsin.dcw.support.comp.btn.CheckBoxShell;
+    import vsin.dcw.support.comp.evt.ProgressEvent;
 
     public class EditField extends Sprite
     {
@@ -39,6 +46,7 @@
         private var editTimeField:TextField;
         private var flyTimeField:TextField;
         private var durationField:TextField;
+		private var moveTimeField:TextField;
         private const FIX_SEEK_WHEN_IN_CLIP_EDGE:int = 0;
 
         public function EditField()
@@ -72,6 +80,7 @@
             this.editTimeField = this.info.totalEditTime;
             this.flyTimeField = this.info.flyTime;
             this.durationField = this.info.totalTime;
+			this.moveTimeField = this.info.moveTime;
             this.playBtn = new CheckBoxShell(this.skin.playBtn);
             this.addEvent();
             addChild(this.skin);
@@ -83,6 +92,7 @@
             this.playBtn.addEventListener(MouseEvent.MOUSE_UP, this.onPlayCtrl);
             this.ptLayer.addEventListener(WorkFieldUIEvt.SET_START_PT, this.onSetStart);
             this.ptLayer.addEventListener(WorkFieldUIEvt.SET_END_PT, this.onSetEnd);
+			this.ptLayer.addEventListener(ProgressEvent.MOUSE_MOVE,this.onSetMoveTime);
             this.editLayer.addEventListener(WorkFieldUIEvt.SELECTION_CHANGE, this.onSelectionChange);
             return;
         }// end function
@@ -436,5 +446,10 @@
             return;
         }// end function
 
+		private function onSetMoveTime(event:ProgressEvent):void{
+			this.moveTimeField.text = Tools.formatTime(event.progressOver);
+			return;
+		}// end function
+		
     }
 }

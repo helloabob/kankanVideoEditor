@@ -63,6 +63,7 @@
 
         public function enableTrackMouse(param1:Boolean) : void
         {
+			trace("ProgressShell_enableTrackMouse");
             this.skinTrack.mouseChildren = param1;
             this.skinTrack.mouseEnabled = param1;
             this.skinFill.mouseChildren = param1;
@@ -114,11 +115,22 @@
         {
             this.track.addEventListener(MouseEvent.MOUSE_DOWN, this.toFill);
             this.track.addEventListener(MouseEvent.MOUSE_DOWN, this.onTrackDown);
+			this.track.addEventListener(MouseEvent.MOUSE_MOVE, this.MouseMove);
             this.skinFill.mouseEnabled = false;
             this.skinFill.hitArea = this.skinTrack;
             return;
         }// end function
 
+		protected function MouseMove(event:MouseEvent):void{
+			trace("ProgressShell_MOUSE_MOVE");
+			var evt:ProgressEvent = new ProgressEvent(ProgressEvent.MOUSE_MOVE);
+			var udat:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
+			var rate:Number = event.localX * this.skinTrack.scaleX / this.skinTrack.width;
+			var _loc_1:* = udat.transTotProgToClipIdAndClipFlyTime(rate);
+			evt.progressOver = _loc_1[2];
+			this.dispatchEvent(evt);
+		}
+		
         protected function onTrackDown(event:MouseEvent) : void
         {
 //			this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);

@@ -1,12 +1,14 @@
 ﻿package easy.edit.sys.stg.viw.layer
 {
-    import easy.edit.sys.stg.*;
-    import easy.edit.sys.stg.dat.*;
-    import easy.edit.sys.stg.evt.*;
-    import easy.edit.sys.stg.viw.comp.*;
-    import flash.display.*;
-    import vsin.dcw.support.*;
-    import vsin.dcw.support.comp.evt.*;
+    import flash.display.Sprite;
+    
+    import easy.edit.sys.stg.EditViewFactory;
+    import easy.edit.sys.stg.dat.EditUIData;
+    import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    import easy.edit.sys.stg.viw.comp.PointerSliderShell;
+    
+    import vsin.dcw.support.Trace;
+    import vsin.dcw.support.comp.evt.ProgressEvent;
 
     public class PointerLayer extends Sprite
     {
@@ -32,6 +34,7 @@
             this.slider.width = param1;
             this.slider.setPercent(0, true);
             this.slider.addEventListener(ProgressEvent.PROGRESS_CHANGE, this.onProg);
+			this.slider.addEventListener(ProgressEvent.MOUSE_MOVE,onShowMouseMoveTime);
             this.dur = param2;
             var _loc_3:* = param1 - 1;
             var _loc_4:* = height - 1;
@@ -102,6 +105,11 @@
             return;
         }// end function
 
+		private function onShowMouseMoveTime(event:ProgressEvent):void{
+			trace("mouseover:"+event.progressOver);
+			dispatchEvent(event.clone());
+		}
+		
         private function onProg(event:ProgressEvent) : void
         {
 			this.isTuning=true;
