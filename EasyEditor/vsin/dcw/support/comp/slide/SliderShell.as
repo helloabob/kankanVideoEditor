@@ -9,6 +9,7 @@
     
     import vsin.dcw.support.Trace;
     import vsin.dcw.support.comp.btn.ButtonShell;
+    import vsin.dcw.support.comp.evt.ProgressEvent;
     import vsin.dcw.support.comp.evt.SliderEvent;
 
     public class SliderShell extends ProgressShell
@@ -127,14 +128,20 @@
 				Trace.log("updateFill:"+rate+"   res:"+res+"  l5:"+_loc_5[0]+","+_loc_5[1]+"  l2:"+_loc_2);
 				this.setPercent(res);
 			}else{
-            if (this.silenceDrag && this.isDraging)
-            {
-                super.setPercentByPx(_loc_1, true);
-            }
-            else
-            {
-                super.setPercentByPx(_loc_1);
-            }
+	            if (this.silenceDrag && this.isDraging)
+	            {
+	                super.setPercentByPx(_loc_1, true);
+	            }
+	            else
+	            {
+	                super.setPercentByPx(_loc_1);
+	            }
+				var evt:ProgressEvent = new ProgressEvent(ProgressEvent.MOUSE_MOVE);
+				var _loc_6:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
+				var _loc_7:Number = _loc_1 / this.skinTrack.width;
+				var _loc_10:* = _loc_6.transTotProgToClipIdAndClipFlyTime(_loc_7);
+				evt.progressOver = _loc_10[2];
+				this.dispatchEvent(evt);
 			}
             return;
         }// end function
