@@ -131,6 +131,10 @@
 			this.dispatchEvent(evt);
 		}
 		
+		public function seekManuallyByTime(time:Number):void{
+			
+		}
+		
         protected function onTrackDown(event:MouseEvent) : void
         {
 //			this.setPercent(event.localX * this.skinTrack.scaleX / this.skinTrack.width);

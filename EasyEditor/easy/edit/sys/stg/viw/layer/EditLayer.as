@@ -29,8 +29,10 @@
 		private var editorHeight:int=10;
 		public var isSerialMode:Boolean=true;
 		private var line:Sprite;
-		private var sectionIndex:int=-1;
+		public var sectionIndex:int=-1;
 		private var btnCommit:CommitBtnSkin;
+		
+		private var colorState:Boolean=true;
 
         public function EditLayer()
         {
@@ -74,6 +76,7 @@
 		
 		private function onCompleteSerialMode(evt:MouseEvent):void{
 			this.isSerialMode=false;
+			sectionIndex = -1;
 			if(line)line.parent.removeChild(line);
 			for each(var sp:Sprite in this.selectedArr){
 				sp.height=this.h;
@@ -85,14 +88,16 @@
 		
 		private function onSliceTapped(evt:MouseEvent):void{
 			var sp:Sprite=evt.target as Sprite;
-			if(line==null){
-				line=new Sprite();
-				line.graphics.beginFill(0xff0000,1);
-				line.graphics.drawRect(0,sp.height-2,2,2);
-				line.graphics.endFill();
+			if(sectionIndex==-1||sectionIndex!=selectedArr.indexOf(sp)){
+				if(line==null){
+					line=new Sprite();
+					line.graphics.beginFill(0xff0000,1);
+					line.graphics.drawRect(0,sp.height-2,2,2);
+					line.graphics.endFill();
+				}
+				sp.addChild(line);
+				sectionIndex=selectedArr.indexOf(sp);
 			}
-			sp.addChild(line);
-			sectionIndex=this.selectedArr.indexOf(sp);
 		}
 		
         public function renderStart(param1:Number,forced:Boolean=false) : Boolean
@@ -130,7 +135,7 @@
 				}
 				this.startSeekPt = param1 * this.dur;
 				this.curOperateSprite = new SpriteForSelection();
-				this.curOperateSprite.graphics.beginFill(15592682, 1);
+				this.curOperateSprite.graphics.beginFill(getCurrentColor(), 1);
 				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+(isSerialMode?editorHeight:0));
 				Trace.log("render_start");
 				this.curOperateSprite.graphics.endFill();
@@ -188,6 +193,22 @@
 			}
         }// end function
 
+		private function getCurrentColor():uint {
+			var colorCode:uint = 0xFFF8DC;
+			if(colorState)colorCode=15592682;
+			colorState=!colorState;
+			return colorCode;
+		}
+		
+		public function removeSelection():void{
+			removeChild(this.selectedArr[this.sectionIndex]);
+			this.selectedArr.splice(this.sectionIndex);
+			this.selectedDat.splice(this.sectionIndex);
+			this.sectionIndex=-1;
+			this.syncEditDat();
+			this.notiTotSelectDur();
+		}
+		
         public function undo(param1:SetPtCmdItem) : void
         {
             var _loc_2:* = param1.action;
@@ -215,6 +236,7 @@
 			_loc_3.show(title);
 		}
 		
+//		update textfield@EditField for total duration of selection
         private function notiTotSelectDur() : void
         {
             var _loc_2:Object = null;
@@ -232,6 +254,7 @@
             return;
         }// end function
 
+//		update edit data@EditData for JS call
         private function syncEditDat() : void
         {
             var _loc_1:* = new WorkFieldUIEvt(WorkFieldUIEvt.UPDATE_EDIT_DAT);

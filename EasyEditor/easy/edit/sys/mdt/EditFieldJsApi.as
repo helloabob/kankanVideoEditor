@@ -1,11 +1,13 @@
 ﻿package easy.edit.sys.mdt
 {
-    import easy.edit.pro.*;
-    import easy.edit.sys.com.dat.*;
-    import easy.edit.sys.stg.evt.*;
-    import easy.edit.sys.stg.viw.*;
-    import flash.external.*;
-    import vsin.dcw.support.*;
+    import flash.external.ExternalInterface;
+    
+    import easy.edit.pro.EditFactory;
+    import easy.edit.sys.com.dat.EditDat;
+    import easy.edit.sys.stg.evt.WorkFieldUIEvt;
+    import easy.edit.sys.stg.viw.EditField;
+    
+    import vsin.dcw.support.Trace;
 
     public class EditFieldJsApi extends Object
     {
@@ -25,6 +27,7 @@
             ExternalInterface.addCallback("togglePlay", this.togglePlay);
             ExternalInterface.addCallback("getEditDat", this.getEditDat);
             ExternalInterface.addCallback("setEditDat", this.setEditDat);
+			ExternalInterface.addCallback("getSelectionInfo", this.getSelectionInfo);
             ExternalInterface.call(this.callJsReadyPath);
             return;
         }// end function
@@ -108,5 +111,9 @@
             }
         }// end function
 
+		private function getSelectionInfo():String{
+			return this.edit.getSelectionInfo();
+		}
+		
     }
 }

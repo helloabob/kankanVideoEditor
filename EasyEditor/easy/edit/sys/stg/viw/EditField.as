@@ -48,6 +48,8 @@
         private var durationField:TextField;
 		private var moveTimeField:TextField;
         private const FIX_SEEK_WHEN_IN_CLIP_EDGE:int = 0;
+		
+		private var epgInfo:Array;
 
         public function EditField()
         {
@@ -225,6 +227,16 @@
 
         public function undo() : void
         {
+			if(this.editLayer.isSerialMode==true){
+				if(this.editLayer.sectionIndex==-1)return;
+				else {
+					var _loc_3:* = editLayer.sectionIndex;
+					epgInfo.splice(_loc_1);
+					undoMgr.allCmd.splice(_loc_1,2);
+					editLayer.removeSelection();
+					return;
+				}
+			}
             var _loc_2:InfoTipsMgr = null;
             if (!this.inited)
             {
@@ -329,6 +341,11 @@
             return;
         }// end function
 
+		public function getSelectionInfo():String{
+			if(this.editLayer.sectionIndex==-1)return null;
+			return JSON.stringify(epgInfo[this.editLayer.sectionIndex]);
+		}
+		
         public function setEditDat(param1:String) : void
         {
             var block:Object;
@@ -368,6 +385,7 @@
                 return param1.start - param2.start;
             }// end function
             );
+			epgInfo=arr;
 			var _loc_19:*=this.undoMgr.allCmd.length;
 			for(var _loc_1:*=0;_loc_1<_loc_19;_loc_1++){
 				this.undo();
