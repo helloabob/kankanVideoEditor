@@ -97,6 +97,11 @@
 				}
 				sp.addChild(line);
 				sectionIndex=selectedArr.indexOf(sp);
+				
+				var _loc_1:WorkFieldUIEvt = new WorkFieldUIEvt(WorkFieldUIEvt.SELECTION_CLICK);
+				_loc_1.progress=this.selectedDat[sectionIndex].start;
+				dispatchEvent(_loc_1);
+				
 			}
 		}
 		
@@ -194,16 +199,18 @@
         }// end function
 
 		private function getCurrentColor():uint {
-			var colorCode:uint = 0xFFF8DC;
-			if(colorState)colorCode=15592682;
+			//0xB0B0B0  0xF7AC03
+			//0xFFF8DC  15592682
+			var colorCode:uint = 0xB0B0B0;
+			if(colorState)colorCode=0xF7AC03;
 			colorState=!colorState;
 			return colorCode;
 		}
 		
 		public function removeSelection():void{
 			removeChild(this.selectedArr[this.sectionIndex]);
-			this.selectedArr.splice(this.sectionIndex);
-			this.selectedDat.splice(this.sectionIndex);
+			this.selectedArr.splice(this.sectionIndex,1);
+			this.selectedDat.splice(this.sectionIndex,1);
 			this.sectionIndex=-1;
 			this.syncEditDat();
 			this.notiTotSelectDur();

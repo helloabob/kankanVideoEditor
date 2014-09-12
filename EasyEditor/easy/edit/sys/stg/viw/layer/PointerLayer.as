@@ -88,6 +88,10 @@
             this.slider.enableSetEnd(param1);
             return;
         }// end function
+		
+		public function seekManuallyByTime(time:Number):void{
+			this.slider.seekManuallyByTime(time);
+		}// end function
 
         public function isSetEndEnabled() : Boolean
         {

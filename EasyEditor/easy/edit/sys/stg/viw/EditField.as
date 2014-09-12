@@ -96,6 +96,7 @@
             this.ptLayer.addEventListener(WorkFieldUIEvt.SET_END_PT, this.onSetEnd);
 			this.ptLayer.addEventListener(ProgressEvent.MOUSE_MOVE,this.onSetMoveTime);
             this.editLayer.addEventListener(WorkFieldUIEvt.SELECTION_CHANGE, this.onSelectionChange);
+			this.editLayer.addEventListener(WorkFieldUIEvt.SELECTION_CLICK, this.onSelectionClick);
             return;
         }// end function
 
@@ -224,6 +225,10 @@
             this.editTimeField.text = Tools.formatTime(param1.totSelectionDuration);
             return;
         }// end function
+		
+		private function onSelectionClick(param1:WorkFieldUIEvt):void{
+			this.ptLayer.seekManuallyByTime(param1.progress);
+		}// end function
 
         public function undo() : void
         {
@@ -231,8 +236,8 @@
 				if(this.editLayer.sectionIndex==-1)return;
 				else {
 					var _loc_3:* = editLayer.sectionIndex;
-					epgInfo.splice(_loc_1);
-					undoMgr.allCmd.splice(_loc_1,2);
+					epgInfo.splice(_loc_3,1);
+					undoMgr.allCmd.splice(_loc_3*2,2);
 					editLayer.removeSelection();
 					return;
 				}

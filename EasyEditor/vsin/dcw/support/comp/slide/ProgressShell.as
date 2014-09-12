@@ -132,8 +132,13 @@
 		}
 		
 		public function seekManuallyByTime(time:Number):void{
-			
-		}
+			var udat:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
+			var _loc_1:* = udat.findClosestSp(0,time);
+			var res:Number = udat.transSecToViewProg(_loc_1);
+			setPercent(res);
+			dispatchProgress();
+			return;
+		}// end function
 		
         protected function onTrackDown(event:MouseEvent) : void
         {

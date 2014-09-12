@@ -1,6 +1,6 @@
 ﻿package easy.edit.sys.stg.evt
 {
-    import flash.events.*;
+    import flash.events.Event;
 
     public class WorkFieldUIEvt extends Event
     {
@@ -17,6 +17,7 @@
         public static const SET_START_PT:String = "SET_START_PT";
         public static const SET_END_PT:String = "SET_END_PT";
         public static const SELECTION_CHANGE:String = "SELECTION_CHANGE";
+		public static const SELECTION_CLICK:String = "SELECTION_CLICK";
 
         public function WorkFieldUIEvt(param1:String, param2:Boolean = true, param3:Boolean = false)
         {
