@@ -110,7 +110,6 @@
         }// end function
 
 		private function onShowMouseMoveTime(event:ProgressEvent):void{
-			trace("mouseover:"+event.progressOver);
 			dispatchEvent(event.clone());
 		}
 		

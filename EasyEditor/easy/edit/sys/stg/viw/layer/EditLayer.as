@@ -133,6 +133,8 @@
 				}
 				this.selectedDat[sectionIndex].start=(param1*dur).toFixed(2);
 				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
+				this.syncEditDat();
+				this.notiTotSelectDur();
 				return true;
 			}else{
 				if (this.inProcess){
@@ -142,7 +144,6 @@
 				this.curOperateSprite = new SpriteForSelection();
 				this.curOperateSprite.graphics.beginFill(getCurrentColor(), 1);
 				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+(isSerialMode?editorHeight:0));
-				Trace.log("render_start");
 				this.curOperateSprite.graphics.endFill();
 				this.curOperateSprite.x = width * param1;
 				addChild(this.curOperateSprite);
@@ -166,15 +167,20 @@
 					this.showAlert("请在起点后设置终点");
 					return false;
 				}
-				if(sectionIndex<this.selectedArr.length-1&&_loc_2>=this.selectedArr[sectionIndex+1].x){
-					this.showAlert("包含了之前的选择区域");
-					return false;
-				}
+//				remove the limit of end time beyond next section's start point.
+//				if(sectionIndex<this.selectedArr.length-1&&_loc_2>=this.selectedArr[sectionIndex+1].x){
+//					this.showAlert("包含了之前的选择区域");
+//					return false;
+//				}
 				var sp:Sprite=this.selectedArr[sectionIndex];
-//				var _loc_3:*=sp.x+sp.width;
+				var _loc_3:Number = sp.width;
+				var _loc_4:Number=selectedDat[sectionIndex].end;
 				sp.width=_loc_2-sp.x;
 				this.selectedDat[sectionIndex].end=(param1*dur).toFixed(2);
 				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
+				this.batchUpdateSectionInfoByOffset(sectionIndex,sp.width-_loc_3,selectedDat[sectionIndex].end-_loc_4);
+				this.syncEditDat();
+				this.notiTotSelectDur();
 				return true;
 			}else{
 	            var _loc_2:Number = NaN;
@@ -197,6 +203,20 @@
 	            return false;
 			}
         }// end function
+		
+		private function batchUpdateSectionInfoByOffset(param1:int, param2:Number, param3:Number):void{
+			if(param1<0||selectedDat.length<=0||param1>=selectedDat.length-1)return;
+			for(var i:int=param1+1;i<selectedDat.length;i++){
+				var sp:Sprite=selectedArr[i];
+				sp.x+=param2;
+				selectedDat[i].start=(Number(selectedDat[i].start) + param3).toFixed(2);
+				selectedDat[i].end=(Number(selectedDat[i].end)+param3).toFixed(2);
+			}
+//			trace("--------------------");
+//			trace("selectedDat[2].start="+selectedDat[2].start);
+//			trace("selectedDat[2].end="+selectedDat[2].end);
+//			trace("--------------------");
+		}
 
 		private function getCurrentColor():uint {
 			//0xB0B0B0  0xF7AC03

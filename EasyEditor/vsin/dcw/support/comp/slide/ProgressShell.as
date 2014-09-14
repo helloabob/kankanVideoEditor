@@ -122,7 +122,6 @@
         }// end function
 
 		protected function MouseMove(event:MouseEvent):void{
-			trace("ProgressShell_MOUSE_MOVE");
 			var evt:ProgressEvent = new ProgressEvent(ProgressEvent.MOUSE_MOVE);
 			var udat:EditUIData = EditViewFactory.to.getCompIns(EditUIData);
 			var rate:Number = event.localX * this.skinTrack.scaleX / this.skinTrack.width;

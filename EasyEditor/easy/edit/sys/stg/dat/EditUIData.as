@@ -74,7 +74,6 @@
 
         public function transTotProgToClipIdAndClipFlyTime(param1:Number) : Array
         {
-			trace("transTotProgToClipIdAndClipFlyTime:"+param1+" and clipDurArr:"+this.clipDurArr.toString());
             var _loc_2:* = param1 * this.dur;
             var _loc_3:Number = 0;
             var _loc_4:int = 0;

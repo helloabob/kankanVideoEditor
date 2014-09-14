@@ -275,9 +275,7 @@
                 return;
             }
             var _loc_1:* = this.udat.transTotProgToClipIdAndClipFlyTime(this.ptLayer.getTotPercent());
-            Trace.log("moveToLeftKeyFr:", _loc_1.toString());
             var _loc_2:* = this.udat.findPrevSp(_loc_1[0], _loc_1[1]);
-            Trace.err("cur and toSeek:", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] - this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
             return;
@@ -290,9 +288,7 @@
                 return;
             }
             var _loc_1:* = this.udat.transTotProgToClipIdAndClipFlyTime(this.ptLayer.getTotPercent());
-            Trace.log("moveToRightKeyFr", _loc_1.toString());
             var _loc_2:* = this.udat.findNextSp(_loc_1[0], _loc_1[1]);
-            Trace.err("cur and toSeek", _loc_1[1] + " / " + _loc_2);
             var _loc_3:* = _loc_2 - _loc_1[1] + this.FIX_SEEK_WHEN_IN_CLIP_EDGE;
             this.ptLayer.seekOffset(this.udat.transSecToViewProg(_loc_3));
             return;

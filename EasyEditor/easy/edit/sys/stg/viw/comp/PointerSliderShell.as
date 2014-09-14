@@ -25,6 +25,12 @@
             this.setEndSkin = this.menuSkin.setEnd;
             super(param1, param2, param3);
             silenceDrag = true;
+			
+			this.menuSkin.visible=false;
+			this.setStartBtn.visible=false;
+			this.setStartBtn.visible=false;
+			this.setStartSkin.visible=false;
+			this.setEndSkin.visible=false;
             return;
         }// end function
 
