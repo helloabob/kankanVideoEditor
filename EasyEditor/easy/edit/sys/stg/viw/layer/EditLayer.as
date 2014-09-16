@@ -21,7 +21,7 @@
         private var curOperateSprite:SpriteForSelection;
         private var inProcess:Boolean = false;
         private var selectedArr:Array;
-        private var selectedDat:Array;
+        public var selectedDat:Array;
         private var startSeekPt:Number;
         private var endSeekPt:Number;
         private var undoMgr:SetPtCmdMgr;

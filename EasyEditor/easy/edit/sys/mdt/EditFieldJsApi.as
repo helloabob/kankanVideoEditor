@@ -27,7 +27,7 @@
             ExternalInterface.addCallback("togglePlay", this.togglePlay);
             ExternalInterface.addCallback("getEditDat", this.getEditDat);
             ExternalInterface.addCallback("setEditDat", this.setEditDat);
-			ExternalInterface.addCallback("getSelectionInfo", this.getSelectionInfo);
+//			ExternalInterface.addCallback("getSelectionInfo", this.getSelectionInfo);
             ExternalInterface.call(this.callJsReadyPath);
             return;
         }// end function

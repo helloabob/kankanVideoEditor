@@ -2,6 +2,7 @@
 {
     import flash.display.Sprite;
     import flash.events.MouseEvent;
+    import flash.external.ExternalInterface;
     import flash.text.TextField;
     
     import easy.edit.ent.EditContext;
@@ -164,10 +165,10 @@
 				var _loc_6:* = _loc_4[1];
 				var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
 				var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
-				this.editLayer.renderEnd(_loc_8);
+				var _loc_9:* = editLayer.renderEnd(_loc_8);
+				if(_loc_9==true)callJSFunction("onUpdateItem");
 			}else{
 				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
-				Trace.log("onSetEnd", _loc_2);
 				var _loc_3:* = new InfoTipsMgr();
 				if (this.editLayer.isInSelected(_loc_2))
 				{
@@ -227,9 +228,21 @@
         }// end function
 		
 		private function onSelectionClick(param1:WorkFieldUIEvt):void{
+			callJSFunction("onSelectItem");
 			this.ptLayer.seekManuallyByTime(param1.progress);
 		}// end function
 
+		private function callJSFunction(funcName:String):void{
+			try{
+				epgInfo[editLayer.sectionIndex].start = editLayer.selectedDat[editLayer.sectionIndex].start;
+				epgInfo[editLayer.sectionIndex].end = editLayer.selectedDat[editLayer.sectionIndex].end;
+				flash.external.ExternalInterface.call(funcName,escape(JSON.stringify(epgInfo[editLayer.sectionIndex])));
+//				trace("callJSFunction:"+editLayer.sectionIndex+":"+JSON.stringify(epgInfo[editLayer.sectionIndex]));
+			}catch(e:Error){
+				flash.external.ExternalInterface.call(funcName,e.message);
+			}
+		}
+		
         public function undo() : void
         {
 			if(this.editLayer.isSerialMode==true){
@@ -301,14 +314,12 @@
             {
                 return;
             }
-			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             if (this.ptLayer.isSetStartEnabled()||this.editLayer.isSerialMode)
             {
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_START_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
                 this.onSetStart(_loc_1);
             }
-			trace("setStartPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             return;
         }// end function
 
@@ -319,15 +330,12 @@
             {
                 return;
             }
-			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             if (this.ptLayer.isSetEndEnabled()||this.editLayer.isSerialMode)
             {
-				trace("setEndPoint2");
                 _loc_1 = new WorkFieldUIEvt(WorkFieldUIEvt.SET_END_PT);
                 _loc_1.viewProgress = this.ptLayer.getViewPercent();
                 this.onSetEnd(_loc_1);
             }
-			trace("setEndPoint"+"startEnabled:"+this.ptLayer.isSetStartEnabled()+"   endEnabled:"+this.ptLayer.isSetEndEnabled());
             return;
         }// end function
 
