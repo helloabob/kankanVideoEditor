@@ -166,7 +166,10 @@
 				var _loc_7:* = this.udat.findClosestSp(_loc_4[0], _loc_4[1]);
 				var _loc_8:* = this.udat.getTotProgByClipTime(_loc_4[0], _loc_7);
 				var _loc_9:* = editLayer.renderEnd(_loc_8);
-				if(_loc_9==true)callJSFunction("onUpdateItem");
+				if(_loc_9==true){
+					callJSFunction("onUpdateItem");
+					this.editLayer.selectNextSelection();
+				}
 			}else{
 				var _loc_2:* = this.udat.getTotProgByViewProg(param1.viewProgress);
 				var _loc_3:* = new InfoTipsMgr();
@@ -237,7 +240,6 @@
 				epgInfo[editLayer.sectionIndex].start = editLayer.selectedDat[editLayer.sectionIndex].start;
 				epgInfo[editLayer.sectionIndex].end = editLayer.selectedDat[editLayer.sectionIndex].end;
 				flash.external.ExternalInterface.call(funcName,escape(JSON.stringify(epgInfo[editLayer.sectionIndex])));
-//				trace("callJSFunction:"+editLayer.sectionIndex+":"+JSON.stringify(epgInfo[editLayer.sectionIndex]));
 			}catch(e:Error){
 				flash.external.ExternalInterface.call(funcName,e.message);
 			}

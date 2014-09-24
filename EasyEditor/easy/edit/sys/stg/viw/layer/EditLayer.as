@@ -56,14 +56,15 @@
 		public function showSerialMode():void{
 			if((ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg!=null&&(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg.length>0){
 				Trace.log("epg:"+(ScrFactory.to.getCompIns(PlayDat)as PlayDat).epg);
-				if(btnCommit==null)btnCommit = new CommitBtnSkin();
-				btnCommit.width=60;
-				btnCommit.height=25;
-				btnCommit.y=this.h+this.editorHeight+5;
-				btnCommit.x=50;
-				btnCommit.mouseEnabled=true;
-				btnCommit.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
-				addChild(btnCommit);
+				//20140924 hide commit button.
+//				if(btnCommit==null)btnCommit = new CommitBtnSkin();
+//				btnCommit.width=60;
+//				btnCommit.height=25;
+//				btnCommit.y=this.h+this.editorHeight+5;
+//				btnCommit.x=50;
+//				btnCommit.mouseEnabled=true;
+//				btnCommit.addEventListener(MouseEvent.CLICK,onCompleteSerialMode);
+//				addChild(btnCommit);
 				isSerialMode=true;
 			}else{
 				isSerialMode=false;
@@ -86,7 +87,7 @@
 			removeChild(btnCommit);
 		}
 		
-		private function onSliceTapped(evt:MouseEvent):void{
+		private function onSliceTapped(evt:*):void{
 			var sp:Sprite=evt.target as Sprite;
 			if(sectionIndex==-1||sectionIndex!=selectedArr.indexOf(sp)){
 				if(line==null){
@@ -101,8 +102,13 @@
 				var _loc_1:WorkFieldUIEvt = new WorkFieldUIEvt(WorkFieldUIEvt.SELECTION_CLICK);
 				_loc_1.progress=this.selectedDat[sectionIndex].start;
 				dispatchEvent(_loc_1);
-				
 			}
+		}
+		public function selectNextSelection():void{
+			if(sectionIndex>=selectedArr.length-1)return;
+			var obj:Object = new Object();
+			obj.target = selectedArr[sectionIndex+1] as Sprite;
+			onSliceTapped(obj);
 		}
 		
         public function renderStart(param1:Number,forced:Boolean=false) : Boolean
@@ -124,15 +130,27 @@
 					return false;
 				}
 				var sp:Sprite=this.selectedArr[sectionIndex];
-				if(_loc_2<sp.x){
-					sp.width=sp.width+(sp.x-_loc_2);
-					sp.x=_loc_2;
-				}else if(_loc_2>sp.x){
-					sp.width=sp.width-(_loc_2-sp.x);
-					sp.x=_loc_2;
-				}
+				/*batch update time and coordinate*/
+				var offsetCoordinate:Number = _loc_2 - sp.x;
+				var offsetTime:Number = param1*dur - this.selectedDat[sectionIndex].start;
+				sp.x = _loc_2;
+				
+				/*end*/
+//				if(_loc_2<sp.x){
+//					sp.width=sp.width+(sp.x-_loc_2);
+//					sp.x=_loc_2;
+//				}else if(_loc_2>sp.x){
+//					sp.width=sp.width-(_loc_2-sp.x);
+//					sp.x=_loc_2;
+//				}
+				Trace.log("sectionArea_change");
+				var newEnd:Number = Number(this.selectedDat[sectionIndex].end) + offsetTime;
 				this.selectedDat[sectionIndex].start=(param1*dur).toFixed(2);
-				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
+				this.selectedDat[sectionIndex].end=newEnd.toFixed(2);
+//				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
+				Trace.log("start batch in start"+sectionIndex+":"+offsetCoordinate+":"+offsetTime);
+				this.batchUpdateSectionInfoByOffset(sectionIndex,offsetCoordinate,offsetTime);
+				Trace.log("end batch in start");
 				this.syncEditDat();
 				this.notiTotSelectDur();
 				return true;
