@@ -195,7 +195,7 @@
 				var _loc_4:Number=selectedDat[sectionIndex].end;
 				sp.width=_loc_2-sp.x;
 				this.selectedDat[sectionIndex].end=(param1*dur).toFixed(2);
-				this.selectedDat[sectionIndex].total=(this.selectedDat[sectionIndex].end-this.selectedDat[sectionIndex].start).toFixed(2);
+				this.selectedDat[sectionIndex].total=(Number(this.selectedDat[sectionIndex].end)-Number(this.selectedDat[sectionIndex].start)).toFixed(2);
 				this.batchUpdateSectionInfoByOffset(sectionIndex,sp.width-_loc_3,selectedDat[sectionIndex].end-_loc_4);
 				this.syncEditDat();
 				this.notiTotSelectDur();
