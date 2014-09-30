@@ -50,6 +50,8 @@
             EditDispatcher.to.addEvent(KeyPressedEvt, KeyPressedEvt.TO_RIGHT, this.onKeyPressed);
             EditDispatcher.to.addEvent(KeyPressedEvt, KeyPressedEvt.UNDO, this.onKeyPressed);
             EditDispatcher.to.addEvent(KeyPressedEvt, KeyPressedEvt.TOGGLE_PLAY, this.onKeyPressed);
+			EditDispatcher.to.addEvent(KeyPressedEvt, KeyPressedEvt.LEFT_BRACKET, this.onKeyPressed);
+			EditDispatcher.to.addEvent(KeyPressedEvt, KeyPressedEvt.RIGHT_BRACKET, this.onKeyPressed);
             EditDispatcher.to.addEvent(StmStatEvt, StmStatEvt.START, this.onStmStat);
             EditDispatcher.to.addEvent(StmStatEvt, StmStatEvt.RESUME, this.onStmStat);
             EditDispatcher.to.addEvent(StmStatEvt, StmStatEvt.PAUSE, this.onStmStat);
@@ -158,6 +160,18 @@
                     this.edit.togglePlay();
                     break;
                 }
+				case KeyPressedEvt.LEFT_BRACKET:
+				{
+					Trace.log("JS KEY leftBracket");
+					this.edit.seekSelectionByType(0);
+					break;
+				}
+				case KeyPressedEvt.RIGHT_BRACKET:
+				{
+					Trace.log("JS KEY rightBracket");
+					this.edit.seekSelectionByType(1);
+					break;
+				}
                 default:
                 {
                     break;

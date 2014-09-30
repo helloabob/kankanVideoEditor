@@ -196,7 +196,7 @@
 				sp.width=_loc_2-sp.x;
 				this.selectedDat[sectionIndex].end=(param1*dur).toFixed(2);
 				this.selectedDat[sectionIndex].total=(Number(this.selectedDat[sectionIndex].end)-Number(this.selectedDat[sectionIndex].start)).toFixed(2);
-				this.batchUpdateSectionInfoByOffset(sectionIndex,sp.width-_loc_3,selectedDat[sectionIndex].end-_loc_4);
+				this.batchUpdateSectionInfoByOffset(sectionIndex,sp.width-_loc_3,Number(selectedDat[sectionIndex].end)-_loc_4);
 				this.syncEditDat();
 				this.notiTotSelectDur();
 				return true;
@@ -223,6 +223,7 @@
         }// end function
 		
 		private function batchUpdateSectionInfoByOffset(param1:int, param2:Number, param3:Number):void{
+			Trace.log("batchUpdateSectionInfoByOffset:"+param1+"&"+param2+"&"+param3);
 			if(param1<0||selectedDat.length<=0||param1>=selectedDat.length-1)return;
 			for(var i:int=param1+1;i<selectedDat.length;i++){
 				var sp:Sprite=selectedArr[i];
@@ -249,6 +250,11 @@
 			removeChild(this.selectedArr[this.sectionIndex]);
 			this.selectedArr.splice(this.sectionIndex,1);
 			this.selectedDat.splice(this.sectionIndex,1);
+			/*batch reset offset for sections after*/
+			var offsetTime:Number = Number(this.selectedDat[sectionIndex].total);
+			var offsetCoordinate:Number = offsetTime/dur*width;
+			this.batchUpdateSectionInfoByOffset(sectionIndex,-offsetCoordinate,-offsetTime);
+			/*end*/
 			this.sectionIndex=-1;
 			this.syncEditDat();
 			this.notiTotSelectDur();

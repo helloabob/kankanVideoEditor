@@ -27,11 +27,21 @@
                     this.edit.noti(new KeyPressedEvt(KeyPressedEvt.SET_END_PT));
                     break;
                 }
+				case Keyboard.O:
+				{
+					this.edit.noti(new KeyPressedEvt(KeyPressedEvt.SET_END_PT));
+					break;
+				}
                 case Keyboard.S:
                 {
                     this.edit.noti(new KeyPressedEvt(KeyPressedEvt.SET_START_PT));
                     break;
                 }
+				case Keyboard.I:
+				{
+					this.edit.noti(new KeyPressedEvt(KeyPressedEvt.SET_START_PT));
+					break;
+				}
                 case Keyboard.LEFT:
                 {
                     this.edit.noti(new KeyPressedEvt(KeyPressedEvt.TO_LEFT));
@@ -52,6 +62,16 @@
                     this.edit.noti(new KeyPressedEvt(KeyPressedEvt.TOGGLE_PLAY));
                     break;
                 }
+				case Keyboard.LEFTBRACKET:
+				{
+					this.edit.noti(new KeyPressedEvt(KeyPressedEvt.LEFT_BRACKET));
+					break;
+				}
+				case Keyboard.RIGHTBRACKET:
+				{
+					this.edit.noti(new KeyPressedEvt(KeyPressedEvt.RIGHT_BRACKET));
+					break;
+				}
                 default:
                 {
                     break;

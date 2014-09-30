@@ -235,6 +235,15 @@
 			this.ptLayer.seekManuallyByTime(param1.progress);
 		}// end function
 
+		public function seekSelectionByType(type:int):void{
+			/*return when selection not exists*/
+			if(this.editLayer.sectionIndex==-1)return;
+			
+			/*seek start/end time according type property*/
+			if(type==0)this.ptLayer.seekManuallyByTime(editLayer.selectedDat[editLayer.sectionIndex].start);
+			else this.ptLayer.seekManuallyByTime(editLayer.selectedDat[editLayer.sectionIndex].end);
+		}
+		
 		private function callJSFunction(funcName:String):void{
 			try{
 				epgInfo[editLayer.sectionIndex].start = editLayer.selectedDat[editLayer.sectionIndex].start;

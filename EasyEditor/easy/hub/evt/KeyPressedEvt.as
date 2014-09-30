@@ -1,6 +1,6 @@
 ﻿package easy.hub.evt
 {
-    import flash.events.*;
+    import flash.events.Event;
 
     public class KeyPressedEvt extends Event
     {
@@ -11,6 +11,10 @@
         public static const SET_START_PT:String = PREFIX + "SET_START_PT";
         public static const SET_END_PT:String = PREFIX + "SET_END_PT";
         public static const TOGGLE_PLAY:String = PREFIX + "TOGGLE_PLAY";
+		
+		/*[,]*/
+		public static const LEFT_BRACKET:String = PREFIX + "LEFT_BRACKET";
+		public static const RIGHT_BRACKET:String = PREFIX + "RIGHT_BRACKET";
 
         public function KeyPressedEvt(param1:String, param2:Boolean = true, param3:Boolean = false)
         {
