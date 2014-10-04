@@ -248,12 +248,13 @@
 		
 		public function removeSelection():void{
 			removeChild(this.selectedArr[this.sectionIndex]);
+			var _loc_1:* = this.selectedDat[sectionIndex].total;
 			this.selectedArr.splice(this.sectionIndex,1);
 			this.selectedDat.splice(this.sectionIndex,1);
 			/*batch reset offset for sections after*/
-			var offsetTime:Number = Number(this.selectedDat[sectionIndex].total);
+			var offsetTime:Number = Number(_loc_1);
 			var offsetCoordinate:Number = offsetTime/dur*width;
-			this.batchUpdateSectionInfoByOffset(sectionIndex,-offsetCoordinate,-offsetTime);
+			this.batchUpdateSectionInfoByOffset(sectionIndex-1,-offsetCoordinate,-offsetTime);
 			/*end*/
 			this.sectionIndex=-1;
 			this.syncEditDat();
