@@ -33,6 +33,8 @@
 		private var btnCommit:CommitBtnSkin;
 		
 		private var colorState:Boolean=true;
+		
+		private var initWidth:int = 0;
 
         public function EditLayer()
         {
@@ -50,6 +52,7 @@
             _loc_3.graphics.moveTo(0, 0);
             _loc_3.graphics.lineTo((param1 - 1), (this.h - 1));
             addChild(_loc_3);
+			initWidth = param1;
             return;
         }// end function
 
@@ -118,7 +121,7 @@
 					this.showAlert("请选择视频片段");
 					return false;
 				}
-				var _loc_2:*=param1*width;
+				var _loc_2:*=param1*initWidth;
 				if(sectionIndex>0){
 					if(_loc_2<this.selectedArr[sectionIndex-1].x+this.selectedArr[sectionIndex-1].width){
 						this.showAlert("包含了之前的选择区域");
@@ -163,7 +166,7 @@
 				this.curOperateSprite.graphics.beginFill(getCurrentColor(), 1);
 				this.curOperateSprite.graphics.drawRect(0, 0, 2, this.h+(isSerialMode?editorHeight:0));
 				this.curOperateSprite.graphics.endFill();
-				this.curOperateSprite.x = width * param1;
+				this.curOperateSprite.x = initWidth * param1;
 				addChild(this.curOperateSprite);
 				this.undoMgr.recordCmd(new SetPtCmdItem(this.curOperateSprite, SetPtCmdType.SET_START));
 				this.inProcess = true;
@@ -180,7 +183,7 @@
 					this.showAlert("请选择视频片段");
 					return false;
 				}
-				var _loc_2:Number = width*param1;
+				var _loc_2:Number = initWidth*param1;
 				if(_loc_2<=this.selectedArr[sectionIndex].x){
 					this.showAlert("请在起点后设置终点");
 					return false;
@@ -205,7 +208,7 @@
 	            var _loc_3:Number = NaN;
 	            if (this.inProcess)
 	            {
-	                _loc_2 = width * param1;
+	                _loc_2 = initWidth * param1;
 	                _loc_3 = this.curOperateSprite.x;
 	                this.curOperateSprite.width = _loc_2 - _loc_3;
 					if(this.isSerialMode)this.curOperateSprite.addEventListener(MouseEvent.CLICK,onSliceTapped);
@@ -253,7 +256,7 @@
 			this.selectedDat.splice(this.sectionIndex,1);
 			/*batch reset offset for sections after*/
 			var offsetTime:Number = Number(_loc_1);
-			var offsetCoordinate:Number = offsetTime/dur*width;
+			var offsetCoordinate:Number = offsetTime/dur*initWidth;
 			this.batchUpdateSectionInfoByOffset(sectionIndex-1,-offsetCoordinate,-offsetTime);
 			/*end*/
 			this.sectionIndex=-1;
@@ -318,7 +321,7 @@
         public function isInSelected(param1:Number) : Boolean
         {
             var _loc_3:SpriteForSelection = null;
-            var _loc_2:* = param1 * width;
+            var _loc_2:* = param1 * initWidth;
             for each (_loc_3 in this.selectedArr)
             {
                 
@@ -332,7 +335,7 @@
 
         public function isBeforeStart(param1:Number) : Boolean
         {
-            var _loc_2:* = param1 * width;
+            var _loc_2:* = param1 * initWidth;
             if (_loc_2 <= this.curOperateSprite.x)
             {
                 return true;
@@ -344,7 +347,7 @@
         {
             var _loc_4:SpriteForSelection = null;
             var _loc_2:* = this.curOperateSprite.x;
-            var _loc_3:* = param1 * width;
+            var _loc_3:* = param1 * initWidth;
             for each (_loc_4 in this.selectedArr)
             {
                 
